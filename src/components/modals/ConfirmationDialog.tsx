@@ -8,23 +8,23 @@ import { GhostTransactionLink } from './GhostTransactionLink'
 import { OopsWarning } from './OopsWarning'
 import Modal, { DialogTitle } from './common/Modal'
 
+import { ReactComponent as PurpleArborIcon } from '@/assets/svg/arbor-purple.svg'
+import { ReactComponent as ArborIcon } from '@/assets/svg/arbor.svg'
 import { ReactComponent as GreenCheckIcon } from '@/assets/svg/greencheck.svg'
-import { ReactComponent as PurplePorterIcon } from '@/assets/svg/porter-purple.svg'
-import { ReactComponent as PorterIcon } from '@/assets/svg/porter.svg'
 import { useAllTransactions } from '@/state/transactions/hooks'
 
 const BodyPanel = ({ after, before, color = 'blue', during }) => (
   <>
     {before.show && before.display}
     {during.show && (
-      <div className="flex flex-col items-center mt-20 animate-pulse">
-        {color === 'blue' ? <PorterIcon /> : <PurplePorterIcon />}
+      <div className="mt-20 flex animate-pulse flex-col items-center">
+        {color === 'blue' ? <ArborIcon /> : <PurpleArborIcon />}
         {during.display}
       </div>
     )}
 
     {after.show && (
-      <div className="flex flex-col items-center mt-20">
+      <div className="mt-20 flex flex-col items-center">
         <GreenCheckIcon />
         <span>{after.display}</span>
       </div>
@@ -156,7 +156,7 @@ const ConfirmationDialog = ({
           </div>
 
           {(showTransactionCreated || transactionComplete) && (
-            <div className="flex flex-col justify-center items-center mt-20 space-y-4">
+            <div className="mt-20 flex flex-col items-center justify-center space-y-4">
               {showTransactionCreated && <GhostTransactionLink hash={showTransactionCreated} />}
 
               {transactionComplete && (

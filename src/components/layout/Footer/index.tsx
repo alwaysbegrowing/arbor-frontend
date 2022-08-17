@@ -40,13 +40,13 @@ export const Footer: React.FC = ({ ...restProps }) => {
               />
             </svg>
           </FooterLogo>
-          <FooterLinks className="grid-flow-col gap-4 md:justify-self-end md:place-self-center">
-            <a href="https://docs.porter.finance/portal/faq">Faq</a>
-            <a href="https://blog.porter.finance">Blog</a>
-            <a href="https://docs.porter.finance">Docs</a>
-            <a href="https://discord.gg/mx8tsEaNut">Discord</a>
-            <a href="https://twitter.com/porterfinance_">Twitter</a>
-            <a href="https://github.com/orgs/porter-finance/">Github</a>
+          <FooterLinks className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
+            <a href="https://docs.arbor.garden/faq">Faq</a>
+            <a href="https://blog.arbor.garden">Blog</a>
+            <a href="https://docs.arbor.garden/">Docs</a>
+            <a href="https://discord.gg/Z4saV8m4ec">Discord</a>
+            <a href="https://twitter.com/arborfinance">Twitter</a>
+            <a href="https://github.com/orgs/alwaysbegrowing/">Github</a>
           </FooterLinks>
         </div>
       </Inner>

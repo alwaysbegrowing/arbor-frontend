@@ -4,7 +4,7 @@ require('dotenv').config({ path: __dirname + '/.env' })
 module.exports = {
   client: {
     service: {
-      name: 'porter-subgraph',
+      name: 'arbor-subgraph',
       url: process.env.REACT_APP_SUBGRAPH_URL_RINKEBY,
     },
   },

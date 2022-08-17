@@ -39,10 +39,10 @@ const GlobalStyle = createGlobalStyle`
 `
 
 const RedeemError = () => (
-  <div className="card card-bordered">
+  <div className="card-bordered card">
     <div className="card-body">
       <div className="flex justify-between">
-        <h2 className="!text-[#696969] card-title">Redeem</h2>
+        <h2 className="card-title !text-[#696969]">Redeem</h2>
       </div>
       <div className="space-y-6">
         <div className="text-base text-[#696969]">
@@ -54,24 +54,24 @@ const RedeemError = () => (
 )
 
 const EmptyConnectWallet = () => (
-  <div className="py-[50px] space-y-4 text-center text-[#696969]">
+  <div className="space-y-4 py-[50px] text-center text-[#696969]">
     <ConnectIcon className="m-auto" height={49.5} width={51} />
     <div className="text-base">Connect your wallet to view your position</div>
   </div>
 )
 
 const EmptyConnected = ({ bondName }) => (
-  <div className="py-[50px] space-y-4 text-center text-[#696969]">
+  <div className="space-y-4 py-[50px] text-center text-[#696969]">
     <WalletIcon className="m-auto" height={49.5} width={51} />
     <div className="text-base">You don&apos;t own any {bondName}s</div>
   </div>
 )
 
 const ConvertError = () => (
-  <div className="card card-bordered">
+  <div className="card-bordered card">
     <div className="card-body">
       <div className="flex justify-between">
-        <h2 className="!text-[#696969] card-title">Convert</h2>
+        <h2 className="card-title !text-[#696969]">Convert</h2>
       </div>
       <div className="space-y-6">
         <div className="text-base text-[#696969]">
@@ -91,7 +91,7 @@ const positionColumns = [
     Header: 'Cost',
     accessor: 'cost',
     tooltip:
-      'This is how much you paid for your bonds. To get this number, we assume you purchased the bonds through the Porter Finance platform. If you purchased them off the platform through an OTC deal or AMM, this number may be incorrect.',
+      'This is how much you paid for your bonds. To get this number, we assume you purchased the bonds through the Arbor protocol. If you purchased them off the platform through an OTC deal or AMM, this number may be incorrect.',
   },
   {
     Header: 'Value at maturity',
@@ -201,7 +201,7 @@ const BondDetail: React.FC = () => {
     <>
       <GlobalStyle />
       <ErrorBoundaryWithFallback>
-        <div className="flex flex-wrap justify-center content-center items-end py-2 md:justify-between">
+        <div className="flex flex-wrap content-center items-end justify-center py-2 md:justify-between">
           <div className="flex flex-wrap items-center space-x-6">
             <div className="hidden md:flex">
               <TokenLogo
@@ -214,7 +214,7 @@ const BondDetail: React.FC = () => {
               />
             </div>
             <div>
-              <h1 className="text-4xl text-white capitalize">{bond?.name.toLowerCase()}</h1>
+              <h1 className="text-4xl capitalize text-white">{bond?.name.toLowerCase()}</h1>
               <p className="text-sm text-blue-100">
                 <TokenLink token={bond} withLink />
               </p>
@@ -228,7 +228,7 @@ const BondDetail: React.FC = () => {
             <>
               <div className="card">
                 <div className="card-body">
-                  <h2 className="flex flex-row justify-between items-center card-title">
+                  <h2 className="card-title flex flex-row items-center justify-between">
                     <span>Bond information</span>
                     {!isMatured ? (
                       <ActiveStatusPill />
@@ -264,7 +264,7 @@ const BondDetail: React.FC = () => {
                   />
 
                   <div
-                    className={`grid gap-x-12 gap-y-8 grid-cols-1 pt-12 ${
+                    className={`grid grid-cols-1 gap-x-12 gap-y-8 pt-12 ${
                       isConvertBond ? 'md:grid-cols-3' : 'md:grid-cols-4'
                     }`}
                   >

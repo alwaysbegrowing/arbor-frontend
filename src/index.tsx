@@ -41,7 +41,7 @@ const { chains, provider } = configureChains(configuredChains, [
 ])
 
 const { connectors } = getDefaultWallets({
-  appName: 'Porter Finance',
+  appName: 'Arbor',
   chains,
 })
 

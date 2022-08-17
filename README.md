@@ -1,4 +1,6 @@
-# Porter Finance Front-end
+# Arbor Front-end
+
+Welcome to our dApp! We're using rainbowkit for login, subgraph for tracking Arbor bonds, Gnosis' API and wagmi for the rest.
 
 ## Development
 
@@ -18,6 +20,6 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 The project is a fork of the uniswap front-end from the following [commit](https://github.com/Uniswap/uniswap-interface/commit/dc391d1bea58c129f34c3777a80e2d7eebd7b349).
 
-Copyright © 2021, Porter limited.
+Copyright © 2021, Always Be Growing
 
 Released under GNU General Public License v3.0

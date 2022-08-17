@@ -1,8 +1,8 @@
 {
-  "name": "porter-finance",
-  "description": "Porter Finance",
+  "name": "arbor-frontend",
+  "description": "Arbor protocol frontend.",
   "license": "GPL-3.0-or-later",
-  "homepage": "https://porter-app.vercel.app/",
+  "homepage": "https://arbor.vercel.app/",
   "private": true,
   "engines": {
     "node": ">=16"
