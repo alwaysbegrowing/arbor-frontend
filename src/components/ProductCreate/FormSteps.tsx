@@ -89,7 +89,7 @@ export const FormSteps = ({
               <div className="flex items-center space-x-4 border-b border-[#2C2C2C] pb-4">
                 <DoubleArrowRightIcon
                   className={`h-6 w-6 rounded-md border border-[#ffffff22] p-1 ${
-                    color === 'blue' ? 'bg-[#404EED]' : 'bg-[#532DBE]'
+                    color === 'blue' ? 'bg-[#3D8367]' : 'bg-[#406de0]'
                   }`}
                 />
                 <span className="text-xs uppercase text-white">{title}</span>

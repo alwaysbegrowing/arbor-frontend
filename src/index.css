@@ -85,12 +85,12 @@ html {
 
 .card.place-order-color {
   @apply card-bordered;
-  @apply border-[#404eed];
+  @apply border-[#3D8367];
 }
 
 .card.redeem-card-color {
   @apply card-bordered;
-  @apply border-[#532dbe];
+  @apply border-[#406de0];
 }
 
 .card-title {
@@ -103,12 +103,12 @@ html {
 }
 
 .progress-blue::-webkit-progress-value {
-  background: linear-gradient(270deg, #404eed -0.07%, #2b3bf4 100%);
+  background: linear-gradient(270deg, #3d8367 -0.07%, #83483d 100%);
   border-radius: 4px;
 }
 
 .progress-purple::-webkit-progress-value {
-  background: linear-gradient(270deg, #6433d9 -0.07%, #532dbe 100%);
+  background: linear-gradient(270deg, #617ec7 -0.07%, #406de0 100%);
   border-radius: 4px;
 }
 
@@ -180,18 +180,18 @@ g[role='tooltip'] {
 
 .steps .step-secondary + .step-secondary:before,
 .steps .step-secondary:after {
-  background-color: #404eed;
+  background-color: #3d8367;
 }
 .steps-vertical .step.step-secondary:before {
-  background: linear-gradient(180deg, #404eed 0%, rgba(83, 45, 190, 0) 100%);
+  background: linear-gradient(180deg, #3d8367 0%, rgba(83, 45, 190, 0) 100%);
 }
 
 .steps .step-primary + .step-primary:before,
 .steps .step-primary:after {
-  background-color: #532dbe;
+  background-color: #406de0;
 }
 .steps-vertical .step.step-primary:before {
-  background: linear-gradient(180deg, #532dbe 0%, rgba(83, 45, 190, 0) 100%);
+  background: linear-gradient(180deg, #406de0 0%, rgba(83, 45, 190, 0) 100%);
 }
 .steps-vertical .step:before {
   width: 2px;

@@ -56,8 +56,8 @@ const PurpleLinearBorder = () => (
         y1="1"
         y2="1"
       >
-        <stop stopColor="#532DBE" />
-        <stop offset="1" stopColor="#532DBE" stopOpacity="0" />
+        <stop stopColor="#406de0" />
+        <stop offset="1" stopColor="#406de0" stopOpacity="0" />
       </linearGradient>
     </defs>
   </svg>
@@ -75,8 +75,8 @@ const BlueLinearBorder = () => (
         y1="1"
         y2="1"
       >
-        <stop stopColor="#404EED" />
-        <stop offset="1" stopColor="#404EED" stopOpacity="0" />
+        <stop stopColor="#3D8367" />
+        <stop offset="1" stopColor="#3D8367" stopOpacity="0" />
       </linearGradient>
     </defs>
   </svg>

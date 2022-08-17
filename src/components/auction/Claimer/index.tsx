@@ -34,9 +34,9 @@ const Wrapper = styled(BaseCard)`
 export const ActionButton = ({ children, color = 'blue', ...props }) => (
   <button
     {...props}
-    className={`btn btn-block btn-sm normal-case w-full hover:bg-blue-500 ${
-      props.disabled ? '!bg-[#2C2C2C] !text-[#696969]' : 'bg-[#404EED] text-white'
-    } font-normal h-[41px] ${color !== 'blue' && 'bg-[#532dbe] hover:bg-[#6135dd]'} ${
+    className={`btn btn-block btn-sm w-full normal-case hover:bg-blue-500 ${
+      props.disabled ? '!bg-[#2C2C2C] !text-[#696969]' : 'bg-[#3D8367] text-white'
+    } h-[41px] font-normal ${color !== 'blue' && 'bg-[#406de0] hover:bg-[#617ec7]'} ${
       props.className
     }`}
   >
@@ -47,9 +47,9 @@ export const ActionButton = ({ children, color = 'blue', ...props }) => (
 export const GhostActionLink = ({ children, ...props }) => (
   <a
     {...props}
-    className={`btn btn-link normal-case btn-block btn-sm normal-case w-full hover:bg-white hover:text-black hover:fill-black ${
+    className={`btn btn-link btn-block btn-sm w-full normal-case hover:bg-white hover:fill-black hover:text-black ${
       props.disabled ? '!bg-[#2C2C2C] !text-[#696969]' : 'bg-transparent text-white'
-    } font-normal h-[41px] bordered border-[#2C2C2C] ${props.className}`}
+    } bordered h-[41px] border-[#2C2C2C] font-normal ${props.className}`}
   >
     {children}
   </a>
@@ -71,7 +71,7 @@ const ClaimDisabled = () => {
   const toggleWalletModal = useWalletModalToggle()
 
   return (
-    <div className="card card-bordered">
+    <div className="card-bordered card">
       <div className="card-body">
         <h2 className="card-title">Claim proceeds</h2>
         <div className="space-y-6">
@@ -139,9 +139,9 @@ const Claimer: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className="place-order-color card card-bordered">
+    <div className="place-order-color card-bordered card">
       <div className="card-body">
-        <h2 className="pb-4 border-b border-b-[#333333] card-title">Claim auction proceeds</h2>
+        <h2 className="card-title border-b border-b-[#333333] pb-4">Claim auction proceeds</h2>
 
         <Wrapper>
           <div className="mb-7 space-y-3">
@@ -211,7 +211,7 @@ const Claimer: React.FC<Props> = (props) => {
             actionText="Claim auction proceeds"
             beforeDisplay={
               <div className="mt-10 space-y-6">
-                <div className="pb-4 space-y-2 text-xs text-[#696969] border-b border-b-[#D5D5D519]">
+                <div className="space-y-2 border-b border-b-[#D5D5D519] pb-4 text-xs text-[#696969]">
                   <TokenInfo
                     token={bondToken}
                     value={Number(
@@ -225,7 +225,7 @@ const Claimer: React.FC<Props> = (props) => {
                     />
                   </div>
                 </div>
-                <div className="pb-4 space-y-2 text-xs text-[#696969] border-b border-b-[#D5D5D519]">
+                <div className="space-y-2 border-b border-b-[#D5D5D519] pb-4 text-xs text-[#696969]">
                   <TokenInfo
                     token={biddingToken}
                     value={Number(

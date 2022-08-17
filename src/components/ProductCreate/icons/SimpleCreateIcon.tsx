@@ -11,7 +11,7 @@ function SimpleCreateIcon(props) {
       {...props}
     >
       <g filter="url(#filter0_d_9565_6481)">
-        <rect fill="#532DBE" height="64" rx="16" width="64" x="10" />
+        <rect fill="#406de0" height="64" rx="16" width="64" x="10" />
         <rect
           height="63"
           rx="15.5"

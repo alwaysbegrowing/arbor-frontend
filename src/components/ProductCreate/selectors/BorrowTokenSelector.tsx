@@ -9,7 +9,7 @@ import { BorrowTokens } from '../SelectableTokens'
 import { requiredChain } from '@/connectors'
 
 const BorrowToken = ({ option }) => (
-  <span className="flex items-center py-3 px-4 space-x-4 text-xs" key={option?.name}>
+  <span className="flex items-center space-x-4 py-3 px-4 text-xs" key={option?.name}>
     {option?.icon?.()}
     <span>{option?.name || 'Pick a token'}</span>
   </span>
@@ -40,14 +40,14 @@ export const Selector = ({ OptionEl, disabled = false, name, options }) => {
         defaultValue={selected?.address || selected?.id}
       />
       <div className="relative mt-1">
-        <Listbox.Button className="relative pr-4 w-full text-sm text-left text-white bg-transparent rounded-lg border border-[#2A2B2C] shadow-md cursor-pointer">
+        <Listbox.Button className="relative w-full cursor-pointer rounded-lg border border-[#2A2B2C] bg-transparent pr-4 text-left text-sm text-white shadow-md">
           {!selected?.address && !selected?.id ? (
             <OptionEl option={null} />
           ) : (
             <>
               <OptionEl option={selected} />
-              <span className="flex absolute inset-y-0 right-0 items-center pr-2 pointer-events-none">
-                <CaretSortIcon aria-hidden="true" className="w-5 h-5 text-gray-400" />
+              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                <CaretSortIcon aria-hidden="true" className="h-5 w-5 text-gray-400" />
               </span>
             </>
           )}
@@ -58,7 +58,7 @@ export const Selector = ({ OptionEl, disabled = false, name, options }) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Listbox.Options className="overflow-auto absolute z-10 w-full max-h-64 bg-[#1F2123] rounded-lg border border-[#2A2B2C] focus:outline-none ring-1 ring-black ring-opacity-5 shadow scrollbar-thin scrollbar-track-zinc-800 scrollbar-thumb-zinc-700">
+          <Listbox.Options className="absolute z-10 max-h-64 w-full overflow-auto rounded-lg border border-[#2A2B2C] bg-[#1F2123] shadow ring-1 ring-black ring-opacity-5 scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-zinc-800 focus:outline-none">
             {options?.map((option, optionIdx) => (
               <Listbox.Option
                 className={({ active }) =>
@@ -73,8 +73,8 @@ export const Selector = ({ OptionEl, disabled = false, name, options }) => {
                   <>
                     <OptionEl option={option} />
                     {selected ? (
-                      <span className="flex absolute inset-y-0 right-2 items-center pl-3 text-[#532DBE]">
-                        <CheckIcon aria-hidden="true" className="w-5 h-5" />
+                      <span className="absolute inset-y-0 right-2 flex items-center pl-3 text-[#406de0]">
+                        <CheckIcon aria-hidden="true" className="h-5 w-5" />
                       </span>
                     ) : null}
                   </>

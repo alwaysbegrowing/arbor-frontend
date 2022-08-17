@@ -34,7 +34,7 @@ export enum BondActions {
 
 const GlobalStyle = createGlobalStyle`
   .siteHeader {
-    background: #532DBE !important;
+    background: #406de0 !important;
   }
 `
 
