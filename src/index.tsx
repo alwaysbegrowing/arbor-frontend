@@ -77,7 +77,7 @@ const apolloClient = new ApolloClient({
 
 const myTheme = merge(darkTheme(), {
   fonts: {
-    body: 'Neue Haas Grotesk Display',
+    body: 'Arima Madurai',
   },
   colors: {
     accentColor: '#e0e0e0',

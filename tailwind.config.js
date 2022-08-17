@@ -74,7 +74,7 @@ module.exports = {
         ],
       },
       fontFamily: {
-        sans: ['Neue Haas Grotesk Display', ...defaultTheme.fontFamily.sans],
+        sans: ['Arima Madurai', ...defaultTheme.fontFamily.sans],
       },
     },
   },
