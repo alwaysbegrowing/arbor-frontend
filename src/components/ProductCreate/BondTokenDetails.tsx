@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { PRTRIcon } from './icons/PRTRIcon'
+import { ArborIcon } from './icons/ArborIcon'
 
 import { Bond } from '@/generated/graphql'
 
@@ -9,22 +9,22 @@ export const BondTokenDetails = ({ option }: { option: Bond }) => {
   if (balance == 0) return null
   if (!option) {
     return (
-      <div className="p-4 space-y-4 w-full text-xs text-white rounded-md form-control">
-        <div className="flex justify-between w-full">
+      <div className="form-control w-full space-y-4 rounded-md p-4 text-xs text-white">
+        <div className="flex w-full justify-between">
           <span>Pick a token</span>
         </div>
       </div>
     )
   }
   return (
-    <div className="p-4 space-y-4 w-full text-xs text-white rounded-md form-control">
-      <div className="flex justify-between w-full">
+    <div className="form-control w-full space-y-4 rounded-md p-4 text-xs text-white">
+      <div className="flex w-full justify-between">
         <span className="flex items-center space-x-2">
-          <PRTRIcon />
+          <ArborIcon />
           <span>{option?.symbol}</span>
         </span>
       </div>
-      <div className="flex justify-between w-full">
+      <div className="flex w-full justify-between">
         <span>
           <span className="text-[#696969]">Balance:</span> {balance?.toLocaleString()}
         </span>

@@ -1,14 +1,14 @@
 import React, { useMemo } from 'react'
 
-import { useAccount } from 'wagmi'
+import { chainId, useAccount } from 'wagmi'
 
 import { BondTokenDetails } from '../BondTokenDetails'
-import { BorrowTokens } from '../SelectableTokens'
+import { BorrowTokens, CollateralTokens } from '../SelectableTokens'
 import { TokenDetails } from '../TokenDetails'
-import { PRTRIcon } from '../icons/PRTRIcon'
+import { ArborIcon } from '../icons/ArborIcon'
 import { Selector } from './BorrowTokenSelector'
 
-import { requiredChain } from '@/connectors'
+import { isProd, requiredChain } from '@/connectors'
 import { useBondsPortfolio } from '@/hooks/useBondsPortfolio'
 import { useTokenAllowList } from '@/hooks/useTokenPermissions'
 import { useTokenListState } from '@/state/tokenList/hooks'
@@ -28,17 +28,21 @@ const CollateralTokenSelector = () => {
   // options from theBondFactory's allowed token list. The hard-coded payment
   // tokens are removed from this list.
   const tokens = useMemo(() => {
-    return allowedTokens
-      ?.filter(
-        (address) =>
-          !BorrowTokens[requiredChain.id].find(
-            (borrow) => borrow.address.toLowerCase() === address.toLowerCase(),
-          ),
-      )
-      .map((address) => ({
-        iconUrl: tokenList[address.toLowerCase()],
-        address,
-      }))
+    if (isProd) {
+      return allowedTokens
+        ?.filter(
+          (address) =>
+            !BorrowTokens[requiredChain.id].find(
+              (borrow) => borrow.address.toLowerCase() === address.toLowerCase(),
+            ),
+        )
+        .map((address) => ({
+          iconUrl: tokenList[address.toLowerCase()],
+          address,
+        }))
+    } else {
+      return CollateralTokens[chainId.rinkeby]
+    }
   }, [allowedTokens, tokenList])
 
   return <Selector OptionEl={TokenDetails} name="collateralToken" options={tokens} />
@@ -49,7 +53,7 @@ const NoBondFound = () => {
   return (
     <div className="form-control w-full space-y-4 rounded-md p-4 text-xs text-white">
       <div className="flex w-full justify-between">
-        <PRTRIcon />
+        <ArborIcon />
         <div className="flex flex-col">
           <span>No Bonds available to auction.</span> {!address && 'Connect wallet'}
         </div>

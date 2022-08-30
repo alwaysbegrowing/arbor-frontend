@@ -1,8 +1,8 @@
 import { chain } from 'wagmi'
 
-import { PRTRIcon } from './icons/PRTRIcon'
 import { RBNIcon } from './icons/RBNIcon'
 import { USDCIcon } from './icons/USDCIcon'
+import { UniIcon } from './icons/UniIcon'
 
 export const BorrowTokens = {
   [chain.mainnet.id]: [
@@ -17,7 +17,7 @@ export const BorrowTokens = {
     {
       name: 'USDC',
       icon: USDCIcon,
-      address: '0xed1980F313A6276d62DEA9c0c1084F28C6e0a67c',
+      address: '0x097B212EFc307B102B37889Bede934EEe74Cda27',
       decimals: 6,
     },
   ],
@@ -39,15 +39,9 @@ export const CollateralTokens = {
   ],
   [chain.rinkeby.id]: [
     {
-      name: 'RBN',
-      icon: RBNIcon,
-      address: '0xaC554B8Fb63aC7a46819701953a7413290c81448',
-      decimals: 18,
-    },
-    {
-      name: 'PRTR',
-      icon: PRTRIcon,
-      address: '0xd7E36C7a3d046d02AcFc57FF6B1cc5b750921710',
+      name: 'UNI',
+      icon: UniIcon,
+      address: '0x81629B9CCe9C92ec6706Acc9d9b7A7d39510985F',
       decimals: 18,
     },
   ],
