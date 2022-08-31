@@ -1,7 +1,6 @@
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
-import { ChainId } from '.'
 import { SUPPORTED_LOCALES } from '../constants'
 
 dayjs.extend(utc)
@@ -64,11 +63,7 @@ export const calculateTimeProgress = (auctionStartDate: number, auctionEndDate: 
 }
 
 export const getChainName = (chainId: number) => {
-  return (
-    (chainId === ChainId.RINKEBY && 'Rinkeby') ||
-    (chainId === ChainId.MAINNET && 'Mainnet') ||
-    'Unknown Network'
-  )
+  return (chainId === 4 && 'Rinkeby') || (chainId === 1 && 'Mainnet') || 'Unknown Network'
 }
 
 export const setLocale = () => {

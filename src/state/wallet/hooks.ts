@@ -5,7 +5,7 @@ import { JSBI, Token, TokenAmount, WETH } from '@josojo/honeyswap-sdk'
 import ERC20_INTERFACE from '../../constants/abis/erc20'
 import { useActiveWeb3React } from '../../hooks'
 import { useMulticallContract } from '../../hooks/useContract'
-import { ChainId, isAddress } from '../../utils'
+import { isAddress } from '../../utils'
 import { useMultipleContractSingleData, useSingleContractMultipleData } from '../multicall/hooks'
 
 /**
@@ -100,8 +100,8 @@ export function useTokenBalancesTreatWETHAsETH(
     let includesWETH = false
     const tokensWithoutWETH = tokens.filter((t) => {
       if (!chainId) return true
-      if (!WETH[chainId as ChainId]) return true
-      const isWETH = t?.equals(WETH[chainId as ChainId]) ?? false
+      if (!WETH[chainId as number]) return true
+      const isWETH = t?.equals(WETH[chainId as number]) ?? false
       if (isWETH) includesWETH = true
       return !isWETH
     })
@@ -114,7 +114,7 @@ export function useTokenBalancesTreatWETHAsETH(
   return useMemo(() => {
     if (!chainId || !address) return {}
     if (includesWETH) {
-      const weth = WETH[chainId as ChainId]
+      const weth = WETH[chainId as number]
       const ethBalance = ETHBalance[address]
       return {
         ...balancesWithoutWETH,
