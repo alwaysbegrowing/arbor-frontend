@@ -11,7 +11,7 @@ const Wrapper = styled.span`
 export const Logo = (props) => {
   return (
     <Wrapper {...props}>
-      <ArborIcon className="w-full" />
+      <ArborIcon className="w-40" />
     </Wrapper>
   )
 }
