@@ -37,12 +37,12 @@ export interface XYBondChartProps {
 }
 
 export const colors = {
-  blue: '#3D8367',
+  blue: '#0F5156',
   red: '#DB3635',
   supply: '#EDA651',
   white: '#e0e0e0',
   green: '#5BCD88',
-  purple: '#406de0',
+  purple: '#236245',
   grey: '#D6D6D6',
   cyan: '#1BBFE3',
   newOrder: '#D2D2D2',

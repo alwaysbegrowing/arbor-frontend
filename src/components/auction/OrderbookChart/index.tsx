@@ -135,7 +135,7 @@ const OrderBookChart: React.FC<Props> = (props) => {
             <Tooltip
               left={
                 <div className="flex items-center space-x-3">
-                  <span className="h-[5px] w-[14px] rounded-sm bg-[#3D8367]" />
+                  <span className="h-[5px] w-[14px] rounded-sm bg-[#0F5156]" />
                   <span>Orders</span>
                 </div>
               }
