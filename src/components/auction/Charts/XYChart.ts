@@ -53,7 +53,7 @@ export const XYChart = (props: XYChartProps): am4charts.XYChart => {
 
   // Colors
   const colors = {
-    blue: '#0F5156',
+    blue: '#1C701C',
     red: '#D25453',
     supply: '#EDA651',
     white: '#e0e0e0',

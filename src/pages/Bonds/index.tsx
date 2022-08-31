@@ -23,7 +23,7 @@ import { useSetNoDefaultNetworkId } from '@/state/orderPlacement/hooks'
 
 const GlobalStyle = createGlobalStyle`
   .siteHeader {
-    background: #236245 !important;
+    background: #293327 !important;
   }
 `
 
@@ -188,7 +188,7 @@ const Bonds = () => {
         <Table
           columns={columns()}
           data={tableData}
-          emptyActionClass="!bg-[#236245]"
+          emptyActionClass="!bg-[#293327]"
           emptyDescription="There are no bonds at the moment"
           emptyLogo={
             <>

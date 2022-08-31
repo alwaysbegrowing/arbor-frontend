@@ -18,7 +18,7 @@ import { RouteAuctionIdentifier, parseURL } from '../../state/orderPlacement/red
 
 const GlobalStyle = createGlobalStyle`
   .siteHeader {
-    background: #0F5156 !important;
+    background: #1C701C !important;
   }
 `
 
