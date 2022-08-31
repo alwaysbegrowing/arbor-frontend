@@ -9,12 +9,10 @@ export function useActiveWeb3React() {
   const { data: blockNumber } = useBlockNumber()
   const { data: signer } = useSigner()
 
-  console.log(chain, 'chain')
-
   return {
     account: address,
     active: !!chain,
-    chainId: chain?.id || requiredChain,
+    chainId: chain?.id || requiredChain.id,
     provider,
     blockNumber,
     library: provider,
