@@ -73,9 +73,6 @@ module.exports = {
           },
         ],
       },
-      fontFamily: {
-        sans: ['Arima Madurai', ...defaultTheme.fontFamily.sans],
-      },
     },
   },
 

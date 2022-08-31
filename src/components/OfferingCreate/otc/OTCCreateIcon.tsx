@@ -3,7 +3,7 @@ import * as React from 'react'
 const SvgComponent = (props) => (
   <svg fill="none" height={84} width={84} xmlns="http://www.w3.org/2000/svg" {...props}>
     <g filter="url(#a)">
-      <rect fill="#3D8367" height={64} rx={16} width={64} x={10} />
+      <rect fill="#1C701C" height={64} rx={16} width={64} x={10} />
       <rect
         height={63}
         rx={15.5}

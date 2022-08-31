@@ -49,7 +49,7 @@ const TermsModal = () => {
 
         <div className="space-x-4">
           <button
-            className="btn btn-sm h-[41px] w-[170px] bg-[#3D8367] font-normal normal-case text-white hover:bg-blue-500"
+            className="btn btn-sm h-[41px] w-[170px] bg-[#1C701C] font-normal normal-case text-white hover:bg-blue-500"
             onClick={acceptTerms}
           >
             Accept

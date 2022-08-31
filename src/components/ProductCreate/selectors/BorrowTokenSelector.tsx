@@ -73,7 +73,7 @@ export const Selector = ({ OptionEl, disabled = false, name, options }) => {
                   <>
                     <OptionEl option={option} />
                     {selected ? (
-                      <span className="absolute inset-y-0 right-2 flex items-center pl-3 text-[#406de0]">
+                      <span className="absolute inset-y-0 right-2 flex items-center pl-3 text-[#293327]">
                         <CheckIcon aria-hidden="true" className="h-5 w-5" />
                       </span>
                     ) : null}
