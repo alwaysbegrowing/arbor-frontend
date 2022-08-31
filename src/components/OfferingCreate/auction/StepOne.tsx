@@ -78,7 +78,7 @@ export const StepOne = () => {
                   Number(
                     formatUnits(
                       bondToAuction?.tokenBalances?.[0]?.amount || '0',
-                      bondToAuction.decimals,
+                      bondToAuction?.decimals,
                     ),
                   ) || 'Not enough bonds to sell',
             },
