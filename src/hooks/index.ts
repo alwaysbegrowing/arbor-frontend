@@ -1,5 +1,7 @@
 import { useAccount, useBlockNumber, useNetwork, useProvider, useSigner } from 'wagmi'
 
+import { requiredChain } from '@/connectors'
+
 export function useActiveWeb3React() {
   const { address } = useAccount()
   const { chain } = useNetwork()
@@ -7,10 +9,12 @@ export function useActiveWeb3React() {
   const { data: blockNumber } = useBlockNumber()
   const { data: signer } = useSigner()
 
+  console.log(chain, 'chain')
+
   return {
     account: address,
     active: !!chain,
-    chainId: chain?.id,
+    chainId: chain?.id || requiredChain,
     provider,
     blockNumber,
     library: provider,
