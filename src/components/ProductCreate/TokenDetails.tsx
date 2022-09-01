@@ -30,7 +30,10 @@ export const TokenDetails = ({ option }) => {
     <div className="form-control w-full space-y-4 rounded-md p-4 text-xs text-white">
       <div className="flex w-full justify-between">
         <span className="flex items-center space-x-2">
-          <img className="w-6" src={option?.iconUrl} />
+          <>
+            {option.iconUrl && <img className="w-6" src={option?.iconUrl} />}
+            {option.icon && <option.icon />}
+          </>
           <span>{tokenBalance?.symbol}</span>
         </span>
         <span>

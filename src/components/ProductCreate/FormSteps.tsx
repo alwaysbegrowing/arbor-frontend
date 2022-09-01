@@ -65,7 +65,7 @@ export const FormSteps = ({
                     </span>
                     <a
                       className="font-medium text-red-700 underline hover:text-red-600"
-                      href="https://forms.gle/NaLa8GV4eBJSAx9s7"
+                      href="https://forms.gle/6H8eHWF4E8vHfLNp8"
                     >
                       Request access
                     </a>

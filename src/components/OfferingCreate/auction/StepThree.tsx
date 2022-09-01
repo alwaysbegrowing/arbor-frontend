@@ -20,7 +20,7 @@ export const StepThree = () => {
 
   return (
     <>
-      <div className="w-full form-control">
+      <div className="form-control w-full">
         <label className="label">
           <TooltipElement
             left={<span className="label-text">Minimum bid size (optional)</span>}
@@ -28,7 +28,8 @@ export const StepThree = () => {
           />
         </label>
         <input
-          className="w-full input input-bordered"
+          className="input-bordered input w-full"
+          inputMode="numeric"
           min="0"
           placeholder="0"
           type="number"
@@ -40,7 +41,7 @@ export const StepThree = () => {
           })}
         />
       </div>
-      <div className="w-full form-control">
+      <div className="form-control w-full">
         <label className="label">
           <TooltipElement
             left={<span className="label-text">Last time to cancel bids (optional)</span>}
@@ -48,7 +49,7 @@ export const StepThree = () => {
           />
         </label>
         <input
-          className="w-full input input-bordered"
+          className="input-bordered input w-full"
           placeholder="MM/DD/YYYY"
           type="datetime-local"
           {...register('orderCancellationEndDate', {
@@ -75,7 +76,7 @@ export const StepThree = () => {
           })}
         />
       </div>
-      <div className="w-full form-control">
+      <div className="form-control w-full">
         <label className="label">
           <TooltipElement
             left={<span className="label-text">Accessibility</span>}
@@ -101,7 +102,7 @@ export const StepThree = () => {
       </div>
 
       {isPrivate && (
-        <div className="w-full form-control">
+        <div className="form-control w-full">
           <label className="label">
             <TooltipElement
               left={<span className="label-text">Access signer wallet address</span>}
@@ -109,7 +110,7 @@ export const StepThree = () => {
             />
           </label>
           <input
-            className="w-full input input-bordered"
+            className="input-bordered input w-full"
             defaultValue=""
             placeholder="0x0"
             type="text"

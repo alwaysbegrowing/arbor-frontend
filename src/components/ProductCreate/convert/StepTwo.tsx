@@ -36,7 +36,7 @@ export const StepTwo = () => {
 
   return (
     <>
-      <div className="w-full form-control">
+      <div className="form-control w-full">
         <label className="label">
           <TooltipElement
             left={<span className="label-text">Collateral token</span>}
@@ -46,7 +46,7 @@ export const StepTwo = () => {
 
         <CollateralTokenSelector />
       </div>
-      <div className="w-full form-control">
+      <div className="form-control w-full">
         <label className="label">
           <TooltipElement
             left={<span className="label-text">Amount of collateral tokens</span>}
@@ -54,7 +54,8 @@ export const StepTwo = () => {
           />
         </label>
         <input
-          className="w-full input input-bordered"
+          className="input-bordered input w-full"
+          inputMode="numeric"
           min={0}
           placeholder="0"
           type="number"
@@ -71,7 +72,7 @@ export const StepTwo = () => {
         />
       </div>
 
-      <FieldRowWrapper className="py-1 my-4 space-y-3">
+      <FieldRowWrapper className="my-4 space-y-3 py-1">
         <div className="flex flex-row justify-between">
           <div className="text-sm text-[#E0E0E0]">
             <p>

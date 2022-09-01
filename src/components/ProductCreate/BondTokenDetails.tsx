@@ -9,7 +9,9 @@ import { Bond } from '@/generated/graphql'
 export const BondTokenDetails = ({ option }: { option: Bond }) => {
   console.log(option)
   const balance = Number(formatUnits(option?.tokenBalances?.[0].amount || '0', option?.decimals))
-  if (balance == 0) return null
+  // This is not a good way to remove 0 balance bonds
+  // if (balance == 0) return null
+  // the field value tries to select it and renders nothing
   if (!option) {
     return (
       <div className="form-control w-full space-y-4 rounded-md p-4 text-xs text-white">

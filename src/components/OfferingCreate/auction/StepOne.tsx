@@ -65,6 +65,7 @@ export const StepOne = () => {
         </label>
         <input
           className="input-bordered input w-full"
+          inputMode="numeric"
           min={1}
           placeholder="0"
           type="number"
@@ -95,6 +96,7 @@ export const StepOne = () => {
         </label>
         <input
           className="input-bordered input w-full"
+          inputMode="numeric"
           min="0"
           placeholder="0"
           step="0.001"
