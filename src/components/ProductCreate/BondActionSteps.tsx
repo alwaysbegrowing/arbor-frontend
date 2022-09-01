@@ -57,11 +57,11 @@ export const BondActionSteps = ({ convertible = true, disabled }) => {
 
   const confirmSteps = [
     {
-      text: `Approve ${collateralTokenData.symbol} as collateral`,
+      text: `Approve ${collateralTokenData.symbol || collateralToken?.name} as collateral`,
       tip: 'The collateral token needs to be approved so it can be transferred into the bond contract and used as collateral.',
     },
     {
-      text: `Mint ${collateralTokenData.symbol} Convertible Bonds`,
+      text: `Mint ${collateralTokenData.symbol || collateralToken?.name} Convertible Bonds`,
       tip: 'Mint the bonds to the connected wallet.',
     },
   ]
@@ -91,7 +91,9 @@ export const BondActionSteps = ({ convertible = true, disabled }) => {
                 setWaitingWalletApprove(2)
                 addRecentTransaction({
                   hash: result?.hash,
-                  description: `Approve ${collateralToken?.symbol} for ${amountOfcollateral}`,
+                  description: `Approve ${
+                    collateralToken?.symbol || collateralToken?.name
+                  } for ${amountOfcollateral}`,
                 })
                 return result.wait()
               })
@@ -104,9 +106,11 @@ export const BondActionSteps = ({ convertible = true, disabled }) => {
               })
           }}
         >
-          {!waitingWalletApprove && `Approve ${collateralToken?.symbol} for sale`}
+          {!waitingWalletApprove &&
+            `Approve ${collateralToken?.symbol || collateralToken?.name} for sale`}
           {waitingWalletApprove === 1 && 'Confirm approval in wallet'}
-          {waitingWalletApprove === 2 && `Approving ${collateralToken?.symbol}...`}
+          {waitingWalletApprove === 2 &&
+            `Approving ${collateralToken?.symbol || collateralToken?.name}...`}
         </ActionButton>
       )}
       {currentApproveStep === 1 && (
