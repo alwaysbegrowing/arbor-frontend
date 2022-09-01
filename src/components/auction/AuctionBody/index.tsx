@@ -39,7 +39,7 @@ const WarningCard = () => {
       leaveTo="opacity-0"
       show={show}
     >
-      <div className="card card-bordered">
+      <div className="card-bordered card">
         <div className="card-body">
           <div className="flex flex-row items-center space-x-2">
             <svg
@@ -63,8 +63,8 @@ const WarningCard = () => {
             your own due diligence and consult your financial advisor before making any investment
             decisions.{' '}
             <a
-              className="text-sm font-normal underline normal-case"
-              href="https://docs.porter.finance/portal/resources/risks"
+              className="text-sm font-normal normal-case underline"
+              href="https://docs.arbor.garden"
               rel="noreferrer"
               target="_blank"
             >
@@ -83,12 +83,12 @@ const BondCard = ({ graphInfo }: { graphInfo: Auction }) => {
   const { isConvertBond } = getBondStates(graphInfo?.bond)
 
   return (
-    <div className="shadow-sm card card-bordered bond-card-color">
+    <div className="bond-card-color card-bordered card shadow-sm">
       <div className="card-body">
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <h2 className="card-title">Bond information</h2>
           <button
-            className="space-x-2 !text-xxs font-normal bg-[#532DBE] rounded-md btn btn-sm btn-primary"
+            className="btn btn-primary btn-sm space-x-2 rounded-md bg-[#293327] !text-xxs font-normal"
             onClick={() => navigate(`/bonds/${graphInfo?.bond.id || ''}`)}
           >
             <span>Learn more</span>
@@ -98,8 +98,8 @@ const BondCard = ({ graphInfo }: { graphInfo: Auction }) => {
           </button>
         </div>
 
-        <div className="flex justify-between items-end text-sm text-[#9F9F9F]">
-          <div className="flex items-center space-x-4 cursor-pointer">
+        <div className="flex items-end justify-between text-sm text-[#9F9F9F]">
+          <div className="flex cursor-pointer items-center space-x-4">
             <TokenLogo
               size={'49px'}
               square
@@ -110,10 +110,10 @@ const BondCard = ({ graphInfo }: { graphInfo: Auction }) => {
             />
 
             <div className="space-y-2">
-              <h2 className="text-2xl font-normal text-white capitalize">
+              <h2 className="text-2xl font-normal capitalize text-white">
                 {graphInfo?.bond.name.toLowerCase() || 'Bond Name'}
               </h2>
-              <p className="text-xs font-normal text-[#9F9F9F] uppercase">
+              <p className="text-xs font-normal uppercase text-[#9F9F9F]">
                 <TokenLink token={graphInfo?.bond} withLink />
               </p>
             </div>
@@ -121,7 +121,7 @@ const BondCard = ({ graphInfo }: { graphInfo: Auction }) => {
         </div>
 
         <div
-          className={`grid gap-x-12 gap-y-8 grid-cols-1 pt-12 ${
+          className={`grid grid-cols-1 gap-x-12 gap-y-8 pt-12 ${
             isConvertBond ? 'md:grid-cols-3' : 'md:grid-cols-4'
           }`}
         >

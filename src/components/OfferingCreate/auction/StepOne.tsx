@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { formatUnits } from '@ethersproject/units'
 import { useFormContext } from 'react-hook-form'
 
 import { BondSelector } from '../../ProductCreate/selectors/CollateralTokenSelector'
@@ -44,7 +45,7 @@ export const StepOne = () => {
 
   return (
     <>
-      <div className="w-full form-control">
+      <div className="form-control w-full">
         <label className="label">
           <TooltipElement
             left={<span className="label-text">Bond to auction</span>}
@@ -55,7 +56,7 @@ export const StepOne = () => {
         <BondSelector />
       </div>
 
-      <div className="w-full form-control">
+      <div className="form-control w-full">
         <label className="label">
           <TooltipElement
             left={<span className="label-text">Number of bonds to auction</span>}
@@ -63,7 +64,7 @@ export const StepOne = () => {
           />
         </label>
         <input
-          className="w-full input input-bordered"
+          className="input-bordered input w-full"
           min={1}
           placeholder="0"
           type="number"
@@ -73,14 +74,19 @@ export const StepOne = () => {
             validate: {
               greaterThanZero: (value) => value > 0 || 'Some bonds must be auctioned',
               exceedBalance: (value) =>
-                value <= Number(bondToAuction?.tokenBalances?.[0]?.amount) ||
-                'Not enough bonds to sell',
+                value <=
+                  Number(
+                    formatUnits(
+                      bondToAuction?.tokenBalances?.[0]?.amount || '0',
+                      bondToAuction?.decimals,
+                    ),
+                  ) || 'Not enough bonds to sell',
             },
           })}
         />
       </div>
 
-      <div className="w-full form-control">
+      <div className="form-control w-full">
         <label className="label">
           <TooltipElement
             left={<span className="label-text">Minimum sale price</span>}
@@ -88,7 +94,7 @@ export const StepOne = () => {
           />
         </label>
         <input
-          className="w-full input input-bordered"
+          className="input-bordered input w-full"
           min="0"
           placeholder="0"
           step="0.001"
@@ -103,7 +109,7 @@ export const StepOne = () => {
         />
       </div>
 
-      <FieldRowWrapper className="py-1 my-4 space-y-3">
+      <FieldRowWrapper className="my-4 space-y-3 py-1">
         <div className="flex flex-row justify-between">
           <div className="text-sm text-[#E0E0E0]">
             <p>{!minBuyAmount ? '-' : minBuyAmount.toLocaleString()}</p>

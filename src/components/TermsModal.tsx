@@ -11,7 +11,7 @@ const TermsModal = () => {
   }
 
   const abortModal = () => {
-    window.location.href = 'https://porter.finance'
+    window.location.href = 'https://arbor.garden'
   }
 
   return (
@@ -23,41 +23,39 @@ const TermsModal = () => {
             Please read our{' '}
             <a
               className="text-[#6CADFB] hover:underline"
-              href="https://www.porter.finance/terms-of-service"
+              href="https://www.arbor.garden/terms-of-service"
               rel="noreferrer"
               target="_blank"
             >
               Terms of Service
             </a>{' '}
-            and review the list of restricted countries Porter Finance does not serve. If you live
-            in one of the restricted countries, you will not be able to use the Porter Finance
-            platform.
+            and review the list of restricted countries Arbor protocol does not serve. If you live
+            in one of the restricted countries, you will not be able to use the Arbor protocol.
           </p>
 
           <p>
             By clicking “Accept” you agree to our{' '}
             <a
               className="text-[#6CADFB] hover:underline"
-              href="https://www.porter.finance/terms-of-service"
+              href="https://www.arbor.garden/terms-of-service"
               rel="noreferrer"
               target="_blank"
             >
               Terms of Service
             </a>{' '}
-            and confirm you do not live in one of the restricted countries Porter Finance does not
-            serve.
+            and confirm you do not live in one of the restricted countries Arbor does not serve.
           </p>
         </div>
 
         <div className="space-x-4">
           <button
-            className="w-[170px] h-[41px] font-normal text-white normal-case bg-[#404EED] hover:bg-blue-500 btn btn-sm"
+            className="btn btn-sm h-[41px] w-[170px] bg-[#1C701C] font-normal normal-case text-white hover:bg-blue-500"
             onClick={acceptTerms}
           >
             Accept
           </button>
           <button
-            className="w-[170px] h-[41px] font-normal text-white normal-case bg-[#696969] hover:bg-gray-500 btn btn-sm"
+            className="btn btn-sm h-[41px] w-[170px] bg-[#696969] font-normal normal-case text-white hover:bg-gray-500"
             onClick={abortModal}
           >
             Decline

@@ -18,7 +18,7 @@ import { RouteAuctionIdentifier, parseURL } from '../../state/orderPlacement/red
 
 const GlobalStyle = createGlobalStyle`
   .siteHeader {
-    background: #404eed !important;
+    background: #1C701C !important;
   }
 `
 
@@ -30,7 +30,7 @@ export const GhostButton = ({ active = false, children, ...props }) => {
     <button
       className={`${
         !props.onClick ? 'pointer-events-none' : ''
-      } inline-flex items-center py-2 px-5 space-x-2 h-[32px] text-xs leading-none text-white uppercase bg-transparent rounded-full border border-blue-100 border-opacity-50`}
+      } inline-flex h-[32px] items-center space-x-2 rounded-full border border-blue-100 border-opacity-50 bg-transparent py-2 px-5 text-xs uppercase leading-none text-white`}
       {...props}
     >
       {children}
@@ -42,7 +42,7 @@ export const AllButton = ({ ...props }) => <GhostButton {...props}>All</GhostBut
 
 export const ActiveButton = ({ children, ...props }) => (
   <button
-    className="inline-flex items-center py-2 px-5 space-x-2 h-[32px] text-xs leading-none text-white uppercase bg-black rounded-full border border-transparent pointer-events-none"
+    className="pointer-events-none inline-flex h-[32px] items-center space-x-2 rounded-full border border-transparent bg-black py-2 px-5 text-xs uppercase leading-none text-white"
     {...props}
   >
     {children}
@@ -87,16 +87,16 @@ export const LoadingBox = ({ className = '', height }) => (
 )
 
 export const TwoGridPage = ({ leftChildren, rightChildren }) => (
-  <main className="px-0 pb-8 mt-[15px]">
+  <main className="mt-[15px] px-0 pb-8">
     {/* Main 3 column grid */}
-    <div className="grid grid-cols-1 gap-4 items-start pb-32 lg:grid-cols-3 lg:gap-8">
+    <div className="grid grid-cols-1 items-start gap-4 pb-32 lg:grid-cols-3 lg:gap-8">
       {/* Left column */}
       <div className="grid grid-cols-1 gap-4 lg:col-span-2">
         <section aria-labelledby="section-1-title">{leftChildren}</section>
       </div>
 
       {/* Right column */}
-      <div className="grid order-first grid-cols-1 gap-4 lg:order-last">
+      <div className="order-first grid grid-cols-1 gap-4 lg:order-last">
         <section aria-labelledby="section-2-title">{rightChildren}</section>
       </div>
     </div>
@@ -105,17 +105,17 @@ export const TwoGridPage = ({ leftChildren, rightChildren }) => (
 
 export const LoadingTwoGrid = () => (
   <>
-    <div className="flex flex-wrap justify-center content-center items-end py-2 md:justify-between">
+    <div className="flex flex-wrap content-center items-end justify-center py-2 md:justify-between">
       <div className="flex flex-wrap items-center space-x-6">
         <div className="hidden md:flex">
-          <div className="w-[66px] h-[66px] bg-transparent rounded-xl animate-pulse"></div>
+          <div className="h-[66px] w-[66px] animate-pulse rounded-xl bg-transparent"></div>
         </div>
         <div className="space-y-3">
-          <div className="w-[425px] h-[33px] bg-transparent rounded animate-pulse"></div>
-          <div className="w-[425px] h-[22px] bg-transparent rounded animate-pulse"></div>
+          <div className="h-[33px] w-[425px] animate-pulse rounded bg-transparent"></div>
+          <div className="h-[22px] w-[425px] animate-pulse rounded bg-transparent"></div>
         </div>
       </div>
-      <div className="w-[120px] h-[32px] bg-transparent rounded-full animate-pulse"></div>
+      <div className="h-[32px] w-[120px] animate-pulse rounded-full bg-transparent"></div>
     </div>
 
     <TwoGridPage
@@ -160,7 +160,7 @@ const AuctionPage = ({ data: { auctionIdentifier, derivedAuctionInfo, graphInfo 
         {loading && <LoadingTwoGrid />}
         {!loading && (
           <>
-            <div className="flex flex-wrap justify-center content-center items-end py-2 md:justify-between">
+            <div className="flex flex-wrap content-center items-end justify-center py-2 md:justify-between">
               <div className="flex flex-wrap items-center space-x-6">
                 <div className="hidden md:flex">
                   <TokenLogo
@@ -173,7 +173,7 @@ const AuctionPage = ({ data: { auctionIdentifier, derivedAuctionInfo, graphInfo 
                   />
                 </div>
                 <div>
-                  <h1 className="text-4xl text-white capitalize">{graphInfo?.bond.name} Auction</h1>
+                  <h1 className="text-4xl capitalize text-white">{graphInfo?.bond.name} Auction</h1>
                   <p className="text-2sm text-[#E0E0E0]">{graphInfo?.bond.symbol}</p>
                 </div>
               </div>

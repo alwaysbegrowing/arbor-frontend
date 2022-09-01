@@ -6,21 +6,21 @@ export const MobileBlocker = () => (
   <main className="block sm:hidden">
     <a
       aria-current="page"
-      aria-label="Porter Homepage"
-      className="absolute portrait:inset-x-0 top-5 landscape:top-5 portrait:top-10 left-6 landscape:left-6 z-10 portrait:mx-auto text-center md:top-12 md:left-14"
+      aria-label="Arbor Homepage"
+      className="absolute top-5 left-6 z-10 text-center md:top-12 md:left-14 portrait:inset-x-0 portrait:top-10 portrait:mx-auto landscape:top-5 landscape:left-6"
       data-v-40b60d66=""
       href="/"
       role="navigation"
     >
-      <div className="flex justify-center items-center space-x-4 md:w-auto">
+      <div className="flex items-center justify-center space-x-4 md:w-auto">
         <Logo />
-        <span className="text-xl font-medium text-white">Porter Finance</span>
+        <span className="text-xl font-medium text-white">Arbor</span>
       </div>
     </a>
     <img
       alt=""
       aria-hidden="true"
-      className="z-0 pointer-events-none glow"
+      className="glow pointer-events-none z-0"
       role="presentation"
       src="/assets/bg_glow.svg"
       style={{
@@ -33,7 +33,7 @@ export const MobileBlocker = () => (
         transform: 'translate(-50%,-20%)',
       }}
     />
-    <section className="flex absolute top-1/2 left-1/2 z-10 justify-center items-center mx-auto text-center -translate-x-1/2 -translate-y-1/2">
+    <section className="absolute top-1/2 left-1/2 z-10 mx-auto flex -translate-x-1/2 -translate-y-1/2 items-center justify-center text-center">
       <div className="relative z-10 mx-auto h-full text-center">
         <div>
           <svg
@@ -69,7 +69,7 @@ export const MobileBlocker = () => (
         </div>
         <div className="mx-auto mt-8">
           <h1 className="text-2xl font-medium">
-            <span className="bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-500 text-gradient">
+            <span className="text-gradient bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-500">
               Please rotate your device
             </span>
           </h1>

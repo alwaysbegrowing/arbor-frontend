@@ -33,7 +33,7 @@ import {
 import { AuctionIdentifier } from '../../../state/orderPlacement/reducer'
 import { useOrderState } from '../../../state/orders/hooks'
 import { OrderState } from '../../../state/orders/reducer'
-import { ChainId, EASY_AUCTION_NETWORKS, getFullTokenDisplay } from '../../../utils'
+import { EASY_AUCTION_NETWORKS, getFullTokenDisplay } from '../../../utils'
 import { getChainName } from '../../../utils/tools'
 import { Button } from '../../buttons/Button'
 import AmountInputPanel from '../../form/AmountInputPanel'
@@ -128,12 +128,12 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
   const [approval, approveCallback] = useApproveCallback(
     approvalTokenAmount,
     EASY_AUCTION_NETWORKS[requiredChain.id],
-    chainIdFromWeb3 as ChainId,
+    chainIdFromWeb3 as number,
   )
   const [, unapproveCallback] = useUnapproveCallback(
     new TokenAmount(biddingToken, '0'),
     EASY_AUCTION_NETWORKS[requiredChain.id],
-    chainIdFromWeb3 as ChainId,
+    chainIdFromWeb3 as number,
   )
 
   const { data: biddingTokenBalance } = useBalance({
@@ -244,9 +244,9 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
 
   if (isPrivate && !signatureAvailable) {
     return (
-      <div className="card card-bordered">
+      <div className="card-bordered card">
         <div className="card-body">
-          <h2 className="space-x-2 !text-[#696969] card-title">
+          <h2 className="card-title space-x-2 !text-[#696969]">
             <span>Private auction</span>
             <PrivateIcon />
           </h2>
@@ -283,7 +283,7 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
   })
 
   return (
-    <div className="card place-order-color">
+    <div className="place-order-color card">
       <div className="card-body">
         <h2 className="card-title">Place order</h2>
 
@@ -375,7 +375,7 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
 
                       <ActionButton
                         aria-label="Continue"
-                        className="!mt-10 btn-block"
+                        className="btn-block !mt-10"
                         onClick={() => setShowCountryDisabledModal(false)}
                       >
                         Got it
@@ -428,7 +428,7 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
                     placeOrder={placeOrderCallback}
                     title="Review order"
                   />
-                  <div className="flex flex-row justify-between items-center mt-4 mb-3 text-xs text-[#9F9F9F]">
+                  <div className="mt-4 mb-3 flex flex-row items-center justify-between text-xs text-[#9F9F9F]">
                     <div>Balance</div>
                     <div>
                       <span className="text-xs font-normal text-[#9F9F9F]">

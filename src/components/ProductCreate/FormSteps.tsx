@@ -40,12 +40,12 @@ export const FormSteps = ({
       <form onSubmit={handleSubmit(onSubmit)}>
         {!isRinkeby && !IssuerAllowList.includes(account?.toLowerCase()) && (
           <div className="w-full">
-            <div className="p-4 bg-red-50 rounded-md border-l-4 border-red-400">
+            <div className="rounded-md border-l-4 border-red-400 bg-red-50 p-4">
               <div className="flex">
                 <div className="shrink-0">
                   <svg
                     aria-hidden="true"
-                    className="w-5 h-5 text-red-400"
+                    className="h-5 w-5 text-red-400"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
@@ -64,15 +64,15 @@ export const FormSteps = ({
                       this form.
                     </span>
                     <a
-                      className="font-medium text-red-700 hover:text-red-600 underline"
+                      className="font-medium text-red-700 underline hover:text-red-600"
                       href="https://forms.gle/NaLa8GV4eBJSAx9s7"
                     >
                       Request access
                     </a>
                     <span>or</span>
                     <a
-                      className="font-medium text-red-700 hover:text-red-600 underline"
-                      href="https://rinkeby.porter.finance/"
+                      className="font-medium text-red-700 underline hover:text-red-600"
+                      href="https://rinkeby.arbor.garden/"
                     >
                       Continue on Rinkeby
                     </a>
@@ -84,15 +84,15 @@ export const FormSteps = ({
         )}
 
         <div className="flex justify-center space-x-8">
-          <div className="overflow-visible w-[326px] card">
+          <div className="card w-[326px] overflow-visible">
             <div className="card-body">
-              <div className="flex items-center pb-4 space-x-4 border-b border-[#2C2C2C]">
+              <div className="flex items-center space-x-4 border-b border-[#2C2C2C] pb-4">
                 <DoubleArrowRightIcon
-                  className={`p-1 w-6 h-6 rounded-md border border-[#ffffff22] ${
-                    color === 'blue' ? 'bg-[#404EED]' : 'bg-[#532DBE]'
+                  className={`h-6 w-6 rounded-md border border-[#ffffff22] p-1 ${
+                    color === 'blue' ? 'bg-[#1C701C]' : 'bg-[#293327]'
                   }`}
                 />
-                <span className="text-xs text-white uppercase">{title}</span>
+                <span className="text-xs uppercase text-white">{title}</span>
               </div>
 
               <ul className="steps steps-vertical">
@@ -102,7 +102,7 @@ export const FormSteps = ({
                       i <= currentStep
                         ? `step-${
                             color === 'purple' ? 'primary' : 'secondary'
-                          } hover:underline hover:cursor-pointer`
+                          } hover:cursor-pointer hover:underline`
                         : ''
                     }`}
                     key={i}
@@ -116,9 +116,9 @@ export const FormSteps = ({
               </ul>
             </div>
           </div>
-          <div className="overflow-visible w-[425px] card">
+          <div className="card w-[425px] overflow-visible">
             <div className="card-body">
-              <h1 className="!text-2xl card-title">{steps[currentStep]}</h1>
+              <h1 className="card-title !text-2xl">{steps[currentStep]}</h1>
               <div className="space-y-4">
                 {!account && (
                   <ActionButton className="mt-4" color={color} onClick={toggleWalletModal}>
@@ -148,10 +148,10 @@ export const FormSteps = ({
                     )}
 
                     {totalErrors ? (
-                      <div className="p-4 bg-red-100 rounded-md">
+                      <div className="rounded-md bg-red-100 p-4">
                         <div className="flex">
                           <div className="shrink-0">
-                            <CrossCircledIcon className="w-5 h-5 text-red-400" />
+                            <CrossCircledIcon className="h-5 w-5 text-red-400" />
                           </div>
                           <div className="ml-3">
                             <h3 className="text-sm font-medium text-red-800">
@@ -159,7 +159,7 @@ export const FormSteps = ({
                               with your submission
                             </h3>
                             <div className="mt-2 text-sm text-red-700">
-                              <ul className="pl-5 space-y-1 list-disc" role="list">
+                              <ul className="list-disc space-y-1 pl-5" role="list">
                                 {Object.keys(errors).map((name) => (
                                   <ErrorMessage
                                     errors={errors}

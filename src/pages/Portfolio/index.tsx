@@ -37,7 +37,7 @@ const columns = [
     accessor: 'cost',
     align: 'flex-start',
     tooltip:
-      'How much you paid for your bonds. To get this number, we assume you purchased the bonds through the Porter Finance platform. If you purchased them off the platform through an OTC deal or AMM, this number may be incorrect.',
+      'How much you paid for your bonds. To get this number, we assume you purchased the bonds through the Arbor protocol. If you purchased them off the platform through an OTC deal or AMM, this number may be incorrect.',
     style: {},
     filter: 'searchInTags',
   },

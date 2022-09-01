@@ -34,13 +34,13 @@ const BondChart = ({ collateralToken, convertibleToken, data, showConvertible }:
         <>
           <ChartWrapper ref={mountPoint} />
           <div
-            className="flex flex-row justify-center items-center p-5 mt-4 space-x-6 h-[61px] text-xxs text-white uppercase rounded-lg border border-[#2A2B2C]"
+            className="mt-4 flex h-[61px] flex-row items-center justify-center space-x-6 rounded-lg border border-[#2A2B2C] p-5 text-xxs uppercase text-white"
             id="legenddiv"
           >
             <Tooltip
               left={
                 <div className="flex items-center space-x-3">
-                  <span className="w-[14px] h-[5px] bg-[#DB3635] rounded-sm" />
+                  <span className="h-[5px] w-[14px] rounded-sm bg-[#DB3635]" />
                   <span>Face value</span>
                 </div>
               }
@@ -49,7 +49,7 @@ const BondChart = ({ collateralToken, convertibleToken, data, showConvertible }:
             <Tooltip
               left={
                 <div className="flex items-center space-x-3">
-                  <span className="w-[14px] h-[5px] bg-[#5BCD88] rounded-sm" />
+                  <span className="h-[5px] w-[14px] rounded-sm bg-[#5BCD88]" />
                   <span>Collateral value</span>
                 </div>
               }
@@ -59,7 +59,7 @@ const BondChart = ({ collateralToken, convertibleToken, data, showConvertible }:
               <Tooltip
                 left={
                   <div className="flex items-center space-x-3">
-                    <span className="w-[14px] h-[5px] bg-[#532DBE] rounded-sm" />
+                    <span className="h-[5px] w-[14px] rounded-sm bg-[#293327]" />
                     <span>Convertible token value</span>
                   </div>
                 }

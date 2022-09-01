@@ -23,7 +23,7 @@ export const UnregisteredToken: React.FC<Props> = (props) => {
     <TooltipFull
       el={
         <Wrapper className="cursor-pointer" size={size} {...restProps}>
-          <QuestionMarkIcon color="#404eed" height={size} width={size} />
+          <QuestionMarkIcon color="#1C701C" height={size} width={size} />
         </Wrapper>
       }
       tip={`

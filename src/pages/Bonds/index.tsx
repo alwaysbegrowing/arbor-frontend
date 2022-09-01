@@ -23,7 +23,7 @@ import { useSetNoDefaultNetworkId } from '@/state/orderPlacement/hooks'
 
 const GlobalStyle = createGlobalStyle`
   .siteHeader {
-    background: #532DBE !important;
+    background: #293327 !important;
   }
 `
 
@@ -95,7 +95,7 @@ export const BondIcon = ({ auctionId = null, icon = null, id, name, symbol, type
           {icon && <AuctionsIcon width={15} />}
           {type && (type === 'convert' ? <ConvertIcon width={15} /> : <SimpleIcon width={15} />)}
         </div>
-        <p className="text-sm text-[#9F9F9F] uppercase">{symbol}</p>
+        <p className="text-sm uppercase text-[#9F9F9F]">{symbol}</p>
       </div>
     </div>
   )
@@ -188,7 +188,7 @@ const Bonds = () => {
         <Table
           columns={columns()}
           data={tableData}
-          emptyActionClass="!bg-[#532DBE]"
+          emptyActionClass="!bg-[#293327]"
           emptyDescription="There are no bonds at the moment"
           emptyLogo={
             <>

@@ -1,7 +1,7 @@
 import React, { HTMLAttributes } from 'react'
 import styled from 'styled-components'
 
-import { ReactComponent as PorterIcon } from '@/assets/svg/porter.svg'
+import { ReactComponent as ArborIcon } from '@/assets/svg/arbor.svg'
 
 const Wrapper = styled.div<{ size?: SpinnerSize | string | undefined }>`
   flex-grow: 0;
@@ -36,7 +36,7 @@ export const Spinner: React.FC<Props> = (props: Props) => {
   return (
     <Wrapper size={size}>
       <div className="animate-pulse" {...restProps}>
-        <PorterIcon />
+        <ArborIcon />
       </div>
     </Wrapper>
   )

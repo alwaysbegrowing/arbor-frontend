@@ -41,7 +41,7 @@ const { chains, provider } = configureChains(configuredChains, [
 ])
 
 const { connectors } = getDefaultWallets({
-  appName: 'Porter Finance',
+  appName: 'Arbor',
   chains,
 })
 
@@ -76,9 +76,6 @@ const apolloClient = new ApolloClient({
 })
 
 const myTheme = merge(darkTheme(), {
-  fonts: {
-    body: 'Neue Haas Grotesk Display',
-  },
   colors: {
     accentColor: '#e0e0e0',
     accentColorForeground: '#1e1e1e',

@@ -13,7 +13,7 @@ import {
   V1_FACTORY_ABI,
   V1_FACTORY_ADDRESS,
 } from '../constants/v1'
-import { ChainId, getContract } from '../utils'
+import { getContract } from '../utils'
 import { getLogger } from '../utils/logger'
 import { useActiveWeb3React } from './index'
 
@@ -53,7 +53,7 @@ export function useBondContract(bondAddress?: string): Maybe<Contract> {
 
 export function useBondFactoryContract(): Maybe<Contract> {
   const { chainId } = useActiveWeb3React()
-  return useContract(V1_BOND_FACTORY_ADDRESS[chainId as ChainId], BondFactory_ABI)
+  return useContract(V1_BOND_FACTORY_ADDRESS[chainId as number], BondFactory_ABI)
 }
 
 export function usePairContract(pairAddress?: string): Maybe<Contract> {
@@ -62,5 +62,5 @@ export function usePairContract(pairAddress?: string): Maybe<Contract> {
 
 export function useMulticallContract(): Maybe<Contract> {
   const { chainId } = useActiveWeb3React()
-  return useContract(MULTICALL_NETWORKS[chainId as ChainId], MULTICALL_ABI)
+  return useContract(MULTICALL_NETWORKS[chainId as number], MULTICALL_ABI)
 }

@@ -73,9 +73,6 @@ module.exports = {
           },
         ],
       },
-      fontFamily: {
-        sans: ['Neue Haas Grotesk Display', ...defaultTheme.fontFamily.sans],
-      },
     },
   },
 

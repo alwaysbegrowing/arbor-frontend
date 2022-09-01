@@ -6,7 +6,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 
 import { useActiveWeb3React } from '../../hooks'
 import { useAllTokens } from '../../hooks/Tokens'
-import { ChainId, getTokenInfoWithFallback, isAddress } from '../../utils'
+import { getTokenInfoWithFallback, isAddress } from '../../utils'
 import { AppDispatch, AppState } from '../index'
 import {
   SerializedPair,
@@ -112,7 +112,7 @@ export function useUserAddedTokens(): Token[] {
 
   return useMemo(() => {
     if (!chainId) return []
-    return Object.values(serializedTokensMap[chainId as ChainId] ?? {}).map(deserializeToken)
+    return Object.values(serializedTokensMap[chainId as number] ?? {}).map(deserializeToken)
   }, [serializedTokensMap, chainId])
 }
 
@@ -165,14 +165,8 @@ export function useTokenWarningDismissal(
 
 const bases = [
   ...Object.values(WETH),
-  new Token(
-    ChainId.MAINNET,
-    '0x6B175474E89094C44Da98b954EedeAC495271d0F',
-    18,
-    'DAI',
-    'Dai Stablecoin',
-  ),
-  new Token(ChainId.MAINNET, '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 6, 'USDC', 'USD//C'),
+  new Token(1, '0x6B175474E89094C44Da98b954EedeAC495271d0F', 18, 'DAI', 'Dai Stablecoin'),
+  new Token(1, '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 6, 'USDC', 'USD//C'),
 ]
 
 export function useAllDummyPairs(): Pair[] {

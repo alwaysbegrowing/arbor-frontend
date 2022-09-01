@@ -35,14 +35,14 @@ export enum ChainId {
 }
 
 export const EASY_AUCTION_NETWORKS: { [key: number]: string } = {
-  [ChainId.MAINNET]: '0x0b7fFc1f4AD541A4Ed16b40D8c37f0929158D101',
-  [ChainId.RINKEBY]: '0xC5992c0e0A3267C7F75493D0F717201E26BE35f7',
+  [1]: '0x0b7fFc1f4AD541A4Ed16b40D8c37f0929158D101',
+  [4]: '0xC5992c0e0A3267C7F75493D0F717201E26BE35f7',
   [chain.hardhat.id]: '0xC5992c0e0A3267C7F75493D0F717201E26BE35f7',
 }
 
 export const DEPOSIT_AND_PLACE_ORDER: { [key: number]: string } = {
-  [ChainId.MAINNET]: '0x10D15DEA67f7C95e2F9Fe4eCC245a8862b9B5B96',
-  [ChainId.RINKEBY]: '0x8624fbDf455D51B967ff40aaB4019281A855f008',
+  [1]: '0x10D15DEA67f7C95e2F9Fe4eCC245a8862b9B5B96',
+  [4]: '0x8624fbDf455D51B967ff40aaB4019281A855f008',
   [chain.hardhat.id]: '0x8624fbDf455D51B967ff40aaB4019281A855f008',
 }
 
@@ -119,7 +119,7 @@ export function getContract(address: string, ABI: any, signer: Signer): Contract
 // account is optional
 export function getEasyAuctionContract(signer: Signer): EasyAuction {
   return getContract(
-    EASY_AUCTION_NETWORKS[requiredChain.id as ChainId],
+    EASY_AUCTION_NETWORKS[requiredChain.id as number],
     easyAuctionABI,
     signer,
   ) as EasyAuction

@@ -129,13 +129,13 @@ const OrderBookChart: React.FC<Props> = (props) => {
         <>
           <ChartWrapper ref={mountPoint} />
           <div
-            className="flex flex-row justify-center items-center p-5 mt-4 space-x-6 h-[61px] text-xxs text-white uppercase rounded-lg border border-[#2A2B2C]"
+            className="mt-4 flex h-[61px] flex-row items-center justify-center space-x-6 rounded-lg border border-[#2A2B2C] p-5 text-xxs uppercase text-white"
             id="legenddiv"
           >
             <Tooltip
               left={
                 <div className="flex items-center space-x-3">
-                  <span className="w-[14px] h-[5px] bg-[#404EED] rounded-sm" />
+                  <span className="h-[5px] w-[14px] rounded-sm bg-[#1C701C]" />
                   <span>Orders</span>
                 </div>
               }
@@ -144,7 +144,7 @@ const OrderBookChart: React.FC<Props> = (props) => {
             <Tooltip
               left={
                 <div className="flex items-center space-x-3">
-                  <span className="w-[14px] h-[5px] bg-[#EDA651] rounded-sm" />
+                  <span className="h-[5px] w-[14px] rounded-sm bg-[#EDA651]" />
                   <span>Sell supply</span>
                 </div>
               }
@@ -153,7 +153,7 @@ const OrderBookChart: React.FC<Props> = (props) => {
             <Tooltip
               left={
                 <div className="flex items-center space-x-3">
-                  <span className="w-[14px] h-[5px] bg-[#DB3635] rounded-sm" />
+                  <span className="h-[5px] w-[14px] rounded-sm bg-[#DB3635]" />
                   <span>Min. Funding Threshold</span>
                 </div>
               }

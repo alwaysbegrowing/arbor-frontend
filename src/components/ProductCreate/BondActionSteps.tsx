@@ -13,8 +13,8 @@ import { MintAction } from './MintAction'
 import TooltipElement from '@/components/common/Tooltip'
 import { requiredChain } from '@/connectors'
 import BOND_ABI from '@/constants/abis/bond.json'
+import { V1_BOND_FACTORY_ADDRESS } from '@/constants/v1'
 import { useActiveWeb3React } from '@/hooks'
-import { EASY_AUCTION_NETWORKS } from '@/utils'
 
 export const BondActionSteps = ({ convertible = true, disabled }) => {
   const { account, signer } = useActiveWeb3React()
@@ -22,7 +22,7 @@ export const BondActionSteps = ({ convertible = true, disabled }) => {
   const navigate = useNavigate()
   const [transactionError, setTransactionError] = useState('')
 
-  const [collateralToken, amountOfcollateral] = getValues(['collateralToken', 'amountOfcollateral'])
+  const [collateralToken, amountOfcollateral] = getValues(['collateralToken', 'amountOfCollateral'])
   const { data: collateralTokenData } = useToken({
     address: collateralToken?.address,
   })
@@ -31,7 +31,7 @@ export const BondActionSteps = ({ convertible = true, disabled }) => {
     addressOrName: collateralTokenData?.address,
     contractInterface: BOND_ABI,
     functionName: 'allowance',
-    args: [account, EASY_AUCTION_NETWORKS[requiredChain.id]],
+    args: [account, V1_BOND_FACTORY_ADDRESS[requiredChain.id]],
   })
 
   // state 0 for none, 1 for metamask confirmation, 2 for block confirmation
@@ -84,7 +84,7 @@ export const BondActionSteps = ({ convertible = true, disabled }) => {
             setWaitingWalletApprove(1)
             contract
               .approve(
-                EASY_AUCTION_NETWORKS[requiredChain.id],
+                V1_BOND_FACTORY_ADDRESS[requiredChain.id],
                 parseUnits(`${amountOfcollateral || 0}`, collateralToken?.decimals),
               )
               .then((result) => {
