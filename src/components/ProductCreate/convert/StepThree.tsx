@@ -23,7 +23,7 @@ export const StepThree = () => {
 
   return (
     <>
-      <div className="w-full form-control">
+      <div className="form-control w-full">
         <label className="label">
           <TooltipElement
             left={<span className="label-text">Convertible token</span>}
@@ -34,7 +34,7 @@ export const StepThree = () => {
           <TokenDetails option={collateralToken} />
         </div>
       </div>
-      <div className="w-full form-control">
+      <div className="form-control w-full">
         <label className="label">
           <TooltipElement
             left={<span className="label-text">Amount of convertible tokens</span>}
@@ -42,7 +42,8 @@ export const StepThree = () => {
           />
         </label>
         <input
-          className="w-full input input-bordered"
+          className="input-bordered input w-full"
+          inputMode="numeric"
           min="0"
           placeholder="0"
           type="number"
@@ -60,7 +61,7 @@ export const StepThree = () => {
         />
       </div>
 
-      <FieldRowWrapper className="py-1 my-4 space-y-3">
+      <FieldRowWrapper className="my-4 space-y-3 py-1">
         <div className="flex flex-row justify-between">
           <div className="text-sm text-[#E0E0E0]">
             <p>

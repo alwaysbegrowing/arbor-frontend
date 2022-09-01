@@ -12,7 +12,7 @@ export const StepOne = () => {
 
   return (
     <>
-      <div className="w-full form-control">
+      <div className="form-control w-full">
         <label className="label">
           <TooltipElement
             left={<span className="label-text">Issuer name</span>}
@@ -20,14 +20,14 @@ export const StepOne = () => {
           />
         </label>
         <input
-          className="w-full input input-bordered"
+          className="input-bordered input w-full"
           defaultValue=""
           {...register('issuerName', { required: 'Please enter a Bond issuer name' })}
           placeholder="Insert issuer name"
           type="text"
         />
       </div>
-      <div className="w-full form-control">
+      <div className="form-control w-full">
         <label className="label">
           <TooltipElement
             left={<span className="label-text">Amount of bonds to mint</span>}
@@ -35,7 +35,8 @@ export const StepOne = () => {
           />
         </label>
         <input
-          className="w-full input input-bordered"
+          className="input-bordered input w-full"
+          inputMode="numeric"
           min={1}
           placeholder="0"
           type="number"
@@ -48,7 +49,7 @@ export const StepOne = () => {
           })}
         />
       </div>
-      <div className="w-full form-control">
+      <div className="form-control w-full">
         <label className="label">
           <TooltipElement
             left={<span className="label-text">Borrow token</span>}
@@ -57,7 +58,7 @@ export const StepOne = () => {
         </label>
         <BorrowTokenSelector />
       </div>
-      <div className="w-full form-control">
+      <div className="form-control w-full">
         <label className="label">
           <TooltipElement
             left={<span className="label-text">Bond maturity date</span>}
@@ -65,7 +66,7 @@ export const StepOne = () => {
           />
         </label>
         <input
-          className="w-full input input-bordered"
+          className="input-bordered input w-full"
           min={dayjs(new Date()).utc().add(1, 'day').format('YYYY-MM-DD')}
           placeholder="DD/MM/YYYY"
           type="date"
