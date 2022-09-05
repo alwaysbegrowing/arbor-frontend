@@ -4,7 +4,7 @@ import { Token, WETH } from '@josojo/honeyswap-sdk'
 
 import { ALL_TOKENS } from '../constants/tokens'
 import { useAddUserToken, useFetchTokenByAddress, useUserAddedTokens } from '../state/user/hooks'
-import { ChainId, isAddress } from '../utils'
+import { isAddress } from '../utils'
 import { useActiveWeb3React } from './index'
 
 export function useAllTokens(): { [address: string]: Token } {
@@ -22,10 +22,10 @@ export function useAllTokens(): { [address: string]: Token } {
         },
         // must make a copy because reduce modifies the map, and we do not
         // want to make a copy in every iteration
-        { ...ALL_TOKENS[chainId as ChainId] },
+        { ...ALL_TOKENS[chainId as number] },
       )
 
-    const weth = WETH[chainId as ChainId]
+    const weth = WETH[chainId as number]
     if (weth) {
       // we have to replace it as a workaround because if it is automatically
       // fetched by address it will cause an invariant when used in constructing
@@ -62,7 +62,7 @@ export function useTokenByAddressAndAutomaticallyAdd(tokenAddress?: string): {
 
   useEffect(() => {
     if (!chainId || !tokenAddress || !isAddress(tokenAddress)) return
-    const weth = WETH[chainId as ChainId]
+    const weth = WETH[chainId as number]
     if (weth && weth.address === isAddress(tokenAddress)) return
 
     if (tokenAddress && tokenAddress != '0x0000000000000000000000000000000000000000' && !token) {

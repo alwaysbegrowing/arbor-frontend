@@ -68,7 +68,7 @@ export function usePlaceOrderCallback(
   const price = priceFromSwapState.toString()
 
   const easyAuctionInstance: Maybe<Contract> = useContract(
-    EASY_AUCTION_NETWORKS[requiredChain.id as ChainId],
+    EASY_AUCTION_NETWORKS[requiredChain.id as number],
     easyAuctionABI,
   )
   const userId: Result | undefined = useSingleCallResult(easyAuctionInstance, 'getUserId', [

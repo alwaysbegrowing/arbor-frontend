@@ -16,7 +16,7 @@ import { AuctionInfoDetail, useAuctionDetails } from '../../hooks/useAuctionDeta
 import { ClaimState } from '../../hooks/useClaimOrderCallback'
 import { useContract } from '../../hooks/useContract'
 import { useClearingPriceInfo } from '../../hooks/useCurrentClearingOrderAndVolumeCallback'
-import { ChainId, EASY_AUCTION_NETWORKS, getFullTokenDisplay, isTimeout } from '../../utils'
+import { EASY_AUCTION_NETWORKS, getFullTokenDisplay, isTimeout } from '../../utils'
 import { getLogger } from '../../utils/logger'
 import { convertPriceIntoBuyAndSellAmount } from '../../utils/prices'
 import { calculateTimeLeft, currentTimeInUTC } from '../../utils/tools'
@@ -251,7 +251,7 @@ export const useGetOrderPlacementError = (
     total > Number(formatUnits(balanceIn.raw.toString(), balanceIn.token.decimals)) &&
     `You do not have enough ${getFullTokenDisplay(
       amountIn.token,
-      chainId as ChainId,
+      chainId as number,
     )} on this account`
 
   const messageHigherInitialPrice = `Price must be higher than ${derivedAuctionInfo?.initialPrice?.toSignificant(
@@ -333,7 +333,7 @@ export function useDeriveAuctioningAndBiddingToken(auctionIdentifer: AuctionIden
       chainId == undefined || !auctionDetails
         ? undefined
         : new Token(
-            chainId as ChainId,
+            chainId as number,
             auctionDetails.addressAuctioningToken,
             parseInt(auctionDetails.decimalsAuctioningToken, 16),
             auctionDetails.symbolAuctioningToken,
@@ -346,7 +346,7 @@ export function useDeriveAuctioningAndBiddingToken(auctionIdentifer: AuctionIden
       chainId == undefined || !auctionDetails
         ? undefined
         : new Token(
-            chainId as ChainId,
+            chainId as number,
             auctionDetails.addressBiddingToken,
             parseInt(auctionDetails.decimalsBiddingToken, 16),
             auctionDetails.symbolBiddingToken,
@@ -393,7 +393,7 @@ export function useDerivedAuctionInfo(auctionIdentifier: AuctionIdentifier): {
       !auctionDetails
         ? undefined
         : new Token(
-            chainId as ChainId,
+            chainId as number,
             auctionDetails.addressAuctioningToken,
             parseInt(auctionDetails.decimalsAuctioningToken, 16),
             auctionDetails.symbolAuctioningToken,
@@ -406,7 +406,7 @@ export function useDerivedAuctionInfo(auctionIdentifier: AuctionIdentifier): {
       !auctionDetails
         ? undefined
         : new Token(
-            chainId as ChainId,
+            chainId as number,
             auctionDetails.addressBiddingToken,
             parseInt(auctionDetails.decimalsBiddingToken, 16),
             auctionDetails.symbolBiddingToken,
@@ -604,7 +604,7 @@ export function useOnChainAuctionData(auctionIdentifier: AuctionIdentifier): {
   const { auctionId } = auctionIdentifier
 
   const easyAuctionInstance: Maybe<Contract> = useContract(
-    EASY_AUCTION_NETWORKS[requiredChain.id as ChainId],
+    EASY_AUCTION_NETWORKS[requiredChain.id as number],
     easyAuctionABI,
   )
 
