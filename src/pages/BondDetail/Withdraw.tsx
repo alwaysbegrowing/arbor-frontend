@@ -2,7 +2,12 @@ import { BigNumber } from 'ethers'
 import React, { useState } from 'react'
 
 import { formatUnits, parseUnits } from '@ethersproject/units'
-import { useContractRead, useContractWrite, useWaitForTransaction } from 'wagmi'
+import {
+  useContractRead,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from 'wagmi'
 
 import { WithdrawPayment } from './WithdrawPayment'
 
@@ -36,12 +41,16 @@ export const Withdraw = ({
 
   const [collateralAmount, setCollateralAmount] = useState('0')
 
-  const { data, error, isError, isLoading, reset, write } = useContractWrite({
+  const { config } = usePrepareContractWrite({
     addressOrName: bond?.id,
     contractInterface: BOND_ABI,
     functionName: 'withdrawExcessCollateral',
+    args: [parseUnits(collateralAmount, bond?.collateralToken.decimals), bond?.owner],
+  })
+  const { data, error, isError, isLoading, reset, write } = useContractWrite({
+    ...config,
     onSuccess(data, error) {
-      addTransaction(data, {
+      addTransaction(data?.hash, {
         summary: `Withdraw ${collateralAmount} ${bond?.collateralToken?.symbol} from ${bond?.symbol}`,
       })
     },
@@ -119,11 +128,7 @@ export const Withdraw = ({
         <ActionButton
           className={`${isLoading || isConfirmLoading ? 'loading' : ''}`}
           disabled={!Number(collateralAmount) || hasErrorCollateral}
-          onClick={() =>
-            write({
-              args: [parseUnits(collateralAmount, bond?.collateralToken.decimals), bond?.owner],
-            })
-          }
+          onClick={write}
         >
           Withdraw Collateral
         </ActionButton>

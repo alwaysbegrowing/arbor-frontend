@@ -36,7 +36,7 @@ if (isProdRinkeby) {
 }
 
 const { chains, provider } = configureChains(configuredChains, [
-  alchemyProvider({ alchemyId: 'rD-tnwLLzbfOaFOBAv2ckazyJTmCRLhu' }),
+  alchemyProvider({ apiKey: 'rD-tnwLLzbfOaFOBAv2ckazyJTmCRLhu' }),
   publicProvider(),
 ])
 

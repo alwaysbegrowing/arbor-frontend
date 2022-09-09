@@ -1,7 +1,12 @@
 import React from 'react'
 
 import { formatUnits, parseUnits } from '@ethersproject/units'
-import { useContractRead, useContractWrite, useWaitForTransaction } from 'wagmi'
+import {
+  useContractRead,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from 'wagmi'
 
 import { SummaryItem } from '@/components/ProductCreate/SummaryItem'
 import { ActionButton } from '@/components/auction/Claimer'
@@ -12,6 +17,12 @@ import { useTransactionAdder } from '@/state/transactions/hooks'
 export const WithdrawPayment = ({ bond }) => {
   const addTransaction = useTransactionAdder()
 
+  const { config } = usePrepareContractWrite({
+    addressOrName: bond?.id,
+    contractInterface: BOND_ABI,
+    functionName: 'withdrawExcessPayment',
+    args: [bond?.owner],
+  })
   const {
     data: dataPayment,
     error: errorPayment,
@@ -20,11 +31,9 @@ export const WithdrawPayment = ({ bond }) => {
     reset: resetPayment,
     write: writePayment,
   } = useContractWrite({
-    addressOrName: bond?.id,
-    contractInterface: BOND_ABI,
-    functionName: 'withdrawExcessPayment',
+    ...config,
     onSuccess(data, error) {
-      addTransaction(data, {
+      addTransaction(data?.hash, {
         summary: `Withdraw ${parseUnits(
           previewWithdrawExcessPayment?.toString(),
           bond?.paymentToken.decimals,
@@ -75,11 +84,7 @@ export const WithdrawPayment = ({ bond }) => {
       <ActionButton
         className={`${isLoadingPayment || isConfirmLoadingPayment ? 'loading' : ''}`}
         disabled={!Number(previewWithdrawExcessPayment)}
-        onClick={() =>
-          writePayment({
-            args: [bond?.owner],
-          })
-        }
+        onClick={writePayment}
       >
         Withdraw Payment
       </ActionButton>

@@ -32,7 +32,7 @@ export function useConvertBond(amountToConvert?: TokenAmount | null, addressToCo
         throw error
       })
 
-    addTransaction(response, {
+    addTransaction(response?.hash, {
       summary: 'Convert ' + amountToConvert?.token?.symbol,
       approval: { tokenAddress: amountToConvert.token.address, spender: addressToConvert },
     })

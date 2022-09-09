@@ -32,7 +32,7 @@ export function useRedeemBond(amountToRedeem?: TokenAmount | null, addressToRede
         throw error
       })
 
-    addTransaction(response, {
+    addTransaction(response?.hash, {
       summary: 'Redeem ' + amountToRedeem?.token?.symbol,
       approval: { tokenAddress: amountToRedeem.token.address, spender: addressToRedeem },
     })

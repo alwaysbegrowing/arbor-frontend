@@ -1,6 +1,5 @@
 import { useCallback, useMemo } from 'react'
 
-import { TransactionResponse } from '@ethersproject/providers'
 import { useAddRecentTransaction } from '@rainbow-me/rainbowkit'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -14,7 +13,7 @@ const logger = getLogger('TX Debug Hooks')
 
 // helper that can take a ethers library transaction response and add it to the list of transactions
 export function useTransactionAdder(): (
-  response: TransactionResponse,
+  hash: string,
   customData?: { summary?: string; approval?: { tokenAddress: string; spender: string } },
 ) => void {
   const addRecentTransaction = useAddRecentTransaction()
@@ -23,7 +22,7 @@ export function useTransactionAdder(): (
 
   return useCallback(
     (
-      response: TransactionResponse,
+      hash: string,
       {
         approval,
         summary,
@@ -32,7 +31,6 @@ export function useTransactionAdder(): (
       if (!account) return
       if (!chainId) return
 
-      const { hash } = response
       if (!hash) {
         throw Error('No transaction hash found.')
       }

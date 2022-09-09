@@ -4,7 +4,12 @@ import { parseFixed } from '@ethersproject/bignumber'
 import { formatUnits, parseUnits } from '@ethersproject/units'
 import { Token, TokenAmount } from '@josojo/honeyswap-sdk'
 import dayjs from 'dayjs'
-import { useContractRead, useContractWrite, useWaitForTransaction } from 'wagmi'
+import {
+  useContractRead,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from 'wagmi'
 
 import { SummaryItem } from '@/components/ProductCreate/SummaryItem'
 import { ActionButton } from '@/components/auction/Claimer'
@@ -38,12 +43,16 @@ export const Pay = ({
   const [bondAmount, setBondAmount] = useState('0')
   const addTransaction = useTransactionAdder()
 
-  const { data, error, isError, isLoading, reset, write } = useContractWrite({
+  const { config } = usePrepareContractWrite({
     addressOrName: bond?.id,
     contractInterface: BOND_ABI,
     functionName: 'pay',
+    args: [parseUnits(bondAmount || '0', bond?.paymentToken.decimals)],
+  })
+  const { data, error, isError, isLoading, reset, write } = useContractWrite({
+    ...config,
     onSuccess(data, error) {
-      addTransaction(data, {
+      addTransaction(data?.hash, {
         summary: `Pay ${bondAmount} ${bond?.paymentToken?.symbol} to ${bond?.symbol}`,
       })
     },
@@ -154,11 +163,7 @@ export const Pay = ({
       <ActionButton
         className={`${isLoading || isConfirmLoading ? 'loading' : ''}`}
         disabled={!Number(bondAmount || '0') || hasError || notApproved}
-        onClick={() =>
-          write({
-            args: [parseUnits(bondAmount || '0', bond?.paymentToken.decimals)],
-          })
-        }
+        onClick={write}
       >
         Pay
       </ActionButton>

@@ -5,6 +5,7 @@ import {
   useBalance,
   useContractRead,
   useContractWrite,
+  usePrepareContractWrite,
   useToken,
   useWaitForTransaction,
 } from 'wagmi'
@@ -43,12 +44,16 @@ export const Burn = ({
     contractInterface: BOND_ABI,
     functionName: 'totalSupply',
   })
-  const { data, error, isError, isLoading, reset, write } = useContractWrite({
+  const { config } = usePrepareContractWrite({
     addressOrName: bond?.id,
     contractInterface: BOND_ABI,
     functionName: 'burn',
+    args: [parseUnits(bondAmount || '0', bond.decimals)],
+  })
+  const { data, error, isError, isLoading, reset, write } = useContractWrite({
+    ...config,
     onSuccess(data, error) {
-      addTransaction(data, {
+      addTransaction(data?.hash, {
         summary: `Burn ${bondAmount} ${bond?.symbol}`,
       })
     },
@@ -114,9 +119,7 @@ export const Burn = ({
         className={`${isLoading || isConfirmLoading ? 'loading' : ''}`}
         disabled={!Number(bondAmount) || hasError}
         onClick={() => {
-          write({
-            args: [parseUnits(bondAmount || '0', bond.decimals)],
-          })
+          write()
           refetch()
         }}
       >
