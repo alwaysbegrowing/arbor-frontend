@@ -108,7 +108,7 @@ html {
 }
 
 .progress-purple::-webkit-progress-value {
-  background: linear-gradient(270deg, #617ec7 -0.07%, #293327 100%);
+  background: linear-gradient(270deg, #293327 -0.07%, #293327 100%);
   border-radius: 4px;
 }
 
