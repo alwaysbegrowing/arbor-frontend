@@ -36,7 +36,7 @@ if (isProdRinkeby) {
 }
 
 const { chains, provider } = configureChains(configuredChains, [
-  alchemyProvider({ apiKey: 'rD-tnwLLzbfOaFOBAv2ckazyJTmCRLhu' }),
+  alchemyProvider({ apiKey: process.env.REACT_APP_NETWORK_URL_MAINNET.slice(-32) }),
   publicProvider(),
 ])
 
