@@ -60,7 +60,7 @@ export function useCancelOrderCallback(
           }),
         )
         .then((response) => {
-          addTransaction(response, {
+          addTransaction(response?.hash, {
             summary: `Cancel ${abbreviation(
               new Fraction(
                 decodedOrder.sellAmount.toString(),

@@ -36,7 +36,7 @@ export function useSettleAuction(address: string) {
       throw error
     })
 
-    addTransaction(response)
+    addTransaction(response?.hash)
     return response
   }, [addTransaction, address, chainId, signer])
 

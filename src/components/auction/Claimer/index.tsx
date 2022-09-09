@@ -34,9 +34,9 @@ const Wrapper = styled(BaseCard)`
 export const ActionButton = ({ children, color = 'blue', ...props }) => (
   <button
     {...props}
-    className={`btn btn-block btn-sm w-full normal-case hover:bg-blue-500 ${
+    className={`btn btn-block btn-sm w-full normal-case hover:bg-[#1C701C]/80 ${
       props.disabled ? '!bg-[#2C2C2C] !text-[#696969]' : 'bg-[#1C701C] text-white'
-    } h-[41px] font-normal ${color !== 'blue' && 'bg-[#293327] hover:bg-[#617ec7]'} ${
+    } h-[41px] font-normal ${color !== 'blue' && 'bg-[#293327] hover:bg-[#293327]/80'} ${
       props.className
     }`}
   >

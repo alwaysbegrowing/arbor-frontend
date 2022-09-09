@@ -253,7 +253,7 @@ export const useClaimOrderCallback = (
       gasLimit: calculateGasMargin(estimatedGasLimit),
     })
 
-    addTransaction(response, {
+    addTransaction(response?.hash, {
       summary: `Claim tokens from auction ${auctionId}`,
     })
     return response.hash

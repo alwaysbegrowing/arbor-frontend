@@ -83,6 +83,7 @@ module.exports = {
         dark: {
           ...require('daisyui/src/colors/themes')['[data-theme=dark]'],
           'base-100': '#131415',
+          primary: '#1C701C',
         },
       },
     ],

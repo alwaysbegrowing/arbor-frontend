@@ -257,7 +257,7 @@ export const ActiveStatusPill = ({
 }) => {
   return (
     <button
-      className={`hover:none focus:none pointer-events-none relative inline-flex max-h-[30px] items-center space-x-2 rounded-full border border-transparent bg-[#5BCD88] px-3 py-1 text-xs font-normal uppercase text-[#1E1E1E] shadow-sm focus:outline-none disabled:bg-[#696969] disabled:text-[#181A1C] ${className}`}
+      className={`hover:none focus:none pointer-events-none relative inline-flex max-h-[30px] items-center space-x-2 rounded-full border border-transparent bg-[#1C701C] px-3 py-1 text-xs font-normal uppercase text-white shadow-sm focus:outline-none disabled:bg-[#696969] disabled:text-[#181A1C] ${className}`}
       disabled={disabled}
       type="button"
       {...rest}

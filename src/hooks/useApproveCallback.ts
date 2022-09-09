@@ -96,7 +96,7 @@ export function useApproveCallback(
         gasLimit: calculateGasMargin(estimatedGas),
       })
       .then((response: TransactionResponse) => {
-        addTransaction(response, {
+        addTransaction(response?.hash, {
           summary: 'Approve ' + amountToApprove?.token?.symbol,
           approval: { tokenAddress: amountToApprove.token.address, spender: addressToApprove },
         })
@@ -180,7 +180,7 @@ export function useUnapproveCallback(
         gasLimit: calculateGasMargin(estimatedGas),
       })
       .then((response: TransactionResponse) => {
-        addTransaction(response, {
+        addTransaction(response?.hash, {
           summary: 'Unapprove ' + amountToApprove?.token?.symbol,
           approval: { tokenAddress: amountToApprove.token.address, spender: addressToApprove },
         })

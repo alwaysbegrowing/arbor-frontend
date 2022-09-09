@@ -135,7 +135,7 @@ export function usePlaceOrderCallback(
         )
         .then((response) => {
           try {
-            addTransaction(response, {
+            addTransaction(response?.hash, {
               summary: `Place ${abbreviation(
                 sellAmount,
               )} ${biddingTokenDisplay} order for ${auctioningTokenDisplay} on auction ${auctionId}`,

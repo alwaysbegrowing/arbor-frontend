@@ -49,7 +49,7 @@ const BondChart = ({ collateralToken, convertibleToken, data, showConvertible }:
             <Tooltip
               left={
                 <div className="flex items-center space-x-3">
-                  <span className="h-[5px] w-[14px] rounded-sm bg-[#5BCD88]" />
+                  <span className="h-[5px] w-[14px] rounded-sm bg-[#1C701C]" />
                   <span>Collateral value</span>
                 </div>
               }
