@@ -41,7 +41,7 @@ export const colors = {
   red: '#DB3635',
   supply: '#EDA651',
   white: '#e0e0e0',
-  green: '#5BCD88',
+  green: '#1C701C',
   purple: '#293327',
   grey: '#D6D6D6',
   cyan: '#1BBFE3',

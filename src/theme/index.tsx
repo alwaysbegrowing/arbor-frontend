@@ -96,9 +96,9 @@ export const theme = (darkMode: boolean): DefaultTheme => ({
   `,
   buttonPrimary: {
     backgroundColor: '#1C701C',
-    backgroundColorHover: '#6972de',
-    borderColor: '#1C701C',
-    borderColorHover: '#6972de',
+    backgroundColorHover: '#1c701cd6',
+    borderColor: '#1c701ce0',
+    borderColorHover: '#1C701C',
     color: '#e0e0e0',
     colorHover: '#e0e0e0',
   },
