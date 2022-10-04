@@ -26,8 +26,8 @@ export const Footer: React.FC = ({ ...restProps }) => {
     <Wrapper {...restProps} className="flex py-10">
       <Inner className="fullPage">
         <div className="footer text-neutral-content">
-          <FooterLogo className="grid-flow-col items-center text-2xl font-medium">
-            <Wordmark />
+          <FooterLogo className="grid-flow-col items-center">
+            <Wordmark style={{ height: 80 }} />
           </FooterLogo>
           <FooterLinks className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
             <a href="https://docs.arbor.garden/faq">Faq</a>
