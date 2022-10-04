@@ -18,7 +18,11 @@ const BodyPanel = ({ after, before, color = 'blue', during }) => (
     {before.show && before.display}
     {during.show && (
       <div className="mt-20 flex animate-pulse flex-col items-center">
-        {color === 'blue' ? <ArborIcon /> : <PurpleArborIcon />}
+        {color === 'blue' ? (
+          <ArborIcon style={{ height: 60 }} />
+        ) : (
+          <PurpleArborIcon style={{ height: 60 }} />
+        )}
         {during.display}
       </div>
     )}
