@@ -15,6 +15,7 @@ export const StepThree = () => {
     setValue('accessibility', isPrivate ? 'Private' : 'Public')
     if (!isPrivate) {
       unregister('accessManagerContractData')
+      unregister('accessManagerAddress')
     }
   }, [setValue, unregister, isPrivate])
 
