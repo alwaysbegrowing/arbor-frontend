@@ -27,18 +27,21 @@ import '@rainbow-me/rainbowkit/styles.css'
 import { isProdRinkeby } from '@/connectors'
 
 let configuredChains = []
+let configuredProviders = []
 if (isProdRinkeby) {
   configuredChains = [chain.rinkeby]
+  configuredProviders = [publicProvider()]
 } else if (isRinkeby) {
   configuredChains = [chain.rinkeby, chain.hardhat]
+  configuredProviders = [publicProvider(), publicProvider()]
 } else {
   configuredChains = [chain.mainnet]
+  configuredProviders = [
+    alchemyProvider({ apiKey: process.env.REACT_APP_NETWORK_URL_MAINNET.slice(-32) }),
+  ]
 }
 
-const { chains, provider } = configureChains(configuredChains, [
-  alchemyProvider({ apiKey: process.env.REACT_APP_NETWORK_URL_MAINNET.slice(-32) }),
-  publicProvider(),
-])
+const { chains, provider } = configureChains(configuredChains, configuredProviders)
 
 const { connectors } = getDefaultWallets({
   appName: 'Arbor',
