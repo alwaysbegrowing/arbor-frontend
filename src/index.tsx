@@ -37,13 +37,13 @@ if (isProdRinkeby) {
 }
 
 const { chains, provider } = configureChains(configuredChains, [
-  alchemyProvider({ apiKey: process.env.REACT_APP_NETWORK_URL_MAINNET.slice(-32) }),
   jsonRpcProvider({
     rpc: (chain) => {
       if (chain.id !== chainId.rinkeby) return null
       return { http: process.env.REACT_APP_NETWORK_URL_RINKEBY }
     },
   }),
+  alchemyProvider({ apiKey: process.env.REACT_APP_NETWORK_URL_MAINNET.slice(-32) }),
   publicProvider(),
 ])
 
