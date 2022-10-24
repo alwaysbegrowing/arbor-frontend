@@ -28,7 +28,7 @@ export const useClearingPriceInfo = (
     setLoading(true)
     const fetchApiData = async () => {
       try {
-        if (!chainId || !auctionId) {
+        if (!chainId || !auctionId || !additionalServiceApi) {
           return
         }
 
