@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { additionalServiceApi } from '../api'
 import { PricePoint } from '../api/AdditionalServicesApi'
 import { AuctionIdentifier } from '../state/orderPlacement/reducer'
 import { getLogger } from '../utils/logger'
@@ -56,10 +57,10 @@ export const useAuctionDetails = (
           auctionId,
         }
 
-        // const auctionInfo = await additionalServiceApi.getAuctionDetails(params)
+        const auctionInfo = await additionalServiceApi.getAuctionDetails(params)
         if (!cancelled) {
           setLoading(false)
-          setAuctionInfo(null)
+          setAuctionInfo(auctionInfo)
         }
       } catch (error) {
         if (!cancelled) {

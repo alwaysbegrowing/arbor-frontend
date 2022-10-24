@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { additionalServiceApi } from '../api'
 import { ClearingPriceAndVolumeData } from '../api/AdditionalServicesApi'
 import { AuctionIdentifier } from '../state/orderPlacement/reducer'
 import { getLogger } from '../utils/logger'
@@ -31,11 +32,10 @@ export const useClearingPriceInfo = (
           return
         }
 
-        const clearingOrderAndVolume = null
-        // await additionalServiceApi.getClearingPriceOrderAndVolume({
-        //   networkId: chainId,
-        //   auctionId,
-        // })
+        const clearingOrderAndVolume = await additionalServiceApi.getClearingPriceOrderAndVolume({
+          networkId: chainId,
+          auctionId,
+        })
 
         if (!cancelled) {
           setLoading(false)

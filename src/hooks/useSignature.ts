@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { additionalServiceApi } from '../api'
 import { AuctionIdentifier } from '../state/orderPlacement/reducer'
 import { getLogger } from '../utils/logger'
 
@@ -26,7 +27,7 @@ export const useSignature = (
         address: account,
       }
       try {
-        const signature = null //await additionalServiceApi.getSignature(params)
+        const signature = await additionalServiceApi.getSignature(params)
 
         if (cancelled) return
         setSignature(signature)

@@ -7,6 +7,7 @@ import { Fraction, JSBI, Token, TokenAmount } from '@josojo/honeyswap-sdk'
 import { round } from 'lodash'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { additionalServiceApi } from '../../api'
 import easyAuctionABI from '../../constants/abis/easyAuction/easyAuction.json'
 import { useActiveWeb3React } from '../../hooks'
 import { Order, decodeOrder } from '../../hooks/Order'
@@ -678,12 +679,11 @@ export function useAllUserOrders(
       let sellOrdersFromUser: string[] = []
 
       try {
-        sellOrdersFromUser = []
-        // await additionalServiceApi.getAllUserOrders({
-        //   networkId: chainId,
-        //   auctionId,
-        //   user: account,
-        // })
+        sellOrdersFromUser = await additionalServiceApi.getAllUserOrders({
+          networkId: chainId,
+          auctionId,
+          user: account,
+        })
       } catch (error) {
         logger.error('Error getting current orders: ', error)
       }
