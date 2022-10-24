@@ -32,7 +32,7 @@ export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
   const { auctionDetails } = useAuctionDetails(auctionIdentifier)
   const { auctionId } = auctionIdentifier
 
-  const { auctioningToken: baseToken, biddingToken: quoteToken } = derivedAuctionInfo
+  const { auctioningToken: baseToken, biddingToken: quoteToken } = derivedAuctionInfo || {}
 
   const processedOrderbook = React.useMemo(() => {
     const data = { bids, asks }
@@ -61,7 +61,7 @@ export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
   return (
     <div className="card">
       <div className="card-body">
-        <div className="flex flex-wrap justify-between mb-5">
+        <div className="mb-5 flex flex-wrap justify-between">
           <h2 className="card-title">Orderbook</h2>
           <div className="flex items-center">
             <div className="btn-group">

@@ -40,5 +40,5 @@ function createAdditionalServiceApi(): AdditionalServicesApi {
 }
 
 // Build APIs
-export const additionalServiceApi: AdditionalServicesApi = createAdditionalServiceApi()
+// export const additionalServiceApi: AdditionalServicesApi = createAdditionalServiceApi()
 export const tokenLogosServiceApi: TokenLogosServiceApiInterface = new TokenLogosServiceApi()

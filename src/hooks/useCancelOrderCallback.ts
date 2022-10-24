@@ -64,7 +64,7 @@ export function useCancelOrderCallback(
             summary: `Cancel ${abbreviation(
               new Fraction(
                 decodedOrder.sellAmount.toString(),
-                BigNumber.from(10).pow(biddingToken.decimals).toString(),
+                BigNumber.from(10).pow(biddingToken?.decimals).toString(),
               ).toSignificant(2),
             )} ${biddingToken.symbol} order from auction ${auctionId}`,
           })
@@ -84,8 +84,8 @@ export function useCancelOrderCallback(
     auctionId,
     gasPrice,
     addTransaction,
-    biddingToken.decimals,
-    biddingToken.symbol,
+    biddingToken?.decimals,
+    biddingToken?.symbol,
     actionCancelOrder,
   ])
 }

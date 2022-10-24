@@ -4,7 +4,6 @@ import { round } from 'lodash'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { AppDispatch, AppState } from '..'
-import { additionalServiceApi } from '../../api'
 import { OrderBookData, PricePoint } from '../../api/AdditionalServicesApi'
 import { CalculatorClearingPrice } from '../../components/auction/OrderbookWidget'
 import { getLogger } from '../../utils/logger'
@@ -144,10 +143,11 @@ export function useOrderbookDataCallback(auctionIdentifer: AuctionIdentifier) {
         return
       }
 
-      const rawData = await additionalServiceApi.getOrderBookData({
-        networkId: chainId,
-        auctionId,
-      })
+      const rawData = { bids: [], asks: [] }
+      // await additionalServiceApi.getOrderBookData({
+      //  networkId: chainId,
+      //  auctionId,
+      // })
       const calcultatedAuctionPrice: CalculatedAuctionPrice = CalculatorClearingPrice.fromOrderbook(
         rawData.bids,
         rawData.asks[0],
@@ -158,7 +158,7 @@ export function useOrderbookDataCallback(auctionIdentifer: AuctionIdentifier) {
     } catch (error) {
       logger.error('Error populating orderbook with data', error)
       onResetOrderbookData(
-        auctionId,
+        auctionId || 0,
         chainId,
         { bids: [], asks: [] },
         { price: 0, priceReversed: 0 },

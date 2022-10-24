@@ -5,7 +5,6 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Contract, ContractFunction } from '@ethersproject/contracts'
 import { Token } from '@josojo/honeyswap-sdk'
 
-import { additionalServiceApi } from '../api'
 import depositAndPlaceOrderABI from '../constants/abis/easyAuction/depositAndPlaceOrder.json'
 import easyAuctionABI from '../constants/abis/easyAuction/easyAuction.json'
 import { Result, useSingleCallResult } from '../state/multicall/hooks'
@@ -97,15 +96,16 @@ export function usePlaceOrderCallback(
       }
 
       try {
-        previousOrder = await additionalServiceApi.getPreviousOrder({
-          networkId: chainId,
-          auctionId,
-          order: {
-            buyAmount: buyAmountScaled,
-            sellAmount: sellAmountScaled,
-            userId: BigNumber.from(0), // Todo: This could be optimized
-          },
-        })
+        previousOrder = ''
+        // await additionalServiceApi.getPreviousOrder({
+        //   networkId: chainId,
+        //   auctionId,
+        //   order: {
+        //     buyAmount: buyAmountScaled,
+        //     sellAmount: sellAmountScaled,
+        //     userId: BigNumber.from(0), // Todo: This could be optimized
+        //   },
+        // })
       } catch (error) {
         logger.error(`Error trying to get previous order for auctionId ${auctionId}`)
       }
@@ -121,7 +121,7 @@ export function usePlaceOrderCallback(
         buyAmountScaled,
         sellAmountScaled,
         previousOrder,
-        auctionId,
+        auctionId || 0,
         signature,
       )
 

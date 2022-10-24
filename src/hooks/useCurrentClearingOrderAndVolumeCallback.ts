@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { ClearingPriceAndVolumeData } from '../api/AdditionalServicesApi'
 import { AuctionIdentifier } from '../state/orderPlacement/reducer'
 import { getLogger } from '../utils/logger'
-import { additionalServiceApi } from './../api'
 
 const logger = getLogger('useCurrentClearingOrderAndVolumeCallback')
 
@@ -28,14 +27,15 @@ export const useClearingPriceInfo = (
     setLoading(true)
     const fetchApiData = async () => {
       try {
-        if (!chainId || !auctionId || !additionalServiceApi) {
+        if (!chainId || !auctionId) {
           return
         }
 
-        const clearingOrderAndVolume = await additionalServiceApi.getClearingPriceOrderAndVolume({
-          networkId: chainId,
-          auctionId,
-        })
+        const clearingOrderAndVolume = null
+        // await additionalServiceApi.getClearingPriceOrderAndVolume({
+        //   networkId: chainId,
+        //   auctionId,
+        // })
 
         if (!cancelled) {
           setLoading(false)
