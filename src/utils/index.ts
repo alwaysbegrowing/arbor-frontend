@@ -181,7 +181,7 @@ export function escapeRegExp(string: string): string {
 
 // Always return a non-undefined token display
 export function getTokenDisplay(token: Token): string {
-  return token?.name || token?.symbol?.slice(0, 7) || token?.address?.slice(0, 7) || '0x'
+  return token?.name || token?.symbol?.slice(0, 7) || token?.address?.slice(0, 7) || '-'
 }
 
 export function getDisplay(token: GraphToken): string {
@@ -193,7 +193,7 @@ export function getDisplay(token: GraphToken): string {
 // Always return a non-undefined token display
 export function getFullTokenDisplay(token: Token, chainId: ChainId): string {
   if (isTokenWETH(token.address, chainId)) return `ETH`
-  return token?.name || token?.symbol || token?.address || '0x'
+  return token?.name || token?.symbol || token?.address || '-'
 }
 
 export function isTokenWETH(tokenAddress?: string, chainId?: ChainId): boolean {
