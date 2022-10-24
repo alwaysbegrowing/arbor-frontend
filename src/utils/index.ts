@@ -36,14 +36,14 @@ export enum ChainId {
 
 export const EASY_AUCTION_NETWORKS: { [key: number]: string } = {
   [1]: '0x0b7fFc1f4AD541A4Ed16b40D8c37f0929158D101',
-  [5]: '0xC5992c0e0A3267C7F75493D0F717201E26BE35f7',
-  [chain.hardhat.id]: '0xC5992c0e0A3267C7F75493D0F717201E26BE35f7',
+  [5]: '0x84eCeaBeD88d4fE84F748513Ed6D6AE12a8fA833',
+  [chain.hardhat.id]: '0x84eCeaBeD88d4fE84F748513Ed6D6AE12a8fA833',
 }
 
 export const DEPOSIT_AND_PLACE_ORDER: { [key: number]: string } = {
   [1]: '0x10D15DEA67f7C95e2F9Fe4eCC245a8862b9B5B96',
-  [5]: '0x8624fbDf455D51B967ff40aaB4019281A855f008',
-  [chain.hardhat.id]: '0x8624fbDf455D51B967ff40aaB4019281A855f008',
+  [5]: '0x6f06BEADe64eD8055684FBd9abd5b9725786C327',
+  [chain.hardhat.id]: '0x6f06BEADe64eD8055684FBd9abd5b9725786C327',
 }
 
 type NetworkConfig = {
