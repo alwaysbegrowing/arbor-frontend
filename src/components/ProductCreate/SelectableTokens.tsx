@@ -13,7 +13,7 @@ export const BorrowTokens = {
       decimals: 6,
     },
   ],
-  [chain.rinkeby.id]: [
+  [chain.goerli.id]: [
     {
       name: 'USDC',
       icon: USDCIcon,
@@ -25,7 +25,7 @@ export const BorrowTokens = {
 
 export const AccessManagerContract = {
   [chain.mainnet.id]: '0x0F4648d997e486cE06577d6Ee2FecBcA84b834F4',
-  [chain.rinkeby.id]: '0x7C882F296335734B958b35DA6b2595FA00043AE9',
+  [chain.goerli.id]: '0x7C882F296335734B958b35DA6b2595FA00043AE9',
 }
 
 export const CollateralTokens = {
@@ -37,7 +37,7 @@ export const CollateralTokens = {
       decimals: 18,
     },
   ],
-  [chain.rinkeby.id]: [
+  [chain.goerli.id]: [
     {
       name: 'UNI',
       icon: UniIcon,

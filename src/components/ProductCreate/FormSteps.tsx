@@ -7,7 +7,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { ActionButton } from '../auction/Claimer'
 import { IssuerAllowList } from './SelectableTokens'
 
-import { isRinkeby } from '@/connectors'
+import { isGoerli } from '@/connectors'
 import { useActiveWeb3React } from '@/hooks'
 import { useWalletModalToggle } from '@/state/application/hooks'
 
@@ -38,7 +38,7 @@ export const FormSteps = ({
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        {!isRinkeby && !IssuerAllowList.includes(account?.toLowerCase()) && (
+        {!isGoerli && !IssuerAllowList.includes(account?.toLowerCase()) && (
           <div className="w-full">
             <div className="rounded-md border-l-4 border-red-400 bg-red-50 p-4">
               <div className="flex">
@@ -72,9 +72,9 @@ export const FormSteps = ({
                     <span>or</span>
                     <a
                       className="font-medium text-red-700 underline hover:text-red-600"
-                      href="https://rinkeby.arbor.garden/"
+                      href="https://goerli.arbor.garden/"
                     >
-                      Continue on Rinkeby
+                      Continue on Görli
                     </a>
                   </p>
                 </div>
@@ -143,7 +143,7 @@ export const FormSteps = ({
                     {currentStep === steps.length - 1 && (
                       <ActionSteps
                         convertible={convertible}
-                        disabled={!isRinkeby && !IssuerAllowList.includes(account.toLowerCase())}
+                        disabled={!isGoerli && !IssuerAllowList.includes(account.toLowerCase())}
                       />
                     )}
 

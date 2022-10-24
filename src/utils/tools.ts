@@ -63,7 +63,7 @@ export const calculateTimeProgress = (auctionStartDate: number, auctionEndDate: 
 }
 
 export const getChainName = (chainId: number) => {
-  return (chainId === 4 && 'Rinkeby') || (chainId === 1 && 'Mainnet') || 'Unknown Network'
+  return (chainId === 5 && 'Goerli') || (chainId === 1 && 'Mainnet') || 'Unknown Network'
 }
 
 export const setLocale = () => {

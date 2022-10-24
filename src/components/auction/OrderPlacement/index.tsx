@@ -9,7 +9,7 @@ import { useBalance } from 'wagmi'
 
 import kycLinks from '../../../assets/links/kycLinks.json'
 import { ReactComponent as PrivateIcon } from '../../../assets/svg/private.svg'
-import { isRinkeby, requiredChain } from '../../../connectors'
+import { isGoerli, requiredChain } from '../../../connectors'
 import { useActiveWeb3React } from '../../../hooks'
 import {
   ApprovalState,
@@ -91,7 +91,7 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
   const { auctionIdentifier, derivedAuctionInfo } = props
   const { data: graphInfo } = useAuction(auctionIdentifier?.auctionId)
   const location = useGeoLocation()
-  const disabledCountry = !isRinkeby && location?.country === 'US'
+  const disabledCountry = !isGoerli && location?.country === 'US'
   const [showCountry, setShowCountryDisabledModal] = useState(false)
   const { chainId } = auctionIdentifier
   const { account, chainId: chainIdFromWeb3 } = useActiveWeb3React()

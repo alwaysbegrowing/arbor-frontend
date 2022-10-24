@@ -13,7 +13,7 @@ import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { publicProvider } from 'wagmi/providers/public'
 
 import { MobileBlocker } from './components/MobileBlocker'
-import { isRinkeby } from './connectors'
+import { isGoerli, isProdGoerli } from './connectors'
 import App from './pages/App'
 import store from './state'
 import ApplicationUpdater from './state/application/updater'
@@ -25,13 +25,12 @@ import { GlobalStyle } from './theme/globalStyle'
 
 import './index.css'
 import '@rainbow-me/rainbowkit/styles.css'
-import { isProdRinkeby } from '@/connectors'
 
 let configuredChains = []
-if (isProdRinkeby) {
-  configuredChains = [chain.rinkeby]
-} else if (isRinkeby) {
-  configuredChains = [chain.rinkeby, chain.hardhat]
+if (isProdGoerli) {
+  configuredChains = [chain.goerli]
+} else if (isGoerli) {
+  configuredChains = [chain.goerli, chain.hardhat]
 } else {
   configuredChains = [chain.mainnet]
 }
@@ -39,8 +38,8 @@ if (isProdRinkeby) {
 const { chains, provider } = configureChains(configuredChains, [
   jsonRpcProvider({
     rpc: (chain) => {
-      if (chain.id !== chainId.rinkeby) return null
-      return { http: process.env.REACT_APP_NETWORK_URL_RINKEBY }
+      if (chain.id !== chainId.goerli) return null
+      return { http: process.env.REACT_APP_NETWORK_URL_GOERLI }
     },
   }),
   alchemyProvider({ apiKey: process.env.REACT_APP_NETWORK_URL_MAINNET.slice(-32) }),
@@ -75,8 +74,8 @@ const container = document.getElementById('root')
 const root = createRoot(container)
 
 const apolloClient = new ApolloClient({
-  uri: isRinkeby
-    ? process.env.REACT_APP_SUBGRAPH_URL_RINKEBY
+  uri: isGoerli
+    ? process.env.REACT_APP_SUBGRAPH_URL_GOERLI
     : process.env.REACT_APP_SUBGRAPH_URL_MAINNET,
   connectToDevTools: true,
   cache: new InMemoryCache(),

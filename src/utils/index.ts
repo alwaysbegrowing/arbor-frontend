@@ -31,18 +31,18 @@ export function isAddress(value: any): string | false {
 
 export enum ChainId {
   MAINNET = 1,
-  RINKEBY = 4,
+  GOERLI = 5,
 }
 
 export const EASY_AUCTION_NETWORKS: { [key: number]: string } = {
   [1]: '0x0b7fFc1f4AD541A4Ed16b40D8c37f0929158D101',
-  [4]: '0xC5992c0e0A3267C7F75493D0F717201E26BE35f7',
+  [5]: '0xC5992c0e0A3267C7F75493D0F717201E26BE35f7',
   [chain.hardhat.id]: '0xC5992c0e0A3267C7F75493D0F717201E26BE35f7',
 }
 
 export const DEPOSIT_AND_PLACE_ORDER: { [key: number]: string } = {
   [1]: '0x10D15DEA67f7C95e2F9Fe4eCC245a8862b9B5B96',
-  [4]: '0x8624fbDf455D51B967ff40aaB4019281A855f008',
+  [5]: '0x8624fbDf455D51B967ff40aaB4019281A855f008',
   [chain.hardhat.id]: '0x8624fbDf455D51B967ff40aaB4019281A855f008',
 }
 
@@ -54,8 +54,8 @@ export const NETWORK_CONFIGS: { [key: number]: NetworkConfig } = {
   [chain.mainnet.id]: {
     etherscanUrl: etherscanBlockExplorers.mainnet.url,
   },
-  [chain.rinkeby.id]: {
-    etherscanUrl: etherscanBlockExplorers.rinkeby.url,
+  [chain.goerli.id]: {
+    etherscanUrl: etherscanBlockExplorers.goerli.url,
   },
   [chain.hardhat.id]: {
     etherscanUrl: 'https://app.tryethernal.com',
@@ -202,7 +202,7 @@ export function isTokenWETH(tokenAddress?: string, chainId?: ChainId): boolean {
     !!chainId &&
     !!WETH[chainId] &&
     tokenAddress == WETH[chainId].address &&
-    (chainId === 1 || chainId === 4)
+    (chainId === 1 || chainId === 5)
   )
 }
 

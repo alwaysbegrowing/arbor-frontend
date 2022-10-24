@@ -1,10 +1,10 @@
 import { chain } from 'wagmi'
 
 import {
+  API_URL_DEVELOP_GOERLI,
   API_URL_DEVELOP_MAINNET,
-  API_URL_DEVELOP_RINKEBY,
+  API_URL_PRODUCTION_GOERLI,
   API_URL_PRODUCTION_MAINNET,
-  API_URL_PRODUCTION_RINKEBY,
 } from '../constants/config'
 import {
   AdditionalServicesApi,
@@ -21,16 +21,16 @@ function createAdditionalServiceApi(): AdditionalServicesApi {
       url_develop: API_URL_DEVELOP_MAINNET,
     },
   ]
-  if (API_URL_DEVELOP_RINKEBY) {
+  if (API_URL_DEVELOP_GOERLI) {
     config.push({
-      networkId: chain.rinkeby.id,
-      url_production: API_URL_PRODUCTION_RINKEBY,
-      url_develop: API_URL_DEVELOP_RINKEBY,
+      networkId: chain.goerli.id,
+      url_production: API_URL_PRODUCTION_GOERLI,
+      url_develop: API_URL_DEVELOP_GOERLI,
     })
     config.push({
       networkId: chain.hardhat.id,
-      url_production: API_URL_PRODUCTION_RINKEBY,
-      url_develop: API_URL_DEVELOP_RINKEBY,
+      url_production: API_URL_PRODUCTION_GOERLI,
+      url_develop: API_URL_DEVELOP_GOERLI,
     })
   }
   const dexPriceEstimatorApi = new AdditionalServicesApiImpl(config)

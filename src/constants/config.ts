@@ -2,15 +2,15 @@
 export const PUBLIC_URL = process.env.PUBLIC_URL
 
 // API endpoints for several environments
-export const API_URL_DEVELOP_RINKEBY = process.env.REACT_APP_ADDITIONAL_SERVICES_API_URL_RINKEBY
-export const API_URL_PRODUCTION_RINKEBY =
-  process.env.REACT_APP_ADDITIONAL_SERVICES_API_URL_PROD_RINKEBY
+export const API_URL_DEVELOP_GOERLI = process.env.REACT_APP_ADDITIONAL_SERVICES_API_URL_GOERLI
+export const API_URL_PRODUCTION_GOERLI =
+  process.env.REACT_APP_ADDITIONAL_SERVICES_API_URL_PROD_GOERLI
 export const API_URL_DEVELOP_MAINNET = process.env.REACT_APP_ADDITIONAL_SERVICES_API_URL_MAINNET
 export const API_URL_PRODUCTION_MAINNET =
   process.env.REACT_APP_ADDITIONAL_SERVICES_API_URL_PROD_MAINNET
 
 // Infura bridges like 'https://mainnet.infura.io/v3/...'
-export const NETWORK_URL_RINKEBY = process.env.REACT_APP_NETWORK_URL_RINKEBY || ''
+export const NETWORK_URL_GOERLI = process.env.REACT_APP_NETWORK_URL_GOERLI || ''
 export const NETWORK_URL_MAINNET = process.env.REACT_APP_NETWORK_URL_MAINNET || ''
 
 // Wallet connect keys
