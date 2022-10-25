@@ -75,7 +75,7 @@ export const MintAction = ({ convertible = true, disabled, setCurrentApproveStep
     'amountOfCollateral',
     'amountOfConvertible',
   ])
-  const { data: bondData } = useBondName(false, maturityDate)
+  const { data: bondData } = useBondName(convertible, maturityDate)
   const { data: collateralTokenData } = useToken({ address: collateralToken?.address })
   const { data: borrowTokenData } = useToken({ address: borrowToken?.address })
 
