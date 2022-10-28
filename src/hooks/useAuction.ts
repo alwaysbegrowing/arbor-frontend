@@ -1,6 +1,11 @@
+import { BigNumber } from 'ethers'
+
 import { gql, useQuery } from '@apollo/client'
+import { Fraction, Token, TokenAmount } from '@josojo/honeyswap-sdk'
+import dayjs from 'dayjs'
 
 import { AllAuctionsDocument, SingleAuctionDocument } from '@/generated/graphql'
+import { AuctionState, DerivedAuctionInfo } from '@/state/orderPlacement/hooks'
 import { getLogger } from '@/utils/logger'
 
 const logger = getLogger('useAuctions')
@@ -63,6 +68,71 @@ export const useAuction = (auctionId?: number) => {
   }
 
   return { data: data?.auction, loading }
+}
+
+export const getAuctionState = ({
+  end,
+  live,
+  orderCancellationEndDate,
+}: {
+  end?: string
+  orderCancellationEndDate?: string
+  live: Boolean
+}) => {
+  if (!end || !orderCancellationEndDate) return AuctionState.CLAIMING
+  const now = dayjs(new Date())
+  const pastEnd = dayjs(end).utc().isAfter(now)
+  const pastCancellation = dayjs(orderCancellationEndDate).utc().isAfter(now)
+
+  if (!pastCancellation) return AuctionState.ORDER_PLACING_AND_CANCELING
+  if (!pastEnd) return AuctionState.ORDER_PLACING
+  if (live) return AuctionState.NEEDS_SETTLED
+  else return AuctionState.CLAIMING
+}
+
+export const useGraphDerivedAuctionInfo = (auctionId?: number, chainId?: number) => {
+  const { data: graphInfo, loading } = useAuction(auctionId)
+  if (loading) {
+    return { data: null, loading: true }
+  }
+  const auctioningToken = new Token(
+    chainId as number,
+    graphInfo?.bond?.id || '',
+    parseInt(graphInfo?.bond?.decimals.toString() || '0', 16),
+    graphInfo?.bond.symbol,
+  )
+  const biddingToken = new Token(
+    chainId as number,
+    graphInfo?.bidding.id || '',
+    parseInt(graphInfo?.bidding?.decimals.toString() || '0', 16),
+    graphInfo?.bidding.symbol,
+  )
+  const data: DerivedAuctionInfo = {
+    auctionEndDate: graphInfo?.end / 1000,
+    auctioningToken,
+    auctionStartDate: graphInfo?.start / 1000,
+    auctionState: getAuctionState(graphInfo),
+    biddingToken,
+    clearingPrice: graphInfo?.clearingPrice,
+    clearingPriceOrder: {
+      buyAmount: BigNumber.from(0),
+      sellAmount: BigNumber.from(0),
+      userId: BigNumber.from(0),
+    },
+    clearingPriceSellOrder: {
+      buyAmount: new TokenAmount(auctioningToken, '0'),
+      sellAmount: new TokenAmount(biddingToken, '0'),
+    },
+    clearingPriceVolume: graphInfo?.clearingPrice,
+    initialAuctionOrder: graphInfo?.offeringSize,
+    initialPrice: new Fraction(
+      graphInfo?.offeringSize,
+      BigInt(Number(graphInfo?.minimumBondPrice) * Math.pow(10, Number(graphInfo?.bond.decimals))),
+    ),
+    minBiddingAmountPerOrder: '0',
+    orderCancellationEndDate: graphInfo?.orderCancellationEndDate / 1000,
+  }
+  return { data, loading: false }
 }
 
 const auctionsQuery = gql`

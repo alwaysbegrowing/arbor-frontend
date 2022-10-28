@@ -5,6 +5,8 @@ import { PricePoint } from '../api/AdditionalServicesApi'
 import { AuctionIdentifier } from '../state/orderPlacement/reducer'
 import { getLogger } from '../utils/logger'
 
+import { ChainId } from '@/utils'
+
 const logger = getLogger('useAuctionDetails')
 
 export interface AuctionInfoDetail {
@@ -40,12 +42,11 @@ export const useAuctionDetails = (
 
   const [auctionInfo, setAuctionInfo] = useState<Maybe<AuctionInfoDetail>>(null)
   const [auctionInfoLoading, setLoading] = useState<boolean>(true)
-
   useEffect(() => {
     let cancelled = false
     const fetchApiData = async () => {
       try {
-        if (!chainId || !auctionId) {
+        if (!chainId || !auctionId || chainId == ChainId.GOERLI) {
           return
         }
         if (!cancelled) {
@@ -70,7 +71,9 @@ export const useAuctionDetails = (
         }
       }
     }
-    fetchApiData()
+    if (chainId == ChainId.MAINNET) {
+      fetchApiData()
+    }
 
     return (): void => {
       cancelled = true

@@ -300,12 +300,13 @@ export class AdditionalServicesApiImpl implements AdditionalServicesApi {
       return res.json()
     } catch (error) {
       logger.error(error)
-
       const { auctionId } = params
-
-      throw new Error(
-        `Failed to query auction details for auction  id ${auctionId} : ${error.message}`,
+      console.log(
+        new Error(
+          `Failed to query auction details for auction  id ${auctionId} : ${error.message}`,
+        ),
       )
+      return null
     }
   }
 
@@ -439,13 +440,13 @@ export class AdditionalServicesApiImpl implements AdditionalServicesApi {
         volume: BigNumber.from(result[1]),
       }
     } catch (error) {
-      logger.error(error)
-
       const { auctionId } = params
-
-      throw new Error(
-        `Failed to query clearing price order for auction  id ${auctionId} : ${error.message}`,
+      console.log(
+        new Error(
+          `Failed to query clearing price order for auction  id ${auctionId} : ${error.message}`,
+        ),
       )
+      return null
     }
   }
 
@@ -461,13 +462,10 @@ export class AdditionalServicesApiImpl implements AdditionalServicesApi {
       }
       return await res.json()
     } catch (error) {
-      logger.error(error)
-
       const { auctionId } = params
 
-      throw new Error(
-        `Failed to query orderbook data for auction  id ${auctionId} : ${error.message}`,
-      )
+      console.log(`Failed to query orderbook data for auction  id ${auctionId} : ${error.message}`)
+      return null
     }
   }
 

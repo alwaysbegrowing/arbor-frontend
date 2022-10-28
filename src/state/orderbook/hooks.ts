@@ -144,11 +144,16 @@ export function useOrderbookDataCallback(auctionIdentifer: AuctionIdentifier) {
         return
       }
 
-      const rawData = await additionalServiceApi.getOrderBookData({
+      let rawData = await additionalServiceApi.getOrderBookData({
         networkId: chainId,
         auctionId,
       })
-      const calcultatedAuctionPrice: CalculatedAuctionPrice = CalculatorClearingPrice.fromOrderbook(
+
+      if (!rawData) {
+        // The case where the API returns nothing (GOERLI)
+        rawData = { asks: [], bids: [] }
+      }
+      const calcultatedAuctionPrice = CalculatorClearingPrice.fromOrderbook(
         rawData.bids,
         rawData.asks[0],
       )

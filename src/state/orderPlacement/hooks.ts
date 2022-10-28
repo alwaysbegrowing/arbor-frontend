@@ -12,6 +12,7 @@ import easyAuctionABI from '../../constants/abis/easyAuction/easyAuction.json'
 import { useActiveWeb3React } from '../../hooks'
 import { Order, decodeOrder } from '../../hooks/Order'
 import { useTokenByAddressAndAutomaticallyAdd } from '../../hooks/Tokens'
+import { useAuction } from '../../hooks/useAuction'
 import { AuctionInfoDetail, useAuctionDetails } from '../../hooks/useAuctionDetails'
 import { ClaimState } from '../../hooks/useClaimOrderCallback'
 import { useContract } from '../../hooks/useContract'
@@ -381,40 +382,48 @@ export function useDerivedAuctionInfo(auctionIdentifier: AuctionIdentifier): {
   data: Maybe<DerivedAuctionInfo>
 } {
   const { chainId } = auctionIdentifier
+  const { data: graphInfo, loading: graphInfoLoading } = useAuction(auctionIdentifier.auctionId)
   const { auctionDetails, auctionInfoLoading } = useAuctionDetails(auctionIdentifier)
   const { clearingPriceInfo, loadingClearingPrice } = useClearingPriceInfo(auctionIdentifier)
   const auctionState = useDeriveAuctionState(auctionDetails)
 
-  const isLoading = auctionInfoLoading || loadingClearingPrice
-  const noAuctionData = !auctionDetails || !clearingPriceInfo
-
+  const isLoading = auctionInfoLoading || loadingClearingPrice || graphInfoLoading
+  const noAuctionData = !auctionDetails || !clearingPriceInfo || !graphInfo
   const auctioningToken = useMemo(
     () =>
-      !auctionDetails
+      !auctionDetails && !graphInfo
         ? undefined
         : new Token(
             chainId as number,
-            auctionDetails.addressAuctioningToken,
-            parseInt(auctionDetails.decimalsAuctioningToken, 16),
-            auctionDetails.symbolAuctioningToken,
+            auctionDetails?.addressAuctioningToken || graphInfo?.bond?.id || '',
+            parseInt(
+              auctionDetails?.decimalsAuctioningToken ||
+                graphInfo?.bond?.decimals.toString() ||
+                '0',
+              16,
+            ),
+            auctionDetails?.symbolAuctioningToken || graphInfo?.bond.symbol,
           ),
-    [auctionDetails, chainId],
+    [auctionDetails, graphInfo, chainId],
   )
 
   const biddingToken = useMemo(
     () =>
-      !auctionDetails
+      !auctionDetails && !graphInfo
         ? undefined
         : new Token(
             chainId as number,
-            auctionDetails.addressBiddingToken,
-            parseInt(auctionDetails.decimalsBiddingToken, 16),
-            auctionDetails.symbolBiddingToken,
+            auctionDetails?.addressBiddingToken || graphInfo?.bidding.id || '',
+            parseInt(
+              auctionDetails?.decimalsBiddingToken || graphInfo?.bidding.decimals.toString() || '0',
+              16,
+            ),
+            auctionDetails?.symbolBiddingToken || graphInfo?.bidding.symbol,
           ),
-    [auctionDetails, chainId],
+    [auctionDetails, chainId, graphInfo],
   )
 
-  const clearingPriceVolume = clearingPriceInfo?.volume
+  const clearingPriceVolume = clearingPriceInfo?.volume || graphInfo?.bondsSold
 
   const initialAuctionOrder: Maybe<SellOrder> = useMemo(
     () => decodeSellOrder(auctionDetails?.exactOrder, auctioningToken, biddingToken),
@@ -440,8 +449,8 @@ export function useDerivedAuctionInfo(auctionIdentifier: AuctionIdentifier): {
   )
 
   const clearingPrice: Fraction | undefined = useMemo(
-    () => orderToPrice(clearingPriceSellOrder),
-    [clearingPriceSellOrder],
+    () => orderToPrice(clearingPriceSellOrder) || graphInfo?.clearingPrice,
+    [clearingPriceSellOrder, graphInfo],
   )
 
   const initialPrice = useMemo(() => {
