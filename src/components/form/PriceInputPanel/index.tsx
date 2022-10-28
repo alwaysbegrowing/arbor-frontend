@@ -72,7 +72,7 @@ const PriceInputPanel = (props: Props) => {
             onUserSellAmountInput={onUserPriceInput}
             placeholder="-"
             readOnly={!account}
-            value={value}
+            value={!account ? '' : value || ''}
           />
           {graphInfo && <TokenPill token={graphInfo.bidding} />}
         </FieldRowTop>
@@ -93,7 +93,7 @@ const PriceInputPanel = (props: Props) => {
           <div className="flex justify-between">
             {account && (
               <button
-                className="px-3 text-xs font-normal !text-[#E0E0E0] normal-case !border-[#2A2B2C] btn btn-xs"
+                className="btn btn-xs !border-[#2A2B2C] px-3 text-xs font-normal normal-case !text-[#E0E0E0]"
                 onClick={() =>
                   onUserPriceInput(
                     `${derivedAuctionInfo?.initialPrice

@@ -143,7 +143,7 @@ const AmountInputPanel = (props: {
             onUserSellAmountInput={onUserSellAmountInput}
             placeholder="-"
             readOnly={!account}
-            value={!account ? '-' : value || ''}
+            value={!account ? '' : value || ''}
           />
           <Wrap>
             {token && <TokenPill token={token} />}
@@ -170,7 +170,7 @@ const AmountInputPanel = (props: {
             )}
           </Wrap>
         </FieldRowTop>
-        <FieldRowBottom className="flex flex-col mt-auto">
+        <FieldRowBottom className="mt-auto flex flex-col">
           {amountDescription && (
             <div>
               <FieldRowLabelStyled className="space-x-1">
@@ -193,7 +193,7 @@ const AmountInputPanel = (props: {
               </FieldRowLabelStyled>
               {onMax && account && (
                 <button
-                  className="px-3 font-normal !text-[#E0E0E0] normal-case !border-[#2A2B2C] btn btn-xs"
+                  className="btn btn-xs !border-[#2A2B2C] px-3 font-normal normal-case !text-[#E0E0E0]"
                   onClick={onMax}
                 >
                   {maxTitle}
