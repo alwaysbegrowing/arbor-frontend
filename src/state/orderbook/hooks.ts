@@ -21,6 +21,8 @@ import {
 } from './actions'
 
 import { useActiveWeb3React } from '@/hooks'
+import { useAuction } from '@/hooks/useAuction'
+import { useAuctionBids } from '@/hooks/useAuctionBids'
 
 const logger = getLogger('orderbook/hooks')
 
@@ -135,6 +137,8 @@ export function useOrderbookDataCallback(auctionIdentifer: AuctionIdentifier) {
   const { auctionId } = auctionIdentifer
   const { chainId } = useActiveWeb3React()
   const { onAppendOrderbookData, onResetOrderbookData } = useOrderbookActionHandlers()
+  const { data, loading } = useAuctionBids()
+  const { data: graphInfo } = useAuction(auctionId)
   const { shouldLoad } = useOrderbookState()
 
   const makeCall = useCallback(async () => {
@@ -151,7 +155,19 @@ export function useOrderbookDataCallback(auctionIdentifer: AuctionIdentifier) {
 
       if (!rawData) {
         // The case where the API returns nothing (GOERLI)
-        rawData = { asks: [], bids: [] }
+        rawData = {
+          asks: [
+            {
+              price: Number(graphInfo?.minimumBondPrice),
+              volume: Number(graphInfo?.totalBidVolume),
+            },
+          ],
+          bids:
+            data?.bids.map((bid) => ({
+              price: Number(bid.payable),
+              volume: Number(bid.size),
+            })) ?? [],
+        }
       }
       const calcultatedAuctionPrice = CalculatorClearingPrice.fromOrderbook(
         rawData.bids,
@@ -170,7 +186,15 @@ export function useOrderbookDataCallback(auctionIdentifer: AuctionIdentifier) {
         null,
       )
     }
-  }, [chainId, auctionId, onResetOrderbookData, onAppendOrderbookData])
+  }, [
+    chainId,
+    auctionId,
+    onAppendOrderbookData,
+    onResetOrderbookData,
+    graphInfo?.minimumBondPrice,
+    graphInfo?.totalBidVolume,
+    data?.bids,
+  ])
 
   useEffect(() => {
     makeCall()

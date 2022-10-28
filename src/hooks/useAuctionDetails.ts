@@ -73,6 +73,8 @@ export const useAuctionDetails = (
     }
     if (chainId == ChainId.MAINNET) {
       fetchApiData()
+    } else {
+      setLoading(false)
     }
 
     return (): void => {
