@@ -20,6 +20,7 @@ import {
   resetUserVolume,
 } from './actions'
 
+import { isGoerli } from '@/connectors'
 import { useActiveWeb3React } from '@/hooks'
 import { useAuction } from '@/hooks/useAuction'
 import { useAuctionBids } from '@/hooks/useAuctionBids'
@@ -153,7 +154,7 @@ export function useOrderbookDataCallback(auctionIdentifer: AuctionIdentifier) {
         auctionId,
       })
 
-      if (!rawData) {
+      if (!rawData || isGoerli) {
         // The case where the API returns nothing (GOERLI)
         rawData = {
           asks: [
