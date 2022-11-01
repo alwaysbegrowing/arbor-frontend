@@ -24,18 +24,19 @@ export const StepThree = () => {
       <div className="form-control w-full">
         <label className="label">
           <TooltipElement
-            left={<span className="label-text">Minimum bid size (optional)</span>}
+            left={<span className="label-text">Minimum bid size</span>}
             tip="Minimum order size allowed."
           />
         </label>
         <input
           className="input-bordered input w-full"
+          defaultValue={1}
           inputMode="numeric"
-          min="0"
-          placeholder="0"
+          min={1}
+          placeholder="1"
           type="number"
           {...register('minimumBiddingAmountPerOrder', {
-            required: false,
+            required: 'You must set a minimum bid size',
             validate: {
               greaterThanZero: (value) => value > 0 || 'The minimum bid size is 1',
             },

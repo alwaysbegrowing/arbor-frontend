@@ -12,7 +12,7 @@ function addDays(date, days) {
 }
 
 export const StepTwo = () => {
-  const { register } = useFormContext()
+  const { getValues, register } = useFormContext()
   const endDefault = addDays(new Date(), 3)
 
   return (
