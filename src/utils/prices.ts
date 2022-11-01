@@ -55,5 +55,5 @@ export function convertPriceIntoBuyAndSellAmount(
 }
 
 export function showChartsInverted(token: Token): boolean {
-  return STABLE_TOKENS_FOR_INVERTED_CHARTS.includes(token.address)
+  return STABLE_TOKENS_FOR_INVERTED_CHARTS.includes(token?.address)
 }

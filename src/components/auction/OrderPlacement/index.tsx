@@ -9,7 +9,7 @@ import { useBalance } from 'wagmi'
 
 import kycLinks from '../../../assets/links/kycLinks.json'
 import { ReactComponent as PrivateIcon } from '../../../assets/svg/private.svg'
-import { isRinkeby, requiredChain } from '../../../connectors'
+import { isGoerli, requiredChain } from '../../../connectors'
 import { useActiveWeb3React } from '../../../hooks'
 import {
   ApprovalState,
@@ -23,10 +23,9 @@ import { useSignature } from '../../../hooks/useSignature'
 import { LoadingBox } from '../../../pages/Auction'
 import { useWalletModalToggle } from '../../../state/application/hooks'
 import {
-  AuctionState,
   DerivedAuctionInfo,
   tryParseAmount,
-  useGetOrderPlacementError,
+  //useGetOrderPlacementError,
   useOrderPlacementState,
   useSwapActionHandlers,
 } from '../../../state/orderPlacement/hooks'
@@ -91,7 +90,7 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
   const { auctionIdentifier, derivedAuctionInfo } = props
   const { data: graphInfo } = useAuction(auctionIdentifier?.auctionId)
   const location = useGeoLocation()
-  const disabledCountry = !isRinkeby && location?.country === 'US'
+  const disabledCountry = !isGoerli && location?.country === 'US'
   const [showCountry, setShowCountryDisabledModal] = useState(false)
   const { chainId } = auctionIdentifier
   const { account, chainId: chainIdFromWeb3 } = useActiveWeb3React()
@@ -107,21 +106,33 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
   const [showConfirm, setShowConfirm] = useState<boolean>(false)
   const [showWarning, setShowWarning] = useState<boolean>(false)
   const [showWarningWrongChainId, setShowWarningWrongChainId] = useState<boolean>(false)
-  const { errorAmount, errorBidSize, errorPrice } = useGetOrderPlacementError(
-    derivedAuctionInfo,
-    derivedAuctionInfo?.auctionState,
-    auctionIdentifier,
-    graphInfo?.minimumBidSize,
-  )
+  // const { errorAmount, errorBidSize, errorPrice } = useGetOrderPlacementError(
+  //   derivedAuctionInfo,
+  //   derivedAuctionInfo?.auctionState,
+  //   auctionIdentifier,
+  //   graphInfo?.minimumBidSize,
+  // )
+  const { errorAmount, errorBidSize, errorPrice } = {
+    errorAmount: null,
+    errorBidSize: null,
+    errorPrice: null,
+  }
+
   // Setting the name from graphql to the token from gnosis
   const auctioningToken = new Token(
-    derivedAuctionInfo?.auctioningToken.chainId,
-    derivedAuctionInfo?.auctioningToken.address,
-    derivedAuctionInfo?.auctioningToken.decimals,
-    derivedAuctionInfo?.auctioningToken.symbol,
+    chainId,
+    graphInfo?.bond?.id,
+    graphInfo?.bond?.decimals,
+    graphInfo?.bond?.symbol,
     graphInfo?.bond?.name,
   )
-  const biddingToken = derivedAuctionInfo?.biddingToken
+  const biddingToken = new Token(
+    chainId,
+    graphInfo?.bidding?.id,
+    graphInfo?.bidding?.decimals,
+    graphInfo?.bidding?.symbol,
+    graphInfo?.bidding?.name,
+  )
 
   const parsedBiddingAmount = tryParseAmount(sellAmount, biddingToken)
   const approvalTokenAmount: TokenAmount | undefined = parsedBiddingAmount
@@ -188,13 +199,13 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
 
   const cancelDate = React.useMemo(
     () =>
-      derivedAuctionInfo?.auctionEndDate !== derivedAuctionInfo?.orderCancellationEndDate &&
-      derivedAuctionInfo?.orderCancellationEndDate !== 0
-        ? new Date(derivedAuctionInfo?.orderCancellationEndDate * 1000).toLocaleString()
+      graphInfo?.end !== graphInfo?.orderCancellationEndDate &&
+      graphInfo?.orderCancellationEndDate !== 0
+        ? new Date(graphInfo?.orderCancellationEndDate).toLocaleString()
         : undefined,
-    [derivedAuctionInfo?.auctionEndDate, derivedAuctionInfo?.orderCancellationEndDate],
+    [graphInfo?.end, graphInfo?.orderCancellationEndDate],
   )
-  const orderPlacingOnly = derivedAuctionInfo?.auctionState === AuctionState.ORDER_PLACING
+  const orderPlacingOnly = true // fix getAuctionState(graphInfo)
   const isPrivate = React.useMemo(
     () => auctionDetails && auctionDetails.isPrivateAuction,
     [auctionDetails],
@@ -270,11 +281,8 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
   }
 
   const cancelCutoff =
-    derivedAuctionInfo?.orderCancellationEndDate &&
-    dayjs(derivedAuctionInfo?.orderCancellationEndDate * 1000)
-      .utc()
-      .tz()
-      .format('LL HH:mm z')
+    graphInfo?.orderCancellationEndDate &&
+    dayjs(graphInfo?.orderCancellationEndDate).utc().tz().format('LL HH:mm z')
   const reviewData = getReviewData({
     amount: Number(sellAmount),
     maturityDate: graphInfo?.bond?.maturityDate,

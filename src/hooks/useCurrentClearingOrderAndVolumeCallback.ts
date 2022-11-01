@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 
+import { additionalServiceApi } from '../api'
 import { ClearingPriceAndVolumeData } from '../api/AdditionalServicesApi'
 import { AuctionIdentifier } from '../state/orderPlacement/reducer'
 import { getLogger } from '../utils/logger'
-import { additionalServiceApi } from './../api'
 
 const logger = getLogger('useCurrentClearingOrderAndVolumeCallback')
 

@@ -7,7 +7,6 @@ import { ArborIcon } from './icons/ArborIcon'
 import { Bond } from '@/generated/graphql'
 
 export const BondTokenDetails = ({ option }: { option: Bond }) => {
-  console.log(option)
   const balance = Number(formatUnits(option?.tokenBalances?.[0].amount || '0', option?.decimals))
   // This is not a good way to remove 0 balance bonds
   // if (balance == 0) return null

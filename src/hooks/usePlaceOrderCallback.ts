@@ -82,6 +82,7 @@ export function usePlaceOrderCallback(
 
     return async function onPlaceOrder() {
       if (!chainId || !signer || !account || !userId || !signature) {
+        console.log(!chainId, !signer, !account, !userId, !signature, 'missing deps')
         throw new Error('missing dependencies in onPlaceOrder callback')
       }
 
@@ -121,7 +122,7 @@ export function usePlaceOrderCallback(
         buyAmountScaled,
         sellAmountScaled,
         previousOrder,
-        auctionId,
+        auctionId || 0,
         signature,
       )
 

@@ -71,12 +71,12 @@ export const calculateRow = (
   })
   const interest = interestRate !== '-' ? `${interestRate}+` : interestRate
   const amount = `${round(
-    Number(formatUnits(row.payable, derivedAuctionInfo.biddingToken.decimals)),
+    Number(formatUnits(row.payable, derivedAuctionInfo?.biddingToken?.decimals)),
     2,
   ).toLocaleString()} ${paymentToken}`
 
   const bonds = `${round(
-    Number(formatUnits(row.size, derivedAuctionInfo.auctioningToken.decimals)),
+    Number(formatUnits(row.size, derivedAuctionInfo?.auctioningToken?.decimals)),
     3,
   ).toLocaleString()}+ bonds`
 

@@ -41,7 +41,7 @@ const CollateralTokenSelector = () => {
           address,
         }))
     } else {
-      return CollateralTokens[chainId.rinkeby]
+      return CollateralTokens[chainId.goerli]
     }
   }, [allowedTokens, tokenList])
 

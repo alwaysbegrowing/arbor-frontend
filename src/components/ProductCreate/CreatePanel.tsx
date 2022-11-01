@@ -17,22 +17,22 @@ export const CreatePanel = ({ panels }: CreatePanelProps) => {
 
   return (
     <>
-      <div className="flex justify-center space-x-8">
+      <div className="flex items-stretch justify-center space-x-8">
         {panels.map((panel, i) => (
           <div
-            className={`w-[326px] card grayscale-0 transition-all cursor-pointer hover:border-gray-600 ${
+            className={`card flex !h-full w-[326px] cursor-pointer grayscale-0 transition-all hover:border-gray-600 ${
               panel.disabled ? 'cursor-not-allowed hover:grayscale' : ''
             }`}
             key={i}
             onClick={() => (!panel.disabled ? navigate(panel.url) : null)}
           >
             <div className="card-body">
-              <div className="mb-32">{panel.icon}</div>
+              <div>{panel.icon}</div>
 
               <div className="text-3xl font-medium text-white">{panel.title}</div>
               <p className="text-[#696969]">{panel.description}</p>
               <a
-                className="flex self-start mt-4 !text-2sm font-normal text-white normal-case bg-[#181A1C] !border-[#2A2B2C] btn btn-sm"
+                className="btn btn-sm mt-4 flex self-start !border-[#2A2B2C] bg-[#181A1C] !text-2sm font-normal normal-case text-white"
                 href={panel.learn}
                 onClick={(e) => {
                   e.stopPropagation()

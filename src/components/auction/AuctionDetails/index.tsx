@@ -57,7 +57,12 @@ const AuctionDetails = (props: Props) => {
   const { auctionIdentifier } = props
 
   const { data: auction } = useAuction(auctionIdentifier?.auctionId)
-  const { orderbookPrice: auctionCurrentPrice } = useOrderbookState()
+  let { orderbookPrice: auctionCurrentPrice } = useOrderbookState()
+
+  if (auctionCurrentPrice == 0) {
+    // use the price from the subgraph if not found on API
+    auctionCurrentPrice = Number(auction.minimumBondPrice)
+  }
 
   let totalBidVolume,
     offeringSize,
@@ -195,7 +200,7 @@ const AuctionDetails = (props: Props) => {
   return (
     <div className="card">
       <div className="card-body">
-        <h2 className="flex justify-between card-title">
+        <h2 className="card-title flex justify-between">
           <span>Auction information</span>
           <AuctionStatusPill auction={auction} />
         </h2>

@@ -112,8 +112,8 @@ export const StepOne = () => {
       </div>
 
       <FieldRowWrapper className="my-4 space-y-3 py-1">
-        <div className="flex flex-row justify-between">
-          <div className="text-sm text-[#E0E0E0]">
+        <div className="flex flex-row justify-between space-x-4">
+          <div className="w-[170px] overflow-hidden text-ellipsis text-sm text-[#E0E0E0]">
             <p>{!minBuyAmount ? '-' : minBuyAmount.toLocaleString()}</p>
           </div>
 
@@ -122,8 +122,8 @@ export const StepOne = () => {
             tip="Minimum amount of funds you will raise assuming all bonds are sold. The funds raised will be higher if the final sale price is higher than the minimum price set"
           />
         </div>
-        <div className="flex flex-row justify-between">
-          <div className="text-sm text-[#E0E0E0]">
+        <div className="flex flex-row justify-between space-x-4">
+          <div className="w-[170px] overflow-hidden text-ellipsis text-sm text-[#E0E0E0]">
             <p>{amountOwed}</p>
           </div>
 
@@ -132,8 +132,8 @@ export const StepOne = () => {
             tip="Amount you will owe at maturity assuming all bonds are sold."
           />
         </div>
-        <div className="flex flex-row justify-between">
-          <div className="text-sm text-[#E0E0E0]">
+        <div className="flex flex-row justify-between space-x-4">
+          <div className="w-[170px] overflow-hidden text-ellipsis text-sm text-[#E0E0E0]">
             <p>{maximumInterestOwed}</p>
           </div>
 
@@ -142,8 +142,8 @@ export const StepOne = () => {
             tip="Maximum interest owed assuming all bonds are sold. The interest owed will be lower if the final sale price is higher than the minimum price set."
           />
         </div>
-        <div className="flex flex-row justify-between">
-          <div className="text-sm text-[#E0E0E0]">
+        <div className="flex flex-row justify-between space-x-4">
+          <div className="w-[170px] overflow-hidden text-ellipsis text-sm text-[#E0E0E0]">
             <p>{maximumYTM}</p>
           </div>
 

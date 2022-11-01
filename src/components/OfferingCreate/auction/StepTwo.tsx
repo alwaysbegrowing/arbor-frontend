@@ -5,12 +5,19 @@ import { useFormContext } from 'react-hook-form'
 
 import TooltipElement from '@/components/common/Tooltip'
 
+export function addDays(date, days) {
+  const result = new Date(date)
+  result.setDate(result.getDate() + days)
+  return result
+}
+
 export const StepTwo = () => {
   const { getValues, register } = useFormContext()
+  const endDefault = addDays(new Date(), 3)
 
   return (
     <>
-      <div className="w-full form-control">
+      <div className="form-control w-full">
         <label className="label">
           <TooltipElement
             left={<span className="label-text">Start date</span>}
@@ -18,14 +25,14 @@ export const StepTwo = () => {
           />
         </label>
         <input
-          className="w-full input input-bordered"
-          readOnly
+          className="input-bordered input w-full"
+          disabled
           type="date"
           value={new Date().toISOString().substring(0, 10)}
           {...register('auctionStartDate', {})}
         />
       </div>
-      <div className="w-full form-control">
+      <div className="form-control w-full">
         <label className="label">
           <TooltipElement
             left={<span className="label-text">End date</span>}
@@ -33,7 +40,8 @@ export const StepTwo = () => {
           />
         </label>
         <input
-          className="w-full input input-bordered"
+          className="input-bordered input w-full"
+          defaultValue={`${endDefault.toISOString().substring(0, 10)} 23:59`}
           type="datetime-local"
           {...register('auctionEndDate', {
             required: 'The auction end date must be entered',

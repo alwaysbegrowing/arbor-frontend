@@ -5,7 +5,7 @@ module.exports = {
   client: {
     service: {
       name: 'arbor-subgraph',
-      url: process.env.REACT_APP_SUBGRAPH_URL_RINKEBY,
+      url: process.env.REACT_APP_SUBGRAPH_URL_GOERLI,
     },
   },
 }

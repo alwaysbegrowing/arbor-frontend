@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
+    "dev": "react-app-rewired start",
     "prebuild": "pnpm run format",
     "build": "pnpm run typechain:all && react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
@@ -124,6 +125,7 @@
     "graphql": "^16.6.0",
     "lodash": "^4.17.21",
     "logdown": "^3.3.1",
+    "millify": "^5.0.1",
     "numbro": "^2.3.6",
     "polished": "^4.2.2",
     "prop-types": "^15.8.1",

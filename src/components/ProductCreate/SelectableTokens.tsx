@@ -13,11 +13,11 @@ export const BorrowTokens = {
       decimals: 6,
     },
   ],
-  [chain.rinkeby.id]: [
+  [chain.goerli.id]: [
     {
       name: 'USDC',
       icon: USDCIcon,
-      address: '0x097B212EFc307B102B37889Bede934EEe74Cda27',
+      address: '0x5a2D26D95b07C28d735ff76406bd82fE64222Dc1',
       decimals: 6,
     },
   ],
@@ -25,7 +25,7 @@ export const BorrowTokens = {
 
 export const AccessManagerContract = {
   [chain.mainnet.id]: '0x0F4648d997e486cE06577d6Ee2FecBcA84b834F4',
-  [chain.rinkeby.id]: '0x7C882F296335734B958b35DA6b2595FA00043AE9',
+  [chain.goerli.id]: '0x6de1Fe949103087Be8dD6471076331379789ba90',
 }
 
 export const CollateralTokens = {
@@ -37,11 +37,11 @@ export const CollateralTokens = {
       decimals: 18,
     },
   ],
-  [chain.rinkeby.id]: [
+  [chain.goerli.id]: [
     {
       name: 'UNI',
       icon: UniIcon,
-      address: '0x81629B9CCe9C92ec6706Acc9d9b7A7d39510985F',
+      address: '0x1ee2926BDd6c0A34207BAEb7B8fAa12cdE0BC315',
       decimals: 18,
     },
   ],

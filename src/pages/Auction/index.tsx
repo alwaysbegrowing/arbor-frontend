@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
 
+import { ChainId } from '@josojo/honeyswap-sdk'
 import { twMerge } from 'tailwind-merge'
 
 import { ReactComponent as AuctionsIcon } from '../../assets/svg/auctions.svg'
@@ -12,7 +13,7 @@ import AuctionBody from '../../components/auction/AuctionBody'
 import { ErrorBoundaryWithFallback } from '../../components/common/ErrorAndReload'
 import WarningModal from '../../components/modals/WarningModal'
 import TokenLogo from '../../components/token/TokenLogo'
-import { useAuction } from '../../hooks/useAuction'
+import { useAuction, useGraphDerivedAuctionInfo } from '../../hooks/useAuction'
 import { useDerivedAuctionInfo } from '../../state/orderPlacement/hooks'
 import { RouteAuctionIdentifier, parseURL } from '../../state/orderPlacement/reducer'
 
@@ -194,13 +195,21 @@ const AuctionPage = ({ data: { auctionIdentifier, derivedAuctionInfo, graphInfo 
 
 const Auction: React.FC = () => {
   const auctionIdentifier = parseURL(useParams<RouteAuctionIdentifier>())
-  const { data: derivedAuctionInfo, loading } = useDerivedAuctionInfo(auctionIdentifier)
+  const { data: derivedAuctionInfo, loading: apiLoading } = useDerivedAuctionInfo(auctionIdentifier)
+
+  const { data: graphDerivedAuctionInfo, loading: graphDataLoading } = useGraphDerivedAuctionInfo(
+    auctionIdentifier.auctionId,
+    auctionIdentifier.chainId,
+  )
+  const auctionInfo =
+    auctionIdentifier?.chainId == ChainId.MAINNET ? derivedAuctionInfo : graphDerivedAuctionInfo
+  const loading = auctionIdentifier?.chainId == ChainId.MAINNET ? apiLoading : graphDataLoading
   const { data: graphInfo, loading: graphLoading } = useAuction(auctionIdentifier?.auctionId)
 
   return (
     <AuctionPage
-      data={{ auctionIdentifier, derivedAuctionInfo, graphInfo }}
-      loading={loading || graphLoading}
+      data={{ auctionIdentifier, derivedAuctionInfo: auctionInfo, graphInfo }}
+      loading={loading || graphLoading || graphDataLoading}
     />
   )
 }

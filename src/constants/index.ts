@@ -1,6 +1,6 @@
 export const chainNames = {
   1: 'Mainnet',
-  4: 'Rinkeby',
+  5: 'Goerli',
 }
 
 export const SUPPORTED_LOCALES = [

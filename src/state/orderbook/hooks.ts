@@ -20,7 +20,10 @@ import {
   resetUserVolume,
 } from './actions'
 
+import { isGoerli } from '@/connectors'
 import { useActiveWeb3React } from '@/hooks'
+import { useAuction } from '@/hooks/useAuction'
+import { useAuctionBids } from '@/hooks/useAuctionBids'
 
 const logger = getLogger('orderbook/hooks')
 
@@ -135,6 +138,8 @@ export function useOrderbookDataCallback(auctionIdentifer: AuctionIdentifier) {
   const { auctionId } = auctionIdentifer
   const { chainId } = useActiveWeb3React()
   const { onAppendOrderbookData, onResetOrderbookData } = useOrderbookActionHandlers()
+  const { data, loading } = useAuctionBids()
+  const { data: graphInfo } = useAuction(auctionId)
   const { shouldLoad } = useOrderbookState()
 
   const makeCall = useCallback(async () => {
@@ -144,11 +149,28 @@ export function useOrderbookDataCallback(auctionIdentifer: AuctionIdentifier) {
         return
       }
 
-      const rawData = await additionalServiceApi.getOrderBookData({
+      let rawData = await additionalServiceApi.getOrderBookData({
         networkId: chainId,
         auctionId,
       })
-      const calcultatedAuctionPrice: CalculatedAuctionPrice = CalculatorClearingPrice.fromOrderbook(
+
+      if (!rawData || isGoerli) {
+        // The case where the API returns nothing (GOERLI)
+        rawData = {
+          asks: [
+            {
+              price: Number(graphInfo?.minimumBondPrice),
+              volume: Number(graphInfo?.totalBidVolume),
+            },
+          ],
+          bids:
+            data?.bids.map((bid) => ({
+              price: Number(bid.payable),
+              volume: Number(bid.size),
+            })) ?? [],
+        }
+      }
+      const calcultatedAuctionPrice = CalculatorClearingPrice.fromOrderbook(
         rawData.bids,
         rawData.asks[0],
       )
@@ -158,14 +180,22 @@ export function useOrderbookDataCallback(auctionIdentifer: AuctionIdentifier) {
     } catch (error) {
       logger.error('Error populating orderbook with data', error)
       onResetOrderbookData(
-        auctionId,
+        auctionId || 0,
         chainId,
         { bids: [], asks: [] },
         { price: 0, priceReversed: 0 },
         null,
       )
     }
-  }, [chainId, auctionId, onResetOrderbookData, onAppendOrderbookData])
+  }, [
+    chainId,
+    auctionId,
+    onAppendOrderbookData,
+    onResetOrderbookData,
+    graphInfo?.minimumBondPrice,
+    graphInfo?.totalBidVolume,
+    data?.bids,
+  ])
 
   useEffect(() => {
     makeCall()
