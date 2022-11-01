@@ -5,8 +5,15 @@ import { useFormContext } from 'react-hook-form'
 
 import TooltipElement from '@/components/common/Tooltip'
 
+function addDays(date, days) {
+  const result = new Date(date)
+  result.setDate(result.getDate() + days)
+  return result
+}
+
 export const StepTwo = () => {
-  const { getValues, register } = useFormContext()
+  const { register } = useFormContext()
+  const endDefault = addDays(new Date(), 3)
 
   return (
     <>
@@ -34,6 +41,7 @@ export const StepTwo = () => {
         </label>
         <input
           className="input-bordered input w-full"
+          defaultValue={`${endDefault.toISOString().substring(0, 10)} 23:59`}
           type="datetime-local"
           {...register('auctionEndDate', {
             required: 'The auction end date must be entered',
