@@ -8,11 +8,11 @@
     "node": ">=16"
   },
   "scripts": {
-    "start": "next dev",
-    "start-production": "next start",
-    "dev": "next start",
+    "start": "react-scripts dev",
+    "start-production": "react-scripts start",
+    "dev": "react-scripts start",
     "prebuild": "yarn format",
-    "build": "yarn typechain:all && next build",
+    "build": "yarn typechain:all && react-scripts build",
     "test": "jest test --env=jsdom",
     "format:eslint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --fix",
     "format:prettier": "prettier \"src/**/*.{js,jsx,ts,tsx}\" --write",
