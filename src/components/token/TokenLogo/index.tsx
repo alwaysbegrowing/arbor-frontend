@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { ReactComponent as UnicornSvg } from '../../../assets/svg/simple-bond.svg'
-import { useTokenListState } from '../../../state/tokenList/hooks'
-import { isAddress } from '../../../utils'
 import { UnregisteredToken } from '../UnregisteredToken'
 
+import UnicornSvg from '@/assets/svg/components/SimpleBond'
+import { useTokenListState } from '@/state/tokenList/hooks'
 import { DEV_bondImage } from '@/state/tokenList/reducer'
+import { isAddress } from '@/utils'
 
 const Wrapper = styled.div<{ size: string }>`
   background-color: #e0e0e0;
@@ -38,7 +38,7 @@ interface TokenLogoProps {
 const SquareHolder = ({ children, size }) => {
   const defaultSize = size === '24px'
   return (
-    <div className={`avatar placeholder w-${defaultSize ? '14' : '10'} bg-[#e0e0e0] rounded-full`}>
+    <div className={`w- placeholder avatar${defaultSize ? '14' : '10'} rounded-full bg-[#e0e0e0]`}>
       {children}
     </div>
   )

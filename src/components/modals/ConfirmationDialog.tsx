@@ -8,9 +8,9 @@ import { GhostTransactionLink } from './GhostTransactionLink'
 import { OopsWarning } from './OopsWarning'
 import Modal, { DialogTitle } from './common/Modal'
 
-import { ReactComponent as PurpleArborIcon } from '@/assets/svg/arbor-purple.svg'
-import { ReactComponent as ArborIcon } from '@/assets/svg/arbor.svg'
-import { ReactComponent as GreenCheckIcon } from '@/assets/svg/greencheck.svg'
+import ArborIcon from '@/assets/svg/components/Arbor'
+import PurpleArborIcon from '@/assets/svg/components/ArborPurple'
+import GreenCheckIcon from '@/assets/svg/components/Greencheck'
 import { useAllTransactions } from '@/state/transactions/hooks'
 
 const BodyPanel = ({ after, before, color = 'blue', during }) => (

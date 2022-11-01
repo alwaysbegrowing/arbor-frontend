@@ -5,10 +5,6 @@ import { createGlobalStyle } from 'styled-components'
 import { ChainId } from '@josojo/honeyswap-sdk'
 import { twMerge } from 'tailwind-merge'
 
-import { ReactComponent as AuctionsIcon } from '../../assets/svg/auctions.svg'
-import { ReactComponent as ConvertIcon } from '../../assets/svg/convert.svg'
-import { ReactComponent as OTCIcon } from '../../assets/svg/otc.svg'
-import { ReactComponent as SimpleIcon } from '../../assets/svg/simple.svg'
 import AuctionBody from '../../components/auction/AuctionBody'
 import { ErrorBoundaryWithFallback } from '../../components/common/ErrorAndReload'
 import WarningModal from '../../components/modals/WarningModal'
@@ -16,6 +12,11 @@ import TokenLogo from '../../components/token/TokenLogo'
 import { useAuction, useGraphDerivedAuctionInfo } from '../../hooks/useAuction'
 import { useDerivedAuctionInfo } from '../../state/orderPlacement/hooks'
 import { RouteAuctionIdentifier, parseURL } from '../../state/orderPlacement/reducer'
+
+import AuctionsIcon from '@/assets/svg/components/Auctions'
+import ConvertIcon from '@/assets/svg/components/Convert'
+import OTCIcon from '@/assets/svg/components/Otc'
+import SimpleIcon from '@/assets/svg/components/Simple'
 
 const GlobalStyle = createGlobalStyle`
   .siteHeader {

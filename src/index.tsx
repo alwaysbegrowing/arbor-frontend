@@ -1,3 +1,4 @@
+// import '@rainbow-me/rainbowkit/styles.css'
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 
@@ -22,9 +23,6 @@ import TransactionUpdater from './state/transactions/updater'
 import UserUpdater from './state/user/updater'
 import ThemeProvider from './theme'
 import { GlobalStyle } from './theme/globalStyle'
-
-import './index.css'
-import '@rainbow-me/rainbowkit/styles.css'
 
 let configuredChains = []
 if (isProdGoerli) {

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import { Inner } from '../Header'
 
-import { ReactComponent as Wordmark } from '@/assets/svg/wordmark.svg'
+import Wordmark from '@/assets/svg/components/Wordmark'
 
 const FooterLinks = styled.div`
   font-weight: 400;
