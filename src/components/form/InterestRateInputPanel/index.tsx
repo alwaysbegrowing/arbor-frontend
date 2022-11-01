@@ -13,6 +13,8 @@ export const FieldRowLabelStyledText = styled.span`
   font-weight: 400;
   font-size: 12px;
   color: #696969;
+  width: 100%;
+  text-align: right;
   letter-spacing: 0.06em;
 `
 
@@ -85,15 +87,15 @@ const InterestRateInputPanel = ({
   const data = getReviewData({ price, amount, maturityDate, auctionEndDate })
 
   return (
-    <FieldRowWrapper className="py-1 my-4 space-y-3" {...restProps}>
+    <FieldRowWrapper className="my-4 space-y-3 py-1" {...restProps}>
       <div className="flex flex-row justify-between">
-        <div className="overflow-hidden w-full max-w-[194px] text-sm text-[#E0E0E0] text-ellipsis">
+        <div className="w-full max-w-[194px] overflow-hidden text-ellipsis text-sm text-[#E0E0E0]">
           <p>{!account || !price || !amount ? '-' : `${data.pay} ${priceTokenDisplay}`}</p>
           {account && errorBidSize && <p className="text-[#EDA651]">{errorBidSize}</p>}
         </div>
 
         <Tooltip
-          className="flex flex-row justify-end items-center space-x-2 w-full max-w-[95px]"
+          className="flex w-full max-w-[95px] flex-row items-center justify-end space-x-2"
           left={
             <FieldRowLabelStyledText className={account && errorBidSize ? '!text-[#EDA651]' : ''}>
               You pay
@@ -103,33 +105,33 @@ const InterestRateInputPanel = ({
         />
       </div>
       <div className="flex flex-row justify-between">
-        <div className="overflow-hidden w-full max-w-[194px] text-sm text-[#E0E0E0] text-ellipsis">
+        <div className="w-full max-w-[194px] overflow-hidden text-ellipsis text-sm text-[#E0E0E0]">
           {!account || !amount ? '-' : `${data.receive} bonds`}
         </div>
 
         <Tooltip
-          className="flex flex-row justify-end items-center space-x-2 w-full max-w-[95px]"
+          className="flex w-full max-w-[95px] flex-row items-center justify-end space-x-2"
           left={<FieldRowLabelStyledText>You receive</FieldRowLabelStyledText>}
           tip="Amount of bonds you will receive. If the final auction price is lower than your order price, you will receive more bonds than were ordered at that lower price."
         />
       </div>
       <div className="flex flex-row justify-between">
-        <div className="overflow-hidden w-full max-w-[194px] text-sm text-[#E0E0E0] text-ellipsis">
+        <div className="w-full max-w-[194px] overflow-hidden text-ellipsis text-sm text-[#E0E0E0]">
           {!account || !price || !amount ? '-' : `${data.earn} ${priceTokenDisplay}`}
         </div>
 
         <Tooltip
-          className="flex flex-row justify-end items-center space-x-2 w-full max-w-[95px]"
+          className="flex w-full max-w-[95px] flex-row items-center justify-end space-x-2"
           left={<FieldRowLabelStyledText>You earn</FieldRowLabelStyledText>}
           tip="Amount you will earn assuming no default. If the final price is lower than your order price, you will receive more bonds than ordered and, therefore, earn more."
         />
       </div>
       <div className="flex flex-row justify-between">
-        <div className="overflow-hidden w-full max-w-[194px] text-sm text-[#E0E0E0] text-ellipsis">
+        <div className="w-full max-w-[194px] overflow-hidden text-ellipsis text-sm text-[#E0E0E0]">
           {!account ? '-' : data.ytm}
         </div>
         <Tooltip
-          className="flex flex-row justify-end items-center space-x-2 w-full max-w-[95px]"
+          className="flex w-full max-w-[95px] flex-row items-center justify-end space-x-2"
           left={<FieldRowLabelStyledText>Your YTM</FieldRowLabelStyledText>}
           tip="Yield to maturity you will earn assuming no default. If the final price is lower than your order price, you will receive more bonds than ordered at a lower price, therefore, earning a higher YTM."
         />
