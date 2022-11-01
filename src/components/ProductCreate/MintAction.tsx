@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import { useApolloClient } from '@apollo/client'
 import { parseUnits } from '@ethersproject/units'
 import { useAddRecentTransaction } from '@rainbow-me/rainbowkit'
 import dayjs from 'dayjs'
@@ -14,7 +15,7 @@ import WarningModal from '../modals/WarningModal'
 
 import { useBondFactoryContract } from '@/hooks/useContract'
 
-/* 
+/*
 CreateBond ABI & Contract restrictions
 name: string
 symbol: string
@@ -54,6 +55,8 @@ const createBondSchema = yup.object().shape({
 })
 
 export const MintAction = ({ convertible = true, disabled, setCurrentApproveStep }) => {
+  const apolloClient = useApolloClient()
+
   // state 0 for none, 1 for metamask confirmation, 2 for block confirmation
   const [waitingWalletApprove, setWaitingWalletApprove] = useState(0)
   const addRecentTransaction = useAddRecentTransaction()
@@ -133,6 +136,9 @@ export const MintAction = ({ convertible = true, disabled, setCurrentApproveStep
 
                 setWaitingWalletApprove(3)
                 setCurrentApproveStep(2)
+                apolloClient.refetchQueries({
+                  include: 'all',
+                })
               })
               .catch((e) => {
                 setTransactionError(e?.message || e)
