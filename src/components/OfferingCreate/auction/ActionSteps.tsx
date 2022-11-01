@@ -88,9 +88,9 @@ export const ActionSteps = ({ disabled }) => {
               })
           }}
         >
-          {!waitingWalletApprove && `Approve ${bondToAuction?.name} for sale`}
+          {!waitingWalletApprove && `Approve bond for sale`}
           {waitingWalletApprove === 1 && 'Confirm approval in wallet'}
-          {waitingWalletApprove === 2 && `Approving ${bondToAuction?.name}...`}
+          {waitingWalletApprove === 2 && `Approving bond...`}
         </ActionButton>
       )}
       {currentApproveStep === 1 && (
