@@ -1,17 +1,16 @@
 import React, { ReactElement, useEffect, useState } from 'react'
 
 import { useApolloClient } from '@apollo/client'
+import ArborIcon from 'src/assets/svg/components/Arbor'
+import PurpleArborIcon from 'src/assets/svg/components/ArborPurple'
+import GreenCheckIcon from 'src/assets/svg/components/Greencheck'
+import { useAllTransactions } from 'src/state/transactions/hooks'
 import { useWaitForTransaction } from 'wagmi'
 
 import { ActionButton } from '../auction/Claimer'
 import { GhostTransactionLink } from './GhostTransactionLink'
 import { OopsWarning } from './OopsWarning'
 import Modal, { DialogTitle } from './common/Modal'
-
-import ArborIcon from '@/assets/svg/components/Arbor'
-import PurpleArborIcon from '@/assets/svg/components/ArborPurple'
-import GreenCheckIcon from '@/assets/svg/components/Greencheck'
-import { useAllTransactions } from '@/state/transactions/hooks'
 
 const BodyPanel = ({ after, before, color = 'blue', during }) => (
   <>

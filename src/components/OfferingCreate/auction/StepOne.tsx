@@ -2,6 +2,8 @@ import React from 'react'
 
 import { formatUnits } from '@ethersproject/units'
 import { useFormContext } from 'react-hook-form'
+import TooltipElement from 'src/components/common/Tooltip'
+import { currentTimeInUTC } from 'src/utils/tools'
 
 import { BondSelector } from '../../ProductCreate/selectors/CollateralTokenSelector'
 import {
@@ -9,9 +11,6 @@ import {
   FieldRowWrapper,
   calculateInterestRate,
 } from '../../form/InterestRateInputPanel'
-
-import TooltipElement from '@/components/common/Tooltip'
-import { currentTimeInUTC } from '@/utils/tools'
 
 export const StepOne = () => {
   const { register, watch } = useFormContext()

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 
+import { ChainId } from 'src/utils'
+
 import { additionalServiceApi } from '../api'
 import { PricePoint } from '../api/AdditionalServicesApi'
 import { AuctionIdentifier } from '../state/orderPlacement/reducer'
 import { getLogger } from '../utils/logger'
-
-import { ChainId } from '@/utils'
 
 const logger = getLogger('useAuctionDetails')
 

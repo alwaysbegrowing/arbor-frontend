@@ -10,10 +10,9 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
 import Countdown from 'react-countdown'
+import Tooltip from 'src/components/common/Tooltip'
 
 import { calculateTimeProgress, currentTimeInUTC, setLocale } from '../../../utils/tools'
-
-import Tooltip from '@/components/common/Tooltip'
 
 // Used for abbreviated named timezone offset 'z' when formatting.
 dayjs.extend(advancedFormat)
@@ -139,7 +138,7 @@ export const AuctionTimer = ({
       </div>
       <div className="flex flex-col space-y-3 w-full">
         <progress
-          className={`progress progress-primary progress-${color}`}
+          className={`progress- progress progress-primary${color}`}
           max="100"
           value={progress}
         />

@@ -2,6 +2,14 @@ import { BigNumber } from 'ethers'
 import React, { useState } from 'react'
 
 import { formatUnits, parseUnits } from '@ethersproject/units'
+import { SummaryItem } from 'src/components/ProductCreate/SummaryItem'
+import { ActionButton } from 'src/components/auction/Claimer'
+import AmountInputPanel from 'src/components/form/AmountInputPanel'
+import WarningModal from 'src/components/modals/WarningModal'
+import { InfoType } from 'src/components/pureStyledComponents/FieldRow'
+import BOND_ABI from 'src/constants/abis/bond.json'
+import { Bond } from 'src/generated/graphql'
+import { useTransactionAdder } from 'src/state/transactions/hooks'
 import {
   useContractRead,
   useContractWrite,
@@ -10,15 +18,6 @@ import {
 } from 'wagmi'
 
 import { WithdrawPayment } from './WithdrawPayment'
-
-import { SummaryItem } from '@/components/ProductCreate/SummaryItem'
-import { ActionButton } from '@/components/auction/Claimer'
-import AmountInputPanel from '@/components/form/AmountInputPanel'
-import WarningModal from '@/components/modals/WarningModal'
-import { InfoType } from '@/components/pureStyledComponents/FieldRow'
-import BOND_ABI from '@/constants/abis/bond.json'
-import { Bond } from '@/generated/graphql'
-import { useTransactionAdder } from '@/state/transactions/hooks'
 
 export const Withdraw = ({
   bond,

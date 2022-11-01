@@ -1,9 +1,9 @@
 import React from 'react'
 
+import Tooltip from 'src/components/common/Tooltip'
+
 import { TokenInfo } from '../bond/BondAction'
 import { WarningText } from './WarningText'
-
-import Tooltip from '@/components/common/Tooltip'
 
 export const ReviewOrder = ({ amountToken, cancelCutoff, data, orderPlacingOnly, priceToken }) => (
   <div className="mt-10 space-y-6">

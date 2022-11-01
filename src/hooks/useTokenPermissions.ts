@@ -1,7 +1,6 @@
 import { gql, useQuery } from '@apollo/client'
-
-import { TokenAllowListDocument } from '@/generated/graphql'
-import { getLogger } from '@/utils/logger'
+import { TokenAllowListDocument } from 'src/generated/graphql'
+import { getLogger } from 'src/utils/logger'
 
 const logger = getLogger('useTokenAllowList')
 

@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { GhostActionLink } from '../auction/Claimer'
+import { getExplorerLink } from 'src/utils'
 
-import { getExplorerLink } from '@/utils'
+import { GhostActionLink } from '../auction/Claimer'
 
 export const GhostTransactionLink = ({ hash }) => (
   <GhostActionLink

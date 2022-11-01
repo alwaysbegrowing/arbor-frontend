@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 
+import { Bond } from 'src/generated/graphql'
+
 import { getValuePerBond } from '../../hooks/useBondExtraDetails'
 import { useHistoricTokenPrice } from '../../hooks/useTokenPrice'
 import { LoadingBox } from '../../pages/Auction'
 import BondChart from '../auction/BondChart'
-
-import { Bond } from '@/generated/graphql'
 
 const durations: [[number, string], [number, string], [number, string], [number, string]] = [
   [7, '1 week'],

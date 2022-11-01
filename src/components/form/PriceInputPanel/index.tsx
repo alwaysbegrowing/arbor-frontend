@@ -3,6 +3,8 @@ import styled from 'styled-components'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { Fraction } from '@josojo/honeyswap-sdk'
+import Tooltip from 'src/components/common/Tooltip'
+import { DerivedAuctionInfo } from 'src/state/orderPlacement/hooks'
 
 import { useAuction } from '../../../hooks/useAuction'
 import { TokenPill } from '../../bond/BondAction'
@@ -16,9 +18,6 @@ import {
   FieldRowWrapper,
   InfoType,
 } from '../../pureStyledComponents/FieldRow'
-
-import Tooltip from '@/components/common/Tooltip'
-import { DerivedAuctionInfo } from '@/state/orderPlacement/hooks'
 
 export const FieldRowLabelStyled = styled(FieldRowLabel)`
   align-items: center;

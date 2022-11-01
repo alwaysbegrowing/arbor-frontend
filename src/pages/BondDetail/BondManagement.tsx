@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 
+import { useActiveWeb3React } from 'src/hooks'
+import { useBond } from 'src/hooks/useBond'
+
 import { Burn } from './Burn'
 import { Pay } from './Pay'
 import { Withdraw } from './Withdraw'
-
-import { useActiveWeb3React } from '@/hooks'
-import { useBond } from '@/hooks/useBond'
 
 const BondManagement = () => {
   const [bondPanel, setBondPanel] = useState('pay')

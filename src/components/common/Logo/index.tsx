@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import ArborIcon from '@/assets/svg/components/Arbor'
+import ArborIcon from 'src/assets/svg/components/Arbor'
 
 const Wrapper = styled.span`
   align-items: center;

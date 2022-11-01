@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react'
 import styled from 'styled-components'
 
-import { ExternalLink } from '../../navigation/ExternalLink'
+import Tooltip from 'src/components/common/Tooltip'
 
-import Tooltip from '@/components/common/Tooltip'
+import { ExternalLink } from '../../navigation/ExternalLink'
 
 const Value = styled.div`
   font-style: normal;

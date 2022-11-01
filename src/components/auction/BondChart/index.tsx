@@ -1,14 +1,14 @@
 import React from 'react'
 
+import Tooltip from 'src/components/common/Tooltip'
+import { Token } from 'src/generated/graphql'
+
 import useBondChart from '../../../hooks/useBondChart'
 import { getDisplay } from '../../../utils'
 import { InlineLoading } from '../../common/InlineLoading'
 import { SpinnerSize } from '../../common/Spinner'
 import { XYConvertBondChart, XYSimpleBondChart } from '../Charts/BondChart'
 import { ChartWrapper, VolumeLabel } from '../OrderbookChart'
-
-import Tooltip from '@/components/common/Tooltip'
-import { Token } from '@/generated/graphql'
 
 interface Props {
   collateralToken: Token

@@ -2,6 +2,10 @@ import React, { useMemo, useState } from 'react'
 import styled from 'styled-components'
 
 import { formatUnits } from '@ethersproject/units'
+import Tooltip from 'src/components/common/Tooltip'
+import WarningModal from 'src/components/modals/WarningModal'
+import { requiredChain } from 'src/connectors'
+import { getChainName } from 'src/utils/tools'
 
 import { useActiveWeb3React } from '../../../hooks'
 import { useAuction } from '../../../hooks/useAuction'
@@ -19,11 +23,6 @@ import { TokenInfo, TokenPill } from '../../bond/BondAction'
 import { FieldRowLabelStyled } from '../../form/PriceInputPanel'
 import ConfirmationDialog from '../../modals/ConfirmationDialog'
 import { BaseCard } from '../../pureStyledComponents/BaseCard'
-
-import Tooltip from '@/components/common/Tooltip'
-import WarningModal from '@/components/modals/WarningModal'
-import { requiredChain } from '@/connectors'
-import { getChainName } from '@/utils/tools'
 
 const Wrapper = styled(BaseCard)`
   max-width: 100%;

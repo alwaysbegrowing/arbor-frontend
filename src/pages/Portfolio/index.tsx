@@ -2,6 +2,11 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
 
+import ConnectIcon from 'src/assets/svg/components/Connect'
+import DividerIcon from 'src/assets/svg/components/Divider'
+import WalletIcon from 'src/assets/svg/components/Wallet'
+import { ActiveStatusPill } from 'src/components/auction/OrderbookTable'
+
 import Table from '../../components/auctions/Table'
 import { ErrorBoundaryWithFallback } from '../../components/common/ErrorAndReload'
 import { useActiveWeb3React } from '../../hooks'
@@ -11,11 +16,6 @@ import { useSetNoDefaultNetworkId } from '../../state/orderPlacement/hooks'
 import { AllButton, ConvertButtonOutline, SimpleButtonOutline } from '../Auction'
 import { calculatePortfolioRow, getBondStates } from '../BondDetail'
 import { BondIcon } from '../Bonds'
-
-import ConnectIcon from '@/assets/svg/components/Connect'
-import DividerIcon from '@/assets/svg/components/Divider'
-import WalletIcon from '@/assets/svg/components/Wallet'
-import { ActiveStatusPill } from '@/components/auction/OrderbookTable'
 
 const columns = [
   {

@@ -3,16 +3,15 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { tokenLogosServiceApi } from 'src/api'
+import { useTokenListActionHandlers } from 'src/state/tokenList/hooks'
+import { getLogger } from 'src/utils/logger'
 
 import { ButtonMenu } from '../../buttons/ButtonMenu'
 import { Logo } from '../../common/Logo'
 import { Mainmenu } from '../../navigation/Mainmenu'
 import { Mobilemenu } from '../../navigation/Mobilemenu'
 import { InnerContainer } from '../../pureStyledComponents/InnerContainer'
-
-import { tokenLogosServiceApi } from '@/api'
-import { useTokenListActionHandlers } from '@/state/tokenList/hooks'
-import { getLogger } from '@/utils/logger'
 
 const logger = getLogger('Web3ReactManager')
 

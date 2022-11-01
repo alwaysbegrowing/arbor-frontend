@@ -3,8 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 import dayjs from 'dayjs'
 import { useFormContext } from 'react-hook-form'
-
-import TooltipElement from '@/components/common/Tooltip'
+import TooltipElement from 'src/components/common/Tooltip'
 
 export const StepThree = () => {
   const { getValues, register, setValue, unregister } = useFormContext()

@@ -2,6 +2,10 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { round } from 'lodash'
 import { useDispatch, useSelector } from 'react-redux'
+import { isGoerli } from 'src/connectors'
+import { useActiveWeb3React } from 'src/hooks'
+import { useAuction } from 'src/hooks/useAuction'
+import { useAuctionBids } from 'src/hooks/useAuctionBids'
 
 import { AppDispatch, AppState } from '..'
 import { additionalServiceApi } from '../../api'
@@ -19,11 +23,6 @@ import {
   resetUserPrice,
   resetUserVolume,
 } from './actions'
-
-import { isGoerli } from '@/connectors'
-import { useActiveWeb3React } from '@/hooks'
-import { useAuction } from '@/hooks/useAuction'
-import { useAuctionBids } from '@/hooks/useAuctionBids'
 
 const logger = getLogger('orderbook/hooks')
 

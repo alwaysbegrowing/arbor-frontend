@@ -5,6 +5,7 @@ import { useAddRecentTransaction } from '@rainbow-me/rainbowkit'
 import dayjs from 'dayjs'
 import { round } from 'lodash'
 import { useFormContext } from 'react-hook-form'
+import { useBondFactoryContract } from 'src/hooks/useContract'
 import { useToken } from 'wagmi'
 import * as yup from 'yup'
 
@@ -12,9 +13,7 @@ import { useBondName } from '../../hooks/useBondName'
 import { ActionButton } from '../auction/Claimer'
 import WarningModal from '../modals/WarningModal'
 
-import { useBondFactoryContract } from '@/hooks/useContract'
-
-/* 
+/*
 CreateBond ABI & Contract restrictions
 name: string
 symbol: string

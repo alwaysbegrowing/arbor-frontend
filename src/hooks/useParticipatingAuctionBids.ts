@@ -1,12 +1,11 @@
 import { useParams } from 'react-router-dom'
 
 import { gql, useQuery } from '@apollo/client'
+import { BidsForAccountDocument } from 'src/generated/graphql'
+import { RouteAuctionIdentifier, parseURL } from 'src/state/orderPlacement/reducer'
+import { getLogger } from 'src/utils/logger'
 
 import { useActiveWeb3React } from './index'
-
-import { BidsForAccountDocument } from '@/generated/graphql'
-import { RouteAuctionIdentifier, parseURL } from '@/state/orderPlacement/reducer'
-import { getLogger } from '@/utils/logger'
 
 const logger = getLogger('useParticipatingAuctionBids')
 

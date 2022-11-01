@@ -1,11 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Interface } from '@ethersproject/abi'
+import { isProdGoerli } from 'src/connectors'
 
 import { ChainId } from '../../utils'
 import V1_EXCHANGE_ABI from './v1_exchange.json'
 import V1_FACTORY_ABI from './v1_factory.json'
-
-import { isProdGoerli } from '@/connectors'
 
 const V1_FACTORY_ADDRESS = '0x9f20521EF789fd2020e708390b1E6c701d8218BA'
 const V1_FACTORY_INTERFACE = new Interface(V1_FACTORY_ABI)

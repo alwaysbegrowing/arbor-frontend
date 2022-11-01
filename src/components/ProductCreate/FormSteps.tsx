@@ -3,13 +3,12 @@ import React, { useState } from 'react'
 import { ErrorMessage } from '@hookform/error-message'
 import { CrossCircledIcon, DoubleArrowRightIcon } from '@radix-ui/react-icons'
 import { FormProvider, useForm } from 'react-hook-form'
+import { isGoerli } from 'src/connectors'
+import { useActiveWeb3React } from 'src/hooks'
+import { useWalletModalToggle } from 'src/state/application/hooks'
 
 import { ActionButton } from '../auction/Claimer'
 import { IssuerAllowList } from './SelectableTokens'
-
-import { isGoerli } from '@/connectors'
-import { useActiveWeb3React } from '@/hooks'
-import { useWalletModalToggle } from '@/state/application/hooks'
 
 export const FormSteps = ({
   ActionSteps,

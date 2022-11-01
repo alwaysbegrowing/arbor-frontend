@@ -3,10 +3,9 @@ import React, { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons'
 import { useFormContext, useWatch } from 'react-hook-form'
+import { requiredChain } from 'src/connectors'
 
 import { BorrowTokens } from '../SelectableTokens'
-
-import { requiredChain } from '@/connectors'
 
 const BorrowToken = ({ option }) => (
   <span className="flex items-center space-x-4 py-3 px-4 text-xs" key={option?.name}>

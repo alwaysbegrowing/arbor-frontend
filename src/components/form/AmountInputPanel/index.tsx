@@ -2,6 +2,8 @@ import { rgba } from 'polished'
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 
+import Tooltip from 'src/components/common/Tooltip'
+
 import { useActiveWeb3React } from '../../../hooks'
 import { ApprovalState } from '../../../hooks/useApproveCallback'
 import { TokenPill } from '../../bond/BondAction'
@@ -19,8 +21,6 @@ import {
   InfoType,
 } from '../../pureStyledComponents/FieldRow'
 import { FieldRowLabelStyled } from '../PriceInputPanel'
-
-import Tooltip from '@/components/common/Tooltip'
 
 const rotate = keyframes`
   from {

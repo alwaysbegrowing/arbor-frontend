@@ -1,9 +1,9 @@
 import React from 'react'
 
+import Tooltip from 'src/components/common/Tooltip'
+
 import { TokenInfo } from '../bond/BondAction'
 import { GeneralWarning } from './GeneralWarning'
-
-import Tooltip from '@/components/common/Tooltip'
 
 export const ReviewConvert = ({ amount, amountToken, assetsToReceive, type = 'convert' }) => (
   <div className="mt-10 space-y-6">

@@ -3,13 +3,12 @@ import React from 'react'
 import { formatUnits } from '@ethersproject/units'
 import dayjs from 'dayjs'
 import { round } from 'lodash'
+import { Bond } from 'src/generated/graphql'
 
 import { Props as ExtraDetailsItemProps } from '../components/auction/ExtraDetailsItem'
 import TokenLink from '../components/token/TokenLink'
 import { useBond } from './useBond'
 import { useTokenPrice } from './useTokenPrice'
-
-import { Bond } from '@/generated/graphql'
 
 export const WADDecimals = 18
 export const paymentTokenPrice = 1

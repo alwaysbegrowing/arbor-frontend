@@ -1,16 +1,16 @@
 import React, { useCallback, useState } from 'react'
 
-import { BidTransactionLink, TableDesign, calculateRow } from '../OrderbookTable'
+import ConfirmationDialog from 'src/components/modals/ConfirmationDialog'
+import { OopsWarning } from 'src/components/modals/OopsWarning'
+import { Bid } from 'src/generated/graphql'
+import { useBondMaturityForAuction } from 'src/hooks/useBondMaturityForAuction'
+import { useCancelOrderCallback } from 'src/hooks/useCancelOrderCallback'
+import { AuctionState, DerivedAuctionInfo, useAllUserOrders } from 'src/state/orderPlacement/hooks'
+import { AuctionIdentifier } from 'src/state/orderPlacement/reducer'
+import { OrderStatus } from 'src/state/orders/reducer'
+import { PartiallyOptional, getTokenDisplay } from 'src/utils'
 
-import ConfirmationDialog from '@/components/modals/ConfirmationDialog'
-import { OopsWarning } from '@/components/modals/OopsWarning'
-import { Bid } from '@/generated/graphql'
-import { useBondMaturityForAuction } from '@/hooks/useBondMaturityForAuction'
-import { useCancelOrderCallback } from '@/hooks/useCancelOrderCallback'
-import { AuctionState, DerivedAuctionInfo, useAllUserOrders } from '@/state/orderPlacement/hooks'
-import { AuctionIdentifier } from '@/state/orderPlacement/reducer'
-import { OrderStatus } from '@/state/orders/reducer'
-import { PartiallyOptional, getTokenDisplay } from '@/utils'
+import { BidTransactionLink, TableDesign, calculateRow } from '../OrderbookTable'
 
 interface OrdersTableProps {
   bids: PartiallyOptional<Bid, 'account'>[]

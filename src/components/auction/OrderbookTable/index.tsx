@@ -6,6 +6,11 @@ import { formatUnits } from '@ethersproject/units'
 import { DoubleArrowLeftIcon, DoubleArrowRightIcon } from '@radix-ui/react-icons'
 import { round } from 'lodash'
 import { usePagination, useTable } from 'react-table'
+import Tooltip from 'src/components/common/Tooltip'
+import { Auction } from 'src/generated/graphql'
+import { useGetAuctionProceeds } from 'src/hooks/useClaimOrderCallback'
+import { getAuctionStates } from 'src/pages/Offerings'
+import { RouteAuctionIdentifier, parseURL } from 'src/state/orderPlacement/reducer'
 
 import { useActiveWeb3React } from '../../../hooks'
 import { useAuctionBids } from '../../../hooks/useAuctionBids'
@@ -15,12 +20,6 @@ import { OrderStatus } from '../../../state/orders/reducer'
 import { getExplorerLink, getTokenDisplay } from '../../../utils'
 import { calculateInterestRate } from '../../form/InterestRateInputPanel'
 import { orderStatusText } from '../OrdersTable'
-
-import Tooltip from '@/components/common/Tooltip'
-import { Auction } from '@/generated/graphql'
-import { useGetAuctionProceeds } from '@/hooks/useClaimOrderCallback'
-import { getAuctionStates } from '@/pages/Offerings'
-import { RouteAuctionIdentifier, parseURL } from '@/state/orderPlacement/reducer'
 
 export const OverflowWrap = styled.div`
   max-width: 100%;

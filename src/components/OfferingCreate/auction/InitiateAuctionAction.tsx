@@ -5,19 +5,18 @@ import { useAddRecentTransaction } from '@rainbow-me/rainbowkit'
 import dayjs from 'dayjs'
 import { round } from 'lodash'
 import { useFormContext } from 'react-hook-form'
+import WarningModal from 'src/components/modals/WarningModal'
+import { requiredChain } from 'src/connectors'
+import easyAuctionABI from 'src/constants/abis/easyAuction/easyAuction.json'
+import { useActiveWeb3React } from 'src/hooks'
+import { EASY_AUCTION_NETWORKS } from 'src/utils'
 import { useContract, useToken } from 'wagmi'
 import * as yup from 'yup'
 
 import { AccessManagerContract } from '../../ProductCreate/SelectableTokens'
 import { ActionButton } from '../../auction/Claimer'
 
-import WarningModal from '@/components/modals/WarningModal'
-import { requiredChain } from '@/connectors'
-import easyAuctionABI from '@/constants/abis/easyAuction/easyAuction.json'
-import { useActiveWeb3React } from '@/hooks'
-import { EASY_AUCTION_NETWORKS } from '@/utils'
-
-/* 
+/*
 InitiateAuction ABI & Contract restrictions
   _auctioningToken: string
     - Auction must be approved for _auctionedSellAmount from msg.sender

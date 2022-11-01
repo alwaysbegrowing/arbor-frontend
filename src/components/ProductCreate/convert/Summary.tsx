@@ -2,13 +2,12 @@ import React from 'react'
 
 import dayjs from 'dayjs'
 import { useFormContext } from 'react-hook-form'
+import { useCollateralRatio } from 'src/hooks/useCollateralRatio'
+import { useStrikePrice } from 'src/hooks/useStrikePrice'
 import { useToken } from 'wagmi'
 
 import { useBondName } from '../../../hooks/useBondName'
 import { SummaryItem } from '../SummaryItem'
-
-import { useCollateralRatio } from '@/hooks/useCollateralRatio'
-import { useStrikePrice } from '@/hooks/useStrikePrice'
 
 export const Summary = ({ currentStep }) => {
   const { watch } = useFormContext()

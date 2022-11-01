@@ -7,6 +7,8 @@ import { Contract } from '@ethersproject/contracts'
 import { parseBytes32String } from '@ethersproject/strings'
 import { JSBI, Percent, Token, TokenAmount, WETH } from '@josojo/honeyswap-sdk'
 import IUniswapV2PairABI from '@uniswap/v2-core/build/IUniswapV2Pair.json'
+import { requiredChain } from 'src/connectors'
+import { Token as GraphToken } from 'src/generated/graphql'
 import { chain, etherscanBlockExplorers } from 'wagmi'
 
 import { EasyAuction } from '../../gen/types'
@@ -14,9 +16,6 @@ import easyAuctionABI from '../constants/abis/easyAuction/easyAuction.json'
 import ERC20_ABI from '../constants/abis/erc20.json'
 import ERC20_BYTES32_ABI from '../constants/abis/erc20_bytes32.json'
 import { getLogger } from '../utils/logger'
-
-import { requiredChain } from '@/connectors'
-import { Token as GraphToken } from '@/generated/graphql'
 
 const logger = getLogger('utils/index')
 

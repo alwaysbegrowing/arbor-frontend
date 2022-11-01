@@ -4,6 +4,10 @@ import { createGlobalStyle } from 'styled-components'
 
 import { formatUnits } from '@ethersproject/units'
 import dayjs from 'dayjs'
+import ConnectIcon from 'src/assets/svg/components/Connect'
+import WalletIcon from 'src/assets/svg/components/Wallet'
+import { Bond } from 'src/generated/graphql'
+import { useActiveWeb3React } from 'src/hooks'
 
 import BondGraphCard from '../../components/BondGraphCard/BondGraphCard'
 import Dev from '../../components/Dev'
@@ -20,11 +24,6 @@ import { useBond } from '../../hooks/useBond'
 import { useBondExtraDetails } from '../../hooks/useBondExtraDetails'
 import { ConvertButtonOutline, LoadingTwoGrid, SimpleButtonOutline, TwoGridPage } from '../Auction'
 import BondManagement from './BondManagement'
-
-import ConnectIcon from '@/assets/svg/components/Connect'
-import WalletIcon from '@/assets/svg/components/Wallet'
-import { Bond } from '@/generated/graphql'
-import { useActiveWeb3React } from '@/hooks'
 
 export enum BondActions {
   Redeem,

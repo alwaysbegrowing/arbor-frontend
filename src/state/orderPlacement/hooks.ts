@@ -6,6 +6,7 @@ import { formatUnits, parseUnits } from '@ethersproject/units'
 import { Fraction, JSBI, Token, TokenAmount } from '@josojo/honeyswap-sdk'
 import { round } from 'lodash'
 import { useDispatch, useSelector } from 'react-redux'
+import { requiredChain } from 'src/connectors'
 
 import { additionalServiceApi } from '../../api'
 import easyAuctionABI from '../../constants/abis/easyAuction/easyAuction.json'
@@ -36,8 +37,6 @@ import {
   setNoDefaultNetworkId,
 } from './actions'
 import { AuctionIdentifier } from './reducer'
-
-import { requiredChain } from '@/connectors'
 
 const logger = getLogger('orderPlacement/hooks')
 

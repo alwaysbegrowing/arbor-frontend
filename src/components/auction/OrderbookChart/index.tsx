@@ -2,14 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { Token } from '@josojo/honeyswap-sdk'
+import Tooltip from 'src/components/common/Tooltip'
 
 import useChart from '../../../hooks/useChart'
 import { getTokenDisplay } from '../../../utils'
 import { InlineLoading } from '../../common/InlineLoading'
 import { SpinnerSize } from '../../common/Spinner'
 import { XYChart } from '../Charts/XYChart'
-
-import Tooltip from '@/components/common/Tooltip'
 
 export enum Offer {
   Bid,

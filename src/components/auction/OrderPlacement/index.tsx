@@ -5,44 +5,46 @@ import { formatUnits } from '@ethersproject/units'
 import { Fraction, Token, TokenAmount } from '@josojo/honeyswap-sdk'
 import dayjs from 'dayjs'
 import useGeoLocation from 'react-ipgeolocation'
-import { useBalance } from 'wagmi'
-
-import { Button } from '../../buttons/Button'
-import AmountInputPanel from '../../form/AmountInputPanel'
-import InterestRateInputPanel, { getReviewData } from '../../form/InterestRateInputPanel'
-import PriceInputPanel from '../../form/PriceInputPanel'
-import ConfirmationDialog from '../../modals/ConfirmationDialog'
-import { ReviewOrder } from '../../modals/ReviewOrder'
-import WarningModal from '../../modals/WarningModal'
-import Modal from '../../modals/common/Modal'
-import { BaseCard } from '../../pureStyledComponents/BaseCard'
-import { EmptyContentText } from '../../pureStyledComponents/EmptyContent'
-import { InfoType } from '../../pureStyledComponents/FieldRow'
-
-import kycLinks from '@/assets/links/kycLinks.json'
-import PrivateIcon from '@/assets/svg/components/Private'
-import Tooltip from '@/components/common/Tooltip'
-import { isGoerli, requiredChain } from '@/connectors'
-import { useActiveWeb3React } from '@/hooks'
-import { ApprovalState, useApproveCallback, useUnapproveCallback } from '@/hooks/useApproveCallback'
-import { useAuction } from '@/hooks/useAuction'
-import { useAuctionDetails } from '@/hooks/useAuctionDetails'
-import { usePlaceOrderCallback } from '@/hooks/usePlaceOrderCallback'
-import { useSignature } from '@/hooks/useSignature'
-import { LoadingBox } from '@/pages/Auction'
-import { useWalletModalToggle } from '@/state/application/hooks'
+import kycLinks from 'src/assets/links/kycLinks.json'
+import PrivateIcon from 'src/assets/svg/components/Private'
+import { Button } from 'src/components/buttons/Button'
+import Tooltip from 'src/components/common/Tooltip'
+import AmountInputPanel from 'src/components/form/AmountInputPanel'
+import InterestRateInputPanel, { getReviewData } from 'src/components/form/InterestRateInputPanel'
+import PriceInputPanel from 'src/components/form/PriceInputPanel'
+import ConfirmationDialog from 'src/components/modals/ConfirmationDialog'
+import { ReviewOrder } from 'src/components/modals/ReviewOrder'
+import WarningModal from 'src/components/modals/WarningModal'
+import Modal from 'src/components/modals/common/Modal'
+import { BaseCard } from 'src/components/pureStyledComponents/BaseCard'
+import { EmptyContentText } from 'src/components/pureStyledComponents/EmptyContent'
+import { InfoType } from 'src/components/pureStyledComponents/FieldRow'
+import { isGoerli, requiredChain } from 'src/connectors'
+import { useActiveWeb3React } from 'src/hooks'
+import {
+  ApprovalState,
+  useApproveCallback,
+  useUnapproveCallback,
+} from 'src/hooks/useApproveCallback'
+import { useAuction } from 'src/hooks/useAuction'
+import { useAuctionDetails } from 'src/hooks/useAuctionDetails'
+import { usePlaceOrderCallback } from 'src/hooks/usePlaceOrderCallback'
+import { useSignature } from 'src/hooks/useSignature'
+import { LoadingBox } from 'src/pages/Auction'
+import { useWalletModalToggle } from 'src/state/application/hooks'
 import {
   DerivedAuctionInfo,
   tryParseAmount,
   //useGetOrderPlacementError,
   useOrderPlacementState,
   useSwapActionHandlers,
-} from '@/state/orderPlacement/hooks'
-import { AuctionIdentifier } from '@/state/orderPlacement/reducer'
-import { useOrderState } from '@/state/orders/hooks'
-import { OrderState } from '@/state/orders/reducer'
-import { EASY_AUCTION_NETWORKS, getFullTokenDisplay } from '@/utils'
-import { getChainName } from '@/utils/tools'
+} from 'src/state/orderPlacement/hooks'
+import { AuctionIdentifier } from 'src/state/orderPlacement/reducer'
+import { useOrderState } from 'src/state/orders/hooks'
+import { OrderState } from 'src/state/orders/reducer'
+import { EASY_AUCTION_NETWORKS, getFullTokenDisplay } from 'src/utils'
+import { getChainName } from 'src/utils/tools'
+import { useBalance } from 'wagmi'
 
 const LinkCSS = css`
   color: ${({ theme }) => theme.text1};

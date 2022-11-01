@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { UnregisteredToken } from '../UnregisteredToken'
+import UnicornSvg from 'src/assets/svg/components/SimpleBond'
+import { useTokenListState } from 'src/state/tokenList/hooks'
+import { DEV_bondImage } from 'src/state/tokenList/reducer'
+import { isAddress } from 'src/utils'
 
-import UnicornSvg from '@/assets/svg/components/SimpleBond'
-import { useTokenListState } from '@/state/tokenList/hooks'
-import { DEV_bondImage } from '@/state/tokenList/reducer'
-import { isAddress } from '@/utils'
+import { UnregisteredToken } from '../UnregisteredToken'
 
 const Wrapper = styled.div<{ size: string }>`
   background-color: #e0e0e0;

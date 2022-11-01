@@ -4,17 +4,16 @@ import { useNavigate } from 'react-router-dom'
 import { parseUnits } from '@ethersproject/units'
 import { useAddRecentTransaction } from '@rainbow-me/rainbowkit'
 import { useFormContext } from 'react-hook-form'
+import TooltipElement from 'src/components/common/Tooltip'
+import { requiredChain } from 'src/connectors'
+import BOND_ABI from 'src/constants/abis/bond.json'
+import { V1_BOND_FACTORY_ADDRESS } from 'src/constants/v1'
+import { useActiveWeb3React } from 'src/hooks'
 import { useContract, useContractRead, useToken } from 'wagmi'
 
 import { ActionButton } from '../auction/Claimer'
 import WarningModal from '../modals/WarningModal'
 import { MintAction } from './MintAction'
-
-import TooltipElement from '@/components/common/Tooltip'
-import { requiredChain } from '@/connectors'
-import BOND_ABI from '@/constants/abis/bond.json'
-import { V1_BOND_FACTORY_ADDRESS } from '@/constants/v1'
-import { useActiveWeb3React } from '@/hooks'
 
 export const BondActionSteps = ({ convertible = true, disabled }) => {
   const { account, signer } = useActiveWeb3React()

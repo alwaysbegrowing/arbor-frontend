@@ -1,5 +1,10 @@
 import React, { useMemo } from 'react'
 
+import { isProd, requiredChain } from 'src/connectors'
+import { useBondsPortfolio } from 'src/hooks/useBondsPortfolio'
+import { useTokenAllowList } from 'src/hooks/useTokenPermissions'
+import { useTokenListState } from 'src/state/tokenList/hooks'
+import { getLogger } from 'src/utils/logger'
 import { chainId, useAccount } from 'wagmi'
 
 import { BondTokenDetails } from '../BondTokenDetails'
@@ -7,12 +12,6 @@ import { BorrowTokens, CollateralTokens } from '../SelectableTokens'
 import { TokenDetails } from '../TokenDetails'
 import { ArborIcon } from '../icons/ArborIcon'
 import { Selector } from './BorrowTokenSelector'
-
-import { isProd, requiredChain } from '@/connectors'
-import { useBondsPortfolio } from '@/hooks/useBondsPortfolio'
-import { useTokenAllowList } from '@/hooks/useTokenPermissions'
-import { useTokenListState } from '@/state/tokenList/hooks'
-import { getLogger } from '@/utils/logger'
 
 const logger = getLogger('useTokenAllowList')
 

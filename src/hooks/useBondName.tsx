@@ -1,7 +1,6 @@
 import { useFormContext } from 'react-hook-form'
+import { useStrikePrice } from 'src/hooks/useStrikePrice'
 import { useToken } from 'wagmi'
-
-import { useStrikePrice } from '@/hooks/useStrikePrice'
 
 export const useBondName = (isConvertible: boolean, maturityDate: Date) => {
   const { watch } = useFormContext()

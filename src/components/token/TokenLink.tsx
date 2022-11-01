@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react'
 
-import { getExplorerLink } from '../../utils'
+import { Token } from 'src/generated/graphql'
 
-import { Token } from '@/generated/graphql'
+import { getExplorerLink } from '../../utils'
 
 export const LinkIcon = ({ children, href }) => {
   const noPropagation = (e) => e.stopPropagation()

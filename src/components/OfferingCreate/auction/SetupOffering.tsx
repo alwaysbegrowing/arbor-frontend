@@ -1,13 +1,13 @@
 import React from 'react'
 
+import { Token } from 'src/generated/graphql'
+
 import { FormSteps } from '../../ProductCreate/FormSteps'
 import { ActionSteps } from './ActionSteps'
 import { StepOne } from './StepOne'
 import { StepThree } from './StepThree'
 import { StepTwo } from './StepTwo'
 import { Summary } from './Summary'
-
-import { Token } from '@/generated/graphql'
 
 export type Inputs = {
   issuerName: string

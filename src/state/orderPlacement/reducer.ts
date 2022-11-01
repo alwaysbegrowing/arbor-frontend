@@ -1,4 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit'
+import { requiredChain } from 'src/connectors'
 
 import { NUMBER_OF_DIGITS_FOR_INVERSION } from '../../constants/config'
 import { useActiveWeb3React } from '../../hooks'
@@ -11,8 +12,6 @@ import {
   setDefaultsFromURLSearch,
   setNoDefaultNetworkId,
 } from './actions'
-
-import { requiredChain } from '@/connectors'
 
 export interface OrderPlacementState {
   readonly chainId: number | undefined

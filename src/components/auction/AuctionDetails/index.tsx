@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
 import { formatUnits } from '@ethersproject/units'
 import { ceil } from 'lodash'
+import { Auction } from 'src/generated/graphql'
 
 import { useAuction } from '../../../hooks/useAuction'
 import { DerivedAuctionInfo } from '../../../state/orderPlacement/hooks'
@@ -15,8 +16,6 @@ import TokenLink, { LinkIcon } from '../../token/TokenLink'
 import { AuctionTimer } from '../AuctionTimer'
 import { ExtraDetailsItem, Props as ExtraDetailsItemProps } from '../ExtraDetailsItem'
 import { AuctionStatusPill } from '../OrderbookTable'
-
-import { Auction } from '@/generated/graphql'
 
 const TokenValue = styled.span`
   line-height: 1.2;

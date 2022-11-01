@@ -1,11 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { requiredChain } from 'src/connectors'
+import { Auction } from 'src/generated/graphql'
 
 import { Order, decodeOrder, encodeOrder } from '../hooks/Order'
 import { AuctionInfoDetail } from '../hooks/useAuctionDetails'
 import { getLogger } from '../utils/logger'
-
-import { requiredChain } from '@/connectors'
-import { Auction } from '@/generated/graphql'
 
 const logger = getLogger('AdditionalServicesApi')
 

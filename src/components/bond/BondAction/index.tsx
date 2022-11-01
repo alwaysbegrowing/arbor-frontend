@@ -4,6 +4,12 @@ import { useParams } from 'react-router-dom'
 import { formatUnits, parseUnits } from '@ethersproject/units'
 import { Token, TokenAmount } from '@josojo/honeyswap-sdk'
 import dayjs from 'dayjs'
+import { ActionButton } from 'src/components/auction/Claimer'
+import Tooltip from 'src/components/common/Tooltip'
+import WarningModal from 'src/components/modals/WarningModal'
+import { requiredChain } from 'src/connectors'
+import { useUSDPerBond } from 'src/hooks/useBondExtraDetails'
+import { getChainName } from 'src/utils/tools'
 
 import { useActiveWeb3React } from '../../../hooks'
 import { useBond } from '../../../hooks/useBond'
@@ -19,13 +25,6 @@ import ConfirmationDialog from '../../modals/ConfirmationDialog'
 import { ReviewConvert } from '../../modals/ReviewConvert'
 import { FieldRowTokenSymbol } from '../../pureStyledComponents/FieldRow'
 import TokenLogo from '../../token/TokenLogo'
-
-import { ActionButton } from '@/components/auction/Claimer'
-import Tooltip from '@/components/common/Tooltip'
-import WarningModal from '@/components/modals/WarningModal'
-import { requiredChain } from '@/connectors'
-import { useUSDPerBond } from '@/hooks/useBondExtraDetails'
-import { getChainName } from '@/utils/tools'
 
 export const TokenPill = ({ token }) => {
   const noPropagation = (e) => e.stopPropagation()
@@ -301,7 +300,7 @@ const BondAction = ({
   }
 
   return (
-    <div className="card redeem-card-color">
+    <div className="redeem-card-color card">
       <div className="card-body">
         <div className="flex flex-row justify-between items-start">
           <h2 className="card-title">{getActionText(componentType)}</h2>

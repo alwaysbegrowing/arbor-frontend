@@ -15,7 +15,7 @@ const AuctionSettle = () => {
   const { settleAuctionCallback } = useSettleAuction(auctionId)
 
   return (
-    <div className="card place-order-color">
+    <div className="place-order-color card">
       <div className="card-body">
         <h2 className="card-title">Auction Settling</h2>
 

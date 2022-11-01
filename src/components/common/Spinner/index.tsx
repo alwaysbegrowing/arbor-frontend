@@ -1,7 +1,7 @@
 import React, { HTMLAttributes } from 'react'
 import styled from 'styled-components'
 
-import ArborIcon from '@/assets/svg/components/Arbor'
+import ArborIcon from 'src/assets/svg/components/Arbor'
 
 const Wrapper = styled.div<{ size?: SpinnerSize | string | undefined }>`
   flex-grow: 0;

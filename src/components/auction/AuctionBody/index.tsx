@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { Transition } from '@headlessui/react'
 import { DoubleArrowRightIcon } from '@radix-ui/react-icons'
+import { Auction } from 'src/generated/graphql'
 
 import { useBondExtraDetails } from '../../../hooks/useBondExtraDetails'
 import { TwoGridPage } from '../../../pages/Auction'
@@ -18,8 +19,6 @@ import Claimer from '../Claimer'
 import { ExtraDetailsItem } from '../ExtraDetailsItem'
 import OrderPlacement from '../OrderPlacement'
 import { OrderBookContainer } from '../OrderbookContainer'
-
-import { Auction } from '@/generated/graphql'
 
 interface AuctionBodyProps {
   auctionIdentifier: AuctionIdentifier

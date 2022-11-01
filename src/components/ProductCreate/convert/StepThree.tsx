@@ -1,13 +1,12 @@
 import React from 'react'
 
 import { useFormContext } from 'react-hook-form'
+import TooltipElement from 'src/components/common/Tooltip'
+import { useStrikePrice } from 'src/hooks/useStrikePrice'
+import { useTokenPrice } from 'src/hooks/useTokenPrice'
 
 import { FieldRowLabelStyledText, FieldRowWrapper } from '../../form/InterestRateInputPanel'
 import { TokenDetails } from '../TokenDetails'
-
-import TooltipElement from '@/components/common/Tooltip'
-import { useStrikePrice } from '@/hooks/useStrikePrice'
-import { useTokenPrice } from '@/hooks/useTokenPrice'
 
 export const StepThree = () => {
   const { register, watch } = useFormContext()

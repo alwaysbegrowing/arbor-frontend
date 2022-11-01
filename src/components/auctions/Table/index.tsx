@@ -3,13 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { useGlobalFilter, useTable } from 'react-table'
+import Tooltip from 'src/components/common/Tooltip'
 
 import { ActionButton } from '../../auction/Claimer'
 import { Delete } from '../../icons/Delete'
 import { Magnifier } from '../../icons/Magnifier'
 import { PageTitle } from '../../pureStyledComponents/PageTitle'
-
-import Tooltip from '@/components/common/Tooltip'
 
 const Wrapper = styled.div`
   margin-top: -30px;

@@ -1,10 +1,9 @@
 import { useParams } from 'react-router-dom'
 
 import { gql, useQuery } from '@apollo/client'
-
-import { MaturityDateForAuctionDocument } from '@/generated/graphql'
-import { RouteAuctionIdentifier, parseURL } from '@/state/orderPlacement/reducer'
-import { getLogger } from '@/utils/logger'
+import { MaturityDateForAuctionDocument } from 'src/generated/graphql'
+import { RouteAuctionIdentifier, parseURL } from 'src/state/orderPlacement/reducer'
+import { getLogger } from 'src/utils/logger'
 
 const logger = getLogger('useBondMaturityForAuction')
 

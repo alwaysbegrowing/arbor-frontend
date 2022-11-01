@@ -1,9 +1,8 @@
 import React from 'react'
 
 import { round } from 'lodash'
+import { useTokenPrice } from 'src/hooks/useTokenPrice'
 import { useAccount, useBalance, useToken } from 'wagmi'
-
-import { useTokenPrice } from '@/hooks/useTokenPrice'
 
 export const TokenDetails = ({ option }) => {
   const { data: price } = useTokenPrice(option?.address)

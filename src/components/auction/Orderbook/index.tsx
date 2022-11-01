@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { TokenAmount } from '@josojo/honeyswap-sdk'
+import { useAuction } from 'src/hooks/useAuction'
 
 import { LoadingBox } from '../../../pages/Auction'
 import { DerivedAuctionInfo } from '../../../state/orderPlacement/hooks'
@@ -10,8 +11,6 @@ import { useOrderbookState } from '../../../state/orderbook/hooks'
 import OrderBookChart, { OrderBookError } from '../OrderbookChart'
 import { OrderBookTable } from '../OrderbookTable'
 import { processOrderbookData } from '../OrderbookWidget'
-
-import { useAuction } from '@/hooks/useAuction'
 
 interface OrderbookGraphProps {
   derivedAuctionInfo: DerivedAuctionInfo

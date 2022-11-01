@@ -2,8 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { QuestionMarkIcon } from '@radix-ui/react-icons'
-
-import { TooltipFull } from '@/components/common/Tooltip'
+import { TooltipFull } from 'src/components/common/Tooltip'
 
 const Wrapper = styled.div<{ size: string }>`
   height: ${(props) => props.size};

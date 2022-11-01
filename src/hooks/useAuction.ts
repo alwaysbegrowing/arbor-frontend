@@ -3,10 +3,9 @@ import { BigNumber } from 'ethers'
 import { gql, useQuery } from '@apollo/client'
 import { Fraction, Token, TokenAmount } from '@josojo/honeyswap-sdk'
 import dayjs from 'dayjs'
-
-import { AllAuctionsDocument, SingleAuctionDocument } from '@/generated/graphql'
-import { AuctionState, DerivedAuctionInfo } from '@/state/orderPlacement/hooks'
-import { getLogger } from '@/utils/logger'
+import { AllAuctionsDocument, SingleAuctionDocument } from 'src/generated/graphql'
+import { AuctionState, DerivedAuctionInfo } from 'src/state/orderPlacement/hooks'
+import { getLogger } from 'src/utils/logger'
 
 const logger = getLogger('useAuctions')
 

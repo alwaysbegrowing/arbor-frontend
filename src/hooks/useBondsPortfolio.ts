@@ -1,9 +1,8 @@
 import { gql, useQuery } from '@apollo/client'
+import { AccountDetailsDocument, Bond } from 'src/generated/graphql'
+import { getLogger } from 'src/utils/logger'
 
 import { useActiveWeb3React } from '.'
-
-import { AccountDetailsDocument, Bond } from '@/generated/graphql'
-import { getLogger } from '@/utils/logger'
 
 const logger = getLogger('useBondsPortfolio')
 

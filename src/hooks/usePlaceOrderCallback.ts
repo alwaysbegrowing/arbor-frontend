@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract, ContractFunction } from '@ethersproject/contracts'
 import { Token } from '@josojo/honeyswap-sdk'
+import { requiredChain } from 'src/connectors'
 
 import { additionalServiceApi } from '../api'
 import depositAndPlaceOrderABI from '../constants/abis/easyAuction/depositAndPlaceOrder.json'
@@ -32,8 +33,6 @@ import { encodeOrder } from './Order'
 import { useActiveWeb3React } from './index'
 import { useContract } from './useContract'
 import { useGasPrice } from './useGasPrice'
-
-import { requiredChain } from '@/connectors'
 
 const logger = getLogger('usePlaceOrderCallback')
 

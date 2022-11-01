@@ -1,4 +1,4 @@
-import { useTokenPrice } from '@/hooks/useTokenPrice'
+import { useTokenPrice } from 'src/hooks/useTokenPrice'
 
 export const useCollateralRatio = ({ amountOfBonds, amountOfCollateral, collateralToken }) => {
   const { data: tokenPrice } = useTokenPrice(collateralToken?.address)

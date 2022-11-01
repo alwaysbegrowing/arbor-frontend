@@ -5,6 +5,8 @@ import { gql, useQuery } from '@apollo/client'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { Token, TokenAmount } from '@josojo/honeyswap-sdk'
+import { requiredChain } from 'src/connectors'
+import { BidsForAccountNoCancelledDocument } from 'src/generated/graphql'
 
 import { DerivedAuctionInfo } from '../state/orderPlacement/hooks'
 import {
@@ -19,9 +21,6 @@ import { Order, decodeOrder } from './Order'
 import { useActiveWeb3React } from './index'
 import { useAuctionDetails } from './useAuctionDetails'
 import { useGasPrice } from './useGasPrice'
-
-import { requiredChain } from '@/connectors'
-import { BidsForAccountNoCancelledDocument } from '@/generated/graphql'
 
 const logger = getLogger('useClaimOrderCallback')
 

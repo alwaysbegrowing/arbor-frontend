@@ -1,10 +1,9 @@
 import React from 'react'
 
 import { formatUnits } from '@ethersproject/units'
+import { Bond } from 'src/generated/graphql'
 
 import { ArborIcon } from './icons/ArborIcon'
-
-import { Bond } from '@/generated/graphql'
 
 export const BondTokenDetails = ({ option }: { option: Bond }) => {
   const balance = Number(formatUnits(option?.tokenBalances?.[0].amount || '0', option?.decimals))

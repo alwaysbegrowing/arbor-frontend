@@ -1,6 +1,6 @@
 import React from 'react'
 
-import TooltipElement from '@/components/common/Tooltip'
+import TooltipElement from 'src/components/common/Tooltip'
 
 export const SummaryItem = ({ text, tip = null, title }) => (
   <div className="pb-4 space-y-2 border-b border-[#2C2C2C]">

@@ -2,10 +2,9 @@ import React from 'react'
 
 import dayjs from 'dayjs'
 import { useFormContext } from 'react-hook-form'
+import TooltipElement from 'src/components/common/Tooltip'
 
 import BorrowTokenSelector from './selectors/BorrowTokenSelector'
-
-import TooltipElement from '@/components/common/Tooltip'
 
 export const StepOne = () => {
   const { register } = useFormContext()

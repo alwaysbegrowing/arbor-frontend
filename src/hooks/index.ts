@@ -1,6 +1,5 @@
+import { requiredChain } from 'src/connectors'
 import { useAccount, useBlockNumber, useNetwork, useProvider, useSigner } from 'wagmi'
-
-import { requiredChain } from '@/connectors'
 
 export function useActiveWeb3React() {
   const { address } = useAccount()

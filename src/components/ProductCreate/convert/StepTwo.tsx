@@ -1,15 +1,14 @@
 import React from 'react'
 
 import { useFormContext } from 'react-hook-form'
+import TooltipElement from 'src/components/common/Tooltip'
+import { useActiveWeb3React } from 'src/hooks'
+import { useCollateralRatio } from 'src/hooks/useCollateralRatio'
+import { useTokenPrice } from 'src/hooks/useTokenPrice'
 import { useBalance, useToken } from 'wagmi'
 
 import { FieldRowLabelStyledText, FieldRowWrapper } from '../../form/InterestRateInputPanel'
 import CollateralTokenSelector from '../selectors/CollateralTokenSelector'
-
-import TooltipElement from '@/components/common/Tooltip'
-import { useActiveWeb3React } from '@/hooks'
-import { useCollateralRatio } from '@/hooks/useCollateralRatio'
-import { useTokenPrice } from '@/hooks/useTokenPrice'
 
 export const StepTwo = () => {
   const { register, watch } = useFormContext()
