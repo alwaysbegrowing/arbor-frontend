@@ -127,7 +127,11 @@ export const useGraphDerivedAuctionInfo = (auctionId?: number, chainId?: number)
     initialAuctionOrder: graphInfo?.offeringSize,
     initialPrice: new Fraction(
       graphInfo?.offeringSize,
-      BigInt(Number(graphInfo?.minimumBondPrice) * Math.pow(10, Number(graphInfo?.bond.decimals))),
+      BigInt(
+        Math.round(
+          Number(graphInfo?.minimumBondPrice) * Math.pow(10, Number(graphInfo?.bond.decimals)),
+        ),
+      ),
     ),
     minBiddingAmountPerOrder: '0',
     orderCancellationEndDate: graphInfo?.orderCancellationEndDate / 1000,
