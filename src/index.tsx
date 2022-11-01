@@ -24,6 +24,7 @@ import UserUpdater from './state/user/updater'
 import ThemeProvider from './theme'
 import { GlobalStyle } from './theme/globalStyle'
 import './index.css'
+import '@rainbow-me/rainbowkit/styles.css'
 
 let configuredChains = []
 if (isProdGoerli) {
