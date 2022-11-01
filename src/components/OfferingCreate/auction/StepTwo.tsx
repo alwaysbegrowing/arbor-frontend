@@ -10,7 +10,7 @@ export const StepTwo = () => {
 
   return (
     <>
-      <div className="w-full form-control">
+      <div className="form-control w-full">
         <label className="label">
           <TooltipElement
             left={<span className="label-text">Start date</span>}
@@ -18,14 +18,14 @@ export const StepTwo = () => {
           />
         </label>
         <input
-          className="w-full input input-bordered"
-          readOnly
+          className="input-bordered input w-full"
+          disabled
           type="date"
           value={new Date().toISOString().substring(0, 10)}
           {...register('auctionStartDate', {})}
         />
       </div>
-      <div className="w-full form-control">
+      <div className="form-control w-full">
         <label className="label">
           <TooltipElement
             left={<span className="label-text">End date</span>}
@@ -33,7 +33,7 @@ export const StepTwo = () => {
           />
         </label>
         <input
-          className="w-full input input-bordered"
+          className="input-bordered input w-full"
           type="datetime-local"
           {...register('auctionEndDate', {
             required: 'The auction end date must be entered',
