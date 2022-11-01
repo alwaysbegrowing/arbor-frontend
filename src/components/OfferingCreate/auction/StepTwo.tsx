@@ -5,7 +5,7 @@ import { useFormContext } from 'react-hook-form'
 
 import TooltipElement from '@/components/common/Tooltip'
 
-function addDays(date, days) {
+export function addDays(date, days) {
   const result = new Date(date)
   result.setDate(result.getDate() + days)
   return result

@@ -3,6 +3,7 @@ import React from 'react'
 import dayjs from 'dayjs'
 import { useFormContext } from 'react-hook-form'
 
+import { addDays } from '../OfferingCreate/auction/StepTwo'
 import BorrowTokenSelector from './selectors/BorrowTokenSelector'
 
 import TooltipElement from '@/components/common/Tooltip'
@@ -67,6 +68,7 @@ export const StepOne = () => {
         </label>
         <input
           className="input-bordered input w-full"
+          defaultValue={addDays(new Date(), 365).toISOString().substring(0, 10)}
           min={dayjs(new Date()).utc().add(1, 'day').format('YYYY-MM-DD')}
           placeholder="DD/MM/YYYY"
           type="date"
