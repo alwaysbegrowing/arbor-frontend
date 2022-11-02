@@ -180,8 +180,9 @@ const auctionsQuery = gql`
 `
 
 export const useAuctions = () => {
-  const { data, error, loading } = useQuery(AllAuctionsDocument)
-
+  const { data, error, loading } = useQuery(AllAuctionsDocument, {
+    fetchPolicy: 'no-cache',
+  })
   if (error) {
     logger.error('Error getting useAuctions info', error)
   }

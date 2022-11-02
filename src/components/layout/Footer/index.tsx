@@ -27,7 +27,7 @@ export const Footer: React.FC = ({ ...restProps }) => {
       <Inner className="fullPage">
         <div className="footer text-neutral-content">
           <FooterLogo className="grid-flow-col items-center">
-            <Wordmark style={{ height: 80 }} />
+            <Wordmark style={{ height: 60 }} />
           </FooterLogo>
           <FooterLinks className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
             <a href="https://docs.arbor.garden/faq">Faq</a>

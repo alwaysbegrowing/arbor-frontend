@@ -11,6 +11,7 @@ import OrderBookChart, { OrderBookError } from '../OrderbookChart'
 import { OrderBookTable } from '../OrderbookTable'
 import { processOrderbookData } from '../OrderbookWidget'
 
+import { isGoerli } from '@/connectors'
 import { useAuction } from '@/hooks/useAuction'
 
 interface OrderbookGraphProps {
@@ -28,7 +29,7 @@ export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
     userOrderVolume,
   } = useOrderbookState()
 
-  const [showOrderList, setShowOrderList] = useState(false)
+  const [showOrderList, setShowOrderList] = useState(isGoerli)
   const auctionIdentifier = parseURL(useParams())
   const { data: graphData } = useAuction(auctionIdentifier.auctionId)
   const { auctionId } = auctionIdentifier
@@ -68,6 +69,7 @@ export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
             <div className="btn-group">
               <button
                 className={`btn ${!showOrderList && 'btn-active'} w-[85px]`}
+                disabled={isGoerli}
                 onClick={() => showOrderList && setShowOrderList(false)}
               >
                 Graph

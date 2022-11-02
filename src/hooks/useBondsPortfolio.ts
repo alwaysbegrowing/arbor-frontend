@@ -53,6 +53,7 @@ export const useBondsPortfolio = () => {
   const { account } = useActiveWeb3React()
   const { data, error, loading } = useQuery(AccountDetailsDocument, {
     variables: { account: (account && account?.toLowerCase()) || '0x00' },
+    fetchPolicy: 'no-cache',
   })
 
   if (error) {
