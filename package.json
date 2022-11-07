@@ -92,6 +92,8 @@
     "url": "^0.11.0"
   },
   "dependencies": {
+    "@0x/subproviders": "^7.0.0",
+    "@0x/utils": "^7.0.0",
     "@amcharts/amcharts4": "^4.10.27",
     "@apollo/client": "^3.6.9",
     "@ethersproject/abi": "^5.7.0",
