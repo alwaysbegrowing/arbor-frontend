@@ -110,7 +110,7 @@ const columns = [
   },
 ]
 
-const Offerings = () => {
+const Orderbook = () => {
   const { data: allAuctions, loading } = useAuctions()
   const [tableFilter, setTableFilter] = useState(TABLE_FILTERS.ALL)
 
@@ -201,11 +201,11 @@ const Offerings = () => {
           }
           loading={loading}
           name="offerings"
-          title="Offerings"
+          title="Orderbook"
         />
       </ErrorBoundaryWithFallback>
     </>
   )
 }
 
-export default Offerings
+export default Orderbook

@@ -11,6 +11,7 @@ import Auction from '@/pages/Auction'
 import BondDetail from '@/pages/BondDetail'
 import Bonds from '@/pages/Bonds'
 import Offerings from '@/pages/Offerings'
+import Orderbook from '@/pages/Orderbook'
 import Portfolio from '@/pages/Portfolio'
 
 const AppRoutes: React.FC = () => {
@@ -18,6 +19,7 @@ const AppRoutes: React.FC = () => {
     <Routes>
       <Route element={<Auction />} path="/offerings/:auctionId" />
       <Route element={<Offerings />} path="/offerings" />
+      <Route element={<Orderbook />} path="/orderbook" />
       <Route element={<Bonds />} path="/bonds" />
 
       <Route element={<SelectProduct />} path="/bonds/create" />

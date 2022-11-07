@@ -10,6 +10,10 @@ export const navItems = [
     ],
   },
   {
+    title: 'Orderbook',
+    url: '/orderbook',
+  },
+  {
     title: 'Bonds',
     url: '/bonds',
     children: [
