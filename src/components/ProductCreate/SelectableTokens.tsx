@@ -48,3 +48,8 @@ export const CollateralTokens = {
 }
 
 export const IssuerAllowList = ['0xfab4af4ea2eb609868cdb4f744155d67f0a5bf41']
+
+export const ExchangeProxy = {
+  [chain.mainnet.id]: '',
+  [chain.goerli.id]: '0xdef1c0ded9bec7f1a1670819833240f027b25eff',
+}

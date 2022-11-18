@@ -201,7 +201,7 @@ const Orderbook = () => {
           }
           loading={loading}
           name="offerings"
-          title="Orderbook"
+          title="Offerings"
         />
       </ErrorBoundaryWithFallback>
     </>

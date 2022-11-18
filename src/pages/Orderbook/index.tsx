@@ -1,17 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createGlobalStyle } from 'styled-components'
 
+import { AddressZero, One } from '@ethersproject/constants'
 import { formatUnits } from '@ethersproject/units'
 import dayjs from 'dayjs'
 
+import { useActiveWeb3React } from '../../hooks'
 import { AllButton, ConvertButtonOutline, SimpleButtonOutline } from '../Auction'
 import { getBondStates } from '../BondDetail'
+import { sellLimitOrder } from '../BondDetail/OrderbookApi'
 import { TABLE_FILTERS } from '../Portfolio'
 
 import { ReactComponent as AuctionsIcon } from '@/assets/svg/auctions.svg'
 import { ReactComponent as ConvertIcon } from '@/assets/svg/convert.svg'
 import { ReactComponent as DividerIcon } from '@/assets/svg/divider.svg'
 import { ReactComponent as SimpleIcon } from '@/assets/svg/simple.svg'
+import { ExchangeProxy } from '@/components/ProductCreate/SelectableTokens'
 import { ActiveStatusPill } from '@/components/auction/OrderbookTable'
 import Table from '@/components/auctions/Table'
 import { ErrorBoundaryWithFallback } from '@/components/common/ErrorAndReload'
@@ -173,13 +177,43 @@ export const createTable = (data?: Bond[]) =>
 const Orderbook = () => {
   const { data, loading } = useBonds()
   const [tableFilter, setTableFilter] = useState(TABLE_FILTERS.ALL)
-
+  const { account, chainId, signer } = useActiveWeb3React()
+  console.log(signer)
   const tableData = !data
     ? []
     : !tableFilter
     ? createTable(data as Bond[])
     : createTable(data as Bond[]).filter(({ type }) => type === tableFilter)
   useSetNoDefaultNetworkId()
+  const numberOfOptions = One
+  const makerToken = '0xfab4AF4EA2EB609868cDb4f744155d67f0A5BF41'
+  const takerToken = '0xfab4AF4EA2EB609868cDb4f744155d67f0A5BF41'
+
+  useEffect(() => {
+    if (!signer) {
+      return console.log('hi')
+    } else {
+      console.log('by')
+    }
+    const orderData = {
+      maker: '0xfab4AF4EA2EB609868cDb4f744155d67f0A5BF41', //account,
+      signer,
+      isBuy: false,
+      nbrOptions: numberOfOptions,
+      collateralDecimals: 18,
+      makerToken: makerToken,
+      takerToken: takerToken,
+      limitPrice: One,
+      orderExpiry: 5,
+      chainId: chainId,
+      exchangeProxy: ExchangeProxy[chainId],
+      poolId: AddressZero,
+    }
+    const postSellLimitOrder = async () => {
+      await sellLimitOrder(orderData)
+    }
+    postSellLimitOrder()
+  }, [account, chainId, signer, numberOfOptions])
 
   return (
     <>
