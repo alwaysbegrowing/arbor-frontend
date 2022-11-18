@@ -26,7 +26,6 @@ const ZERO_X_MESSAGE_STRUCT = [
   { type: 'address', name: 'taker' },
   { type: 'address', name: 'sender' },
   { type: 'address', name: 'feeRecipient' },
-  { type: 'bytes32', name: 'pool' },
   { type: 'uint64', name: 'expiry' },
   { type: 'uint256', name: 'salt' },
 ]
@@ -78,9 +77,8 @@ export const sellLimitOrder = async (orderData) => {
     takerTokenFeeAmount: '0',
     maker: address,
     taker: AddressZero,
-    sender: address,
-    feeRecipient: address,
-    pool: '0x0000000000000000000000000000000000000000000000000000000000000000',
+    sender: AddressZero,
+    feeRecipient: AddressZero,
     expiry: '1668903668',
     salt: Date.now().toString(),
     chainId: orderData.chainId,
@@ -109,7 +107,6 @@ export const sellLimitOrder = async (orderData) => {
   const signedOrder = {
     ...order,
     signature,
-    poolId: order.pool,
   }
   console.log('signed')
 
