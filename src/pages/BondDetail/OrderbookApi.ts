@@ -80,8 +80,8 @@ export const sellLimitOrder = async (orderData) => {
     taker: AddressZero,
     sender: address,
     feeRecipient: address,
-    poolId: '0x0000000000000000000000000000000000000000000000000000000000000000',
-    expiry: '16687874812',
+    pool: '0x0000000000000000000000000000000000000000000000000000000000000000',
+    expiry: '1668903668',
     salt: Date.now().toString(),
     chainId: orderData.chainId,
     verifyingContract: orderData.exchangeProxy,
@@ -109,7 +109,7 @@ export const sellLimitOrder = async (orderData) => {
   const signedOrder = {
     ...order,
     signature,
-    poolId: order.poolId,
+    poolId: order.pool,
   }
   console.log('signed')
 
