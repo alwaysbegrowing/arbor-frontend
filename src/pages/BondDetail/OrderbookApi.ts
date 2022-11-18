@@ -1,4 +1,4 @@
-import { BigNumber, constants, utils } from 'ethers'
+import { constants, utils } from 'ethers'
 
 import { AddressZero } from '@ethersproject/constants'
 import { splitSignature } from 'ethers/lib/utils'
@@ -73,16 +73,16 @@ export const sellLimitOrder = async (orderData) => {
   const order = {
     makerToken: orderData.makerToken,
     takerToken: orderData.takerToken,
-    makerAmount: BigNumber.from(nbrOptionsToSell.toString()),
-    takerAmount: BigNumber.from('1000'), //" collateralTokenAmount.toString()"
-    takerTokenFeeAmount: BigNumber.from('0'),
+    makerAmount: '1',
+    takerAmount: '10000000', //" collateralTokenAmount.toString()"
+    takerTokenFeeAmount: '0',
     maker: address,
     taker: AddressZero,
     sender: address,
     feeRecipient: address,
-    pool: '0x0000000000000000000000000000000000000000000000000000000000000000',
-    expiry: BigNumber.from('1668787482'),
-    salt: BigNumber.from(Date.now().toString()),
+    poolId: '0x0000000000000000000000000000000000000000000000000000000000000000',
+    expiry: '16687874812',
+    salt: Date.now().toString(),
     chainId: orderData.chainId,
     verifyingContract: orderData.exchangeProxy,
   }
@@ -108,12 +108,8 @@ export const sellLimitOrder = async (orderData) => {
   }
   const signedOrder = {
     ...order,
-    expiry: order.expiry.toString(),
-    takerTokenFeeAmount: order.takerTokenFeeAmount.toString(),
-    takerAmount: order.takerAmount.toString(),
-    makerAmount: order.makerAmount.toString(),
-    salt: order.salt.toString(),
     signature,
+    poolId: order.poolId,
   }
   console.log('signed')
 
