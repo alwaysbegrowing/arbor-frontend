@@ -11,7 +11,7 @@ const TermsModal = () => {
   }
 
   const abortModal = () => {
-    window.location.href = 'https://arbor.garden'
+    window.location.href = 'https://arbor.finance'
   }
 
   return (
@@ -23,7 +23,7 @@ const TermsModal = () => {
             Please read our{' '}
             <a
               className="text-[#6CADFB] hover:underline"
-              href="https://www.arbor.garden/terms-of-service"
+              href="https://arbor.finance/terms-of-service"
               rel="noreferrer"
               target="_blank"
             >
@@ -37,7 +37,7 @@ const TermsModal = () => {
             By clicking “Accept” you agree to our{' '}
             <a
               className="text-[#6CADFB] hover:underline"
-              href="https://www.arbor.garden/terms-of-service"
+              href="https://arbor.finance/terms-of-service"
               rel="noreferrer"
               target="_blank"
             >
