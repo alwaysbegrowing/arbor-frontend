@@ -30,10 +30,10 @@ export const Footer: React.FC = ({ ...restProps }) => {
             <Wordmark style={{ height: 60 }} />
           </FooterLogo>
           <FooterLinks className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
-            <a href="https://docs.arbor.garden/faq">Faq</a>
-            <a href="https://blog.arbor.garden">Blog</a>
-            <a href="https://docs.arbor.garden/">Docs</a>
-            <a href="https://discord.gg/Z4saV8m4ec">Discord</a>
+            <a href="https://docs.arbor.finance/faq">Faq</a>
+            <a href="https://blog.arbor.finance">Blog</a>
+            <a href="https://docs.arbor.finance/">Docs</a>
+            <a href="https://discord.arbor.finance/">Discord</a>
             <a href="https://twitter.com/arborfinance">Twitter</a>
             <a href="https://github.com/orgs/alwaysbegrowing/">Github</a>
           </FooterLinks>

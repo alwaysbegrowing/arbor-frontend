@@ -151,7 +151,7 @@ export const FormSteps = ({
                               <span>or</span>
                               <a
                                 className="font-medium  underline"
-                                href="https://goerli.arbor.garden/"
+                                href="https://goerli.arbor.finance/"
                               >
                                 Continue on Görli
                               </a>

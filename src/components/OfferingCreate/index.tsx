@@ -12,11 +12,11 @@ export const SelectOffering = () => {
           icon: <AuctionCreateIcon />,
           url: '/offerings/create/auction',
           title: 'Auction',
-          learn: 'https://docs.arbor.garden/portal/protocol/offerings/auctions',
+          learn: 'https://docs.arbor.finance/protocol/offerings/auctions',
           description: 'An auction built for DeFi.',
         },
         {
-          learn: 'https://docs.arbor.garden/portal/protocol/offerings/otc-sales',
+          learn: 'https://docs.arbor.finance/protocol/offerings/otc-sales',
           icon: <OTCCreateIcon />,
           url: '/offerings/create/otc',
           title: 'OTC',
