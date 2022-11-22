@@ -49,10 +49,10 @@ const SearchInput = styled.input`
   font-weight: 400;
   font-size: 12px;
   letter-spacing: 0.06em;
-  color: #d6d6d6;
+  color: #fafafa;
   ::placeholder {
     text-transform: uppercase;
-    color: #d6d6d6;
+    color: #fafafa;
     opacity: 0.8;
   }
   flex-grow: 1;
@@ -141,7 +141,7 @@ const Table = ({
 
   return (
     <Wrapper ref={sectionHead} {...restProps}>
-      <div className="flex flex-wrap justify-center content-center items-end py-2 mb-10 md:justify-between">
+      <div className="mb-10 flex flex-wrap content-center items-end justify-center py-2 md:justify-between">
         <div className="flex flex-col space-y-4">
           <SectionTitle>{title}</SectionTitle>
 
@@ -160,6 +160,7 @@ const Table = ({
                 value={state.globalFilter || ''}
               />
               <DeleteSearchTerm
+                aria-label="Delete Search Term"
                 disabled={!state.globalFilter}
                 onClick={() => {
                   setGlobalFilter(undefined)
@@ -173,13 +174,13 @@ const Table = ({
       </div>
 
       <div
-        className="overflow-auto overscroll-contain min-h-[492px] scrollbar-thin scrollbar-track-zinc-800 scrollbar-thumb-zinc-700"
+        className="min-h-[492px] overflow-auto overscroll-contain scrollbar-thin scrollbar-track-zinc-800 scrollbar-thumb-zinc-700"
         style={{
           maxHeight: !rows.length ? '100%' : 'calc(100vh - 391px)',
           height: !rows.length ? 'calc(100vh - 391px)' : 'inherit',
         }}
       >
-        <table className="table w-full h-full" {...getTableProps()}>
+        <table className="table h-full w-full" {...getTableProps()}>
           <thead className="sticky top-0 z-[1]">
             {headerGroups.map((headerGroup, i) => (
               <tr
@@ -189,7 +190,7 @@ const Table = ({
               >
                 {headerGroup.headers.map((column, i) => (
                   <th
-                    className="text-xs font-normal tracking-widest text-[#696969] bg-base-100"
+                    className="bg-base-100 text-xs font-normal tracking-widest text-[#A3A3A3]"
                     key={i}
                     {...column.getHeaderProps()}
                   >
@@ -206,26 +207,26 @@ const Table = ({
           <tbody {...getTableBodyProps()}>
             {loading &&
               [...Array(10).keys()].map((z) => (
-                <tr className="h-[57px] text-sm text-[#D2D2D2] bg-transparent" key={z}>
+                <tr className="h-[57px] bg-transparent text-sm text-[#D2D2D2]" key={z}>
                   {[...Array(columns.length).keys()].map((i) => (
-                    <td className="text-center text-[#696969] bg-transparent" key={i}>
-                      <div className="my-4 w-full max-w-sm h-4 bg-gradient-to-r from-[#1F2123] to-[#181A1C] rounded animate-pulse"></div>
+                    <td className="bg-transparent text-center text-[#696969]" key={i}>
+                      <div className="my-4 h-4 w-full max-w-sm animate-pulse rounded bg-gradient-to-r from-[#1F2123] to-[#181A1C]"></div>
                     </td>
                   ))}
                 </tr>
               ))}
 
             {!loading && !rows.length && (
-              <tr className="h-[57px] text-sm text-[#D2D2D2] bg-transparent">
+              <tr className="h-[57px] bg-transparent text-sm text-[#D2D2D2]">
                 <td
-                  className="py-[100px] space-y-7 text-center text-[#696969] bg-transparent"
+                  className="space-y-7 bg-transparent py-[100px] text-center text-[#696969]"
                   colSpan={columns.length}
                 >
                   <div className="flex justify-center space-x-4 opacity-60">{emptyLogo}</div>
                   <div className="text-base text-[#696969]">{emptyDescription}</div>
                   {emptyActionText && (
                     <ActionButton
-                      className={`!w-[236px] !h-[41px] ${emptyActionClass}`}
+                      className={`!h-[41px] !w-[236px] ${emptyActionClass}`}
                       onClick={emptyActionClick}
                     >
                       {emptyActionText}
@@ -239,14 +240,14 @@ const Table = ({
                 prepareRow(row)
                 return (
                   <tr
-                    className="text-2sm text-[#D2D2D2] bg-transparent cursor-pointer hover"
+                    className="hover cursor-pointer bg-transparent text-2sm text-[#D2D2D2]"
                     key={i}
                     onClick={() => navigate(row.original.url)}
                     {...row.getRowProps()}
                   >
                     {row.cells.map((cell, i) => (
                       <td
-                        className="overflow-hidden max-w-xs text-ellipsis bg-transparent"
+                        className="max-w-xs overflow-hidden text-ellipsis bg-transparent"
                         key={i}
                         {...cell.getCellProps()}
                       >

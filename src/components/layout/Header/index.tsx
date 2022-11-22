@@ -110,7 +110,7 @@ export const Component = (props) => {
         <Inner className="fullPage">
           <ButtonMenuStyled className={mobileMenuVisible && 'active'} onClick={mobileMenuToggle} />
           {mobileMenuVisible && <Mobilemenu onClose={() => setMobileMenuVisible(false)} />}
-          <Link className="arbor-logo" to="/offerings">
+          <Link aria-label="arbor logo" className="arbor-logo" to="/offerings">
             <Logo />
           </Link>
           <Menu />
