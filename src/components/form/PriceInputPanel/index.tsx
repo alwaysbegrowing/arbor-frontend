@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
-// import { BigNumber } from '@ethersproject/bignumber'
-// import { Fraction } from '@josojo/honeyswap-sdk'
+import { BigNumber } from '@ethersproject/bignumber'
+import { Fraction } from '@josojo/honeyswap-sdk'
 
 import { useAuction } from '../../../hooks/useAuction'
 import { TokenPill } from '../../bond/BondAction'
@@ -91,9 +91,9 @@ const PriceInputPanel = (props: Props) => {
             </FieldRowLabelStyled>
           )}
           <div className="flex justify-between">
-            {/* {account && (
+            {account && (
               <button
-                className="btn btn-xs !border-[#2A2B2C] px-3 text-xs font-normal normal-case !text-[#E0E0E0]"
+                className="btn-xs btn !border-[#2A2B2C] px-3 text-xs font-normal normal-case !text-[#E0E0E0]"
                 onClick={() =>
                   onUserPriceInput(
                     `${derivedAuctionInfo?.initialPrice
@@ -111,7 +111,7 @@ const PriceInputPanel = (props: Props) => {
               >
                 Min price
               </button>
-            )} */}
+            )}
           </div>
         </FieldRowBottom>
       </FieldRowWrapper>
