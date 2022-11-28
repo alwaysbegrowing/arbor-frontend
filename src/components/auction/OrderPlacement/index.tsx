@@ -158,12 +158,14 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
 
   useEffect(() => {
     onUserPriceInput(price)
-    if (price == '-' && derivedAuctionInfo?.clearingPrice) {
+    if (price == '-' && graphInfo?.clearingPrice) {
       onUserPriceInput(
-        derivedAuctionInfo?.clearingPrice.multiply(new Fraction('1001', '1000')).toSignificant(4),
+        new Fraction(graphInfo?.clearingPrice)
+          .multiply(new Fraction('1001', '1000'))
+          .toSignificant(4),
       )
     }
-  }, [onUserPriceInput, price, derivedAuctionInfo])
+  }, [onUserPriceInput, price, graphInfo])
 
   const placeOrderCallback = usePlaceOrderCallback(
     auctionIdentifier,

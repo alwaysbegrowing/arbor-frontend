@@ -111,7 +111,6 @@ const Claimer: React.FC<Props> = (props) => {
   )
 
   const { auctioningToken, biddingToken } = derivedAuctionInfo
-
   const isLoading = useMemo(
     () => (account && isDerivedClaimInfoLoading) || !claimableBidFunds || !claimableBonds,
     [account, isDerivedClaimInfoLoading, claimableBidFunds, claimableBonds],
