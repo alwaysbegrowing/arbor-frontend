@@ -111,8 +111,6 @@ const Claimer: React.FC<Props> = (props) => {
   )
 
   const { auctioningToken, biddingToken } = derivedAuctionInfo
-  //eslint-disable-next-line
-  debugger
   const isLoading = useMemo(
     () => (account && isDerivedClaimInfoLoading) || !claimableBidFunds || !claimableBonds,
     [account, isDerivedClaimInfoLoading, claimableBidFunds, claimableBonds],
