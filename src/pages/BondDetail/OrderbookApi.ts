@@ -1,6 +1,4 @@
-import { constants, utils } from 'ethers'
-
-import { AddressZero } from '@ethersproject/constants'
+import { LimitOrder, LimitOrderFields } from '@0x/protocol-utils'
 import { splitSignature } from 'ethers/lib/utils'
 
 export const zeroXDomain = ({
@@ -26,6 +24,7 @@ const ZERO_X_MESSAGE_STRUCT = [
   { type: 'address', name: 'taker' },
   { type: 'address', name: 'sender' },
   { type: 'address', name: 'feeRecipient' },
+  { type: 'bytes32', name: 'pool' },
   { type: 'uint64', name: 'expiry' },
   { type: 'uint256', name: 'salt' },
 ]
@@ -33,84 +32,29 @@ const ZERO_X_MESSAGE_STRUCT = [
 export const zeroXTypes = {
   LimitOrder: ZERO_X_MESSAGE_STRUCT,
 }
-export const sellLimitOrder = async (orderData) => {
-  if (!window?.ethereum) return
-  const accounts = await window.ethereum.request({
-    method: 'eth_requestAccounts',
-  })
 
-  const address = accounts[0]
-  console.log(address)
+const config = {
+  5: {
+    order: 'https://eip712api.xyz/0x/orderbook/v1/order/',
+  },
+}
 
-  const collateralTokenUnit = utils.parseUnits('1', orderData.collateralDecimals)
-
-  const nbrOptionsToSell = orderData.nbrOptions
-
-  // Derive the collateralTokenAmount (takerAmount in Sell Limit) from the user's nbrOptionsToSell input.
-  const collateralTokenAmount = nbrOptionsToSell
-    .mul(orderData.limitPrice) // limitPrice is expressed as an integer with collateral token decimals
-    .div(collateralTokenUnit) // correction factor in integer multiplication
-
-  // Calculate trading fee amount (expressed as an integer with collateral token decimals)
-  // Note that the fee is paid in collateral token which is the taker token in Sell Limit
-  const tradingFee = 0
-  const divaGovernanceAddress = constants.AddressZero
-  const NULL_ADDRESS = constants.AddressZero
-  const config = {
-    5: {
-      order: 'https://eip712api.xyz/0x/orderbook/v1/order',
-    },
-  }
-  const collateralTokenFeeAmount = collateralTokenAmount
-    .mul(utils.parseUnits(tradingFee.toString(), orderData.collateralDecimals))
-    .div(collateralTokenUnit)
-
-  // Get 0x API url to post order
-  const networkUrl = config[orderData.chainId].order
-  // Construct order object
-
-  const order = {
-    makerToken: orderData.makerToken,
-    takerToken: orderData.takerToken,
-    makerAmount: '1',
-    takerAmount: '10000000', //" collateralTokenAmount.toString()"
-    takerTokenFeeAmount: '0',
-    maker: address,
-    taker: AddressZero,
-    sender: AddressZero,
-    feeRecipient: AddressZero,
-    expiry: '1668903668',
-    salt: Date.now().toString(),
-    chainId: orderData.chainId,
-    verifyingContract: orderData.exchangeProxy,
-  }
-  console.log('hia')
-  // TODO: Export this part into a separate function
-  console.log(orderData.chainId)
-  console.log(orderData.exchangeProxy)
-  console.log(order)
-  const signedTypedData = await orderData.signer._signTypedData(
-    zeroXDomain({
-      chainId: orderData.chainId,
-      verifyingContract: orderData.exchangeProxy,
-    }),
-    zeroXTypes,
-    order,
-  )
+export const sellLimitOrder = async (orderData: LimitOrderFields, { signer }) => {
+  const order = new LimitOrder(orderData)
+  const signedTypedData = await signer._signTypedData(zeroXDomain(orderData), zeroXTypes, order)
   const { r, s, v } = splitSignature(signedTypedData)
-  const signature = {
-    v: v,
-    r: r,
-    s: s,
-    signatureType: 2,
-  }
+
   const signedOrder = {
     ...order,
-    signature,
+    signature: {
+      v,
+      r,
+      s,
+      signatureType: 2,
+    },
   }
-  console.log('signed')
 
-  const resp = await fetch(networkUrl, {
+  const resp = await fetch(config[orderData.chainId].order, {
     method: 'POST',
     body: JSON.stringify(signedOrder),
     headers: {

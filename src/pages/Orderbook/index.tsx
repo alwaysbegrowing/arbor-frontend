@@ -1,29 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { createGlobalStyle } from 'styled-components'
 
-import { AddressZero, One } from '@ethersproject/constants'
 import { formatUnits } from '@ethersproject/units'
 import dayjs from 'dayjs'
 
-import { useActiveWeb3React } from '../../hooks'
-import { AllButton, ConvertButtonOutline, SimpleButtonOutline } from '../Auction'
 import { getBondStates } from '../BondDetail'
-import { sellLimitOrder } from '../BondDetail/OrderbookApi'
-import { TABLE_FILTERS } from '../Portfolio'
 
 import { ReactComponent as AuctionsIcon } from '@/assets/svg/auctions.svg'
 import { ReactComponent as ConvertIcon } from '@/assets/svg/convert.svg'
-import { ReactComponent as DividerIcon } from '@/assets/svg/divider.svg'
 import { ReactComponent as SimpleIcon } from '@/assets/svg/simple.svg'
-import { ExchangeProxy } from '@/components/ProductCreate/SelectableTokens'
 import { ActiveStatusPill } from '@/components/auction/OrderbookTable'
-import Table from '@/components/auctions/Table'
 import { ErrorBoundaryWithFallback } from '@/components/common/ErrorAndReload'
 import { calculateInterestRate } from '@/components/form/InterestRateInputPanel'
 import TokenLogo from '@/components/token/TokenLogo'
 import { Bond } from '@/generated/graphql'
 import { useBonds } from '@/hooks/useBond'
-import { useSetNoDefaultNetworkId } from '@/state/orderPlacement/hooks'
+import { useOrderbookPair } from '@/hooks/useOrderbook'
 
 const GlobalStyle = createGlobalStyle`
   .siteHeader {
@@ -175,81 +167,30 @@ export const createTable = (data?: Bond[]) =>
   })
 
 const Orderbook = () => {
-  const { data, loading } = useBonds()
-  const [tableFilter, setTableFilter] = useState(TABLE_FILTERS.ALL)
-  const { account, chainId, signer } = useActiveWeb3React()
-  console.log(signer)
-  const tableData = !data
-    ? []
-    : !tableFilter
-    ? createTable(data as Bond[])
-    : createTable(data as Bond[]).filter(({ type }) => type === tableFilter)
-  useSetNoDefaultNetworkId()
-  const numberOfOptions = One
-  const makerToken = '0xfab4AF4EA2EB609868cDb4f744155d67f0A5BF41'
-  const takerToken = '0xfab4AF4EA2EB609868cDb4f744155d67f0A5BF41'
-
-  useEffect(() => {
-    if (!signer) {
-      return console.log('hi')
-    } else {
-      console.log('by')
-    }
-    const orderData = {
-      maker: '0xfab4AF4EA2EB609868cDb4f744155d67f0A5BF41', //account,
-      signer,
-      isBuy: false,
-      nbrOptions: numberOfOptions,
-      collateralDecimals: 18,
-      makerToken: makerToken,
-      takerToken: takerToken,
-      limitPrice: One,
-      orderExpiry: 5,
-      chainId: chainId,
-      exchangeProxy: ExchangeProxy[chainId],
-      poolId: AddressZero,
-    }
-    const postSellLimitOrder = async () => {
-      await sellLimitOrder(orderData)
-    }
-    postSellLimitOrder()
-  }, [account, chainId, signer, numberOfOptions])
-
+  const {
+    asks,
+    bids,
+    loading: loadingOrderbook,
+  } = useOrderbookPair(
+    '0x552ffa3838af607432e7261328c15a89a93e75be',
+    '0x5a2d26d95b07c28d735ff76406bd82fe64222dc1',
+  )
+  const { data: bonds, loading: loadingBonds } = useBonds()
+  if (!bids?.records) return
+  console.log(bids)
   return (
     <>
       <GlobalStyle />
       <ErrorBoundaryWithFallback>
-        <Table
-          columns={columns()}
-          data={tableData}
-          emptyActionClass="!bg-[#293327]"
-          emptyDescription="There are no bonds at the moment"
-          emptyLogo={
+        {bids?.records?.map(
+          ({ metaData: { remainingFillableTakerAmount }, order: { maker, taker } }) => (
             <>
-              <ConvertIcon height={36} width={36} /> <SimpleIcon height={36} width={36} />
+              <span>remainingFillableTakerAmount: {remainingFillableTakerAmount}</span>
+              <span>maker: {maker}</span>
+              <span>taker: {taker}</span>
             </>
-          }
-          legendIcons={
-            <>
-              <AllButton
-                active={tableFilter === TABLE_FILTERS.ALL}
-                onClick={() => setTableFilter(TABLE_FILTERS.ALL)}
-              />
-              <DividerIcon />
-              <ConvertButtonOutline
-                active={tableFilter === TABLE_FILTERS.CONVERT}
-                onClick={() => setTableFilter(TABLE_FILTERS.CONVERT)}
-              />
-              <SimpleButtonOutline
-                active={tableFilter === TABLE_FILTERS.SIMPLE}
-                onClick={() => setTableFilter(TABLE_FILTERS.SIMPLE)}
-              />
-            </>
-          }
-          loading={loading}
-          name="orderbook"
-          title="Orderbook"
-        />
+          ),
+        )}
       </ErrorBoundaryWithFallback>
     </>
   )

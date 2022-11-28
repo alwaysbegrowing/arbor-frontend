@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 
 import SelectOffering from '@/components/OfferingCreate'
 import SetupOffering from '@/components/OfferingCreate/auction/SetupOffering'
+import SetupOrderbook from '@/components/OrderbookCreate/order/SetupOrderbook'
 import SelectProduct from '@/components/ProductCreate'
 import SetupProduct from '@/components/ProductCreate/convert/SetupProduct'
 import SetupSimpleProduct from '@/components/ProductCreate/simple/SetupSimpleProduct'
@@ -29,6 +30,8 @@ const AppRoutes: React.FC = () => {
       <Route element={<SelectOffering />} path="/offerings/create" />
       <Route element={<SetupOffering />} path="/offerings/create/auction" />
       <Route element={<SetupOffering />} path="/offerings/create/otc" />
+
+      <Route element={<SetupOrderbook />} path="/orderbook/create" />
 
       <Route element={<BondDetail />} path="/bonds/:bondId" />
       <Route element={<Portfolio />} path="/portfolio" />

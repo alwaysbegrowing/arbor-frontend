@@ -51,5 +51,5 @@ export const IssuerAllowList = ['0xfab4af4ea2eb609868cdb4f744155d67f0a5bf41']
 
 export const ExchangeProxy = {
   [chain.mainnet.id]: '',
-  [chain.goerli.id]: '0xdef1c0ded9bec7f1a1670819833240f027b25eff',
+  [chain.goerli.id]: '0xf91bb752490473b8342a3e964e855b9f9a2a668e',
 }
