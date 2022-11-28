@@ -81,8 +81,10 @@ export const getAuctionState = ({
 }) => {
   if (!end || !orderCancellationEndDate) return AuctionState.CLAIMING
   const now = dayjs(new Date())
-  const pastEnd = dayjs(end).utc().isAfter(now)
-  const pastCancellation = dayjs(orderCancellationEndDate).utc().isAfter(now)
+  const pastEnd = dayjs(end).utc().isBefore(now)
+  const pastCancellation = dayjs(orderCancellationEndDate).utc().isBefore(now)
+  // eslint-disable-next-line
+  //debugger
 
   if (!pastCancellation) return AuctionState.ORDER_PLACING_AND_CANCELING
   if (!pastEnd) return AuctionState.ORDER_PLACING
