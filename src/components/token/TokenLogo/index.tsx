@@ -38,7 +38,7 @@ interface TokenLogoProps {
 const SquareHolder = ({ children, size }) => {
   const defaultSize = size === '24px'
   return (
-    <div className={`avatar placeholder w-${defaultSize ? '14' : '10'} bg-[#e0e0e0] rounded-full`}>
+    <div className={`w- placeholder avatar${defaultSize ? '14' : '10'} rounded-full bg-[#e0e0e0]`}>
       {children}
     </div>
   )
@@ -63,7 +63,7 @@ const TokenLogo: React.FC<TokenLogoProps> = (props) => {
         <UnicornSvg height={sizeToUse} style={{ borderRadius: '100%' }} width={sizeToUse} />
       )}
       {!forceSvg && UnTok}
-      {imageURL && <Image src={imageURL} />}
+      {imageURL && <Image alt="token image" src={imageURL} />}
     </Wrapper>
   )
 

@@ -30,9 +30,9 @@ export const CreatePanel = ({ panels }: CreatePanelProps) => {
               <div>{panel.icon}</div>
 
               <div className="text-3xl font-medium text-white">{panel.title}</div>
-              <p className="text-[#696969]">{panel.description}</p>
+              <p className="text-[#a1a1a1]">{panel.description}</p>
               <a
-                className="btn btn-sm mt-4 flex self-start !border-[#2A2B2C] bg-[#181A1C] !text-2sm font-normal normal-case text-white"
+                className="btn-sm btn mt-4 flex self-start !border-[#2A2B2C] bg-[#181A1C] !text-2sm font-normal normal-case text-white"
                 href={panel.learn}
                 onClick={(e) => {
                   e.stopPropagation()
