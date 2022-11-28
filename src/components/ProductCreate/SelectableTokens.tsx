@@ -45,14 +45,10 @@ export const TESTNET_TOKEN_MAP: { [key: string]: string } = {
 export const RIBBON_TOKEN = '0x6123b0049f904d730db3c36a31167d9d4121fa6b'
 
 export const getMappedToken = (tokenContractAddress?: string) => {
-  if (!isGoerli) {
+  if (!isGoerli || !tokenContractAddress) {
     return tokenContractAddress
   }
-  if (!tokenContractAddress) {
-    return null
-  }
-  const mappedToken = TESTNET_TOKEN_MAP[tokenContractAddress.toLowerCase()]
-  return mappedToken?.toLowerCase()
+  return TESTNET_TOKEN_MAP[tokenContractAddress.toLowerCase()]?.toLowerCase()
 }
 
 export const CollateralTokens = {
