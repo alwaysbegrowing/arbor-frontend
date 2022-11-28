@@ -19,14 +19,11 @@ export const getValuePerBond = (
   value: number,
 ) => {
   return bond
-    ? round(
-        Number(
-          formatUnits(
-            value,
-            WADDecimals + bond.collateralToken.decimals - bond.paymentToken.decimals,
-          ),
+    ? Number(
+        formatUnits(
+          value,
+          WADDecimals + bond.collateralToken.decimals - bond.paymentToken.decimals,
         ),
-        3,
       )
     : 0
 }
