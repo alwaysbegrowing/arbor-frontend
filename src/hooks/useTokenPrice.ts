@@ -1,5 +1,4 @@
 import useSWR from 'swr'
-import { useNetwork } from 'wagmi'
 
 import { RIBBON_TOKEN, getMappedToken } from '../components/ProductCreate/SelectableTokens'
 import { getLogger } from '../utils/logger'
@@ -10,11 +9,10 @@ const fetcher = (url: string) => fetch(url).then((r) => r.json())
 const coinGekoBaseUrl = 'https://api.coingecko.com/api/v3'
 
 export const useTokenPrice = (tokenContractAddress?: string): { data: any; loading: boolean } => {
-  const { chain } = useNetwork()
   // The tokens used on the testnet will not exist so no price will be returned
   // this uses ribbon token instead of the real tokens on dev
   // so we have pricing data
-  const resolvedTokenAddress = getMappedToken(tokenContractAddress, chain) || RIBBON_TOKEN
+  const resolvedTokenAddress = getMappedToken(tokenContractAddress) || RIBBON_TOKEN
   const { data, error } = useSWR(
     `${coinGekoBaseUrl}/simple/token_price/ethereum?vs_currencies=usd&contract_addresses=${resolvedTokenAddress}`,
     fetcher,
@@ -41,8 +39,7 @@ export const useHistoricTokenPrice = (
   // The tokens used on the testnet will not exist so no price will be returned
   // this uses ribbon token instead of the real tokens on dev
   // so we have pricing data
-  const { chain } = useNetwork()
-  const resolvedTokenAddress = getMappedToken(tokenContractAddress, chain) || RIBBON_TOKEN
+  const resolvedTokenAddress = getMappedToken(tokenContractAddress) || RIBBON_TOKEN
 
   const url = `${coinGekoBaseUrl}/coins/ethereum/contract/${resolvedTokenAddress}/market_chart/?vs_currency=usd&days=${days}&interval=daily`
   const { data, error } = useSWR(url, fetcher, { refreshInterval: 600 * 1000 })

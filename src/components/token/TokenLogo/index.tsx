@@ -3,9 +3,9 @@ import styled from 'styled-components'
 
 import { ReactComponent as UnicornSvg } from '../../../assets/svg/simple-bond.svg'
 import { useTokenListState } from '../../../state/tokenList/hooks'
-import { isAddress } from '../../../utils'
 import { UnregisteredToken } from '../UnregisteredToken'
 
+import { getMappedToken } from '@/components/ProductCreate/SelectableTokens'
 import { DEV_bondImage } from '@/state/tokenList/reducer'
 
 const Wrapper = styled.div<{ size: string }>`
@@ -46,9 +46,11 @@ const SquareHolder = ({ children, size }) => {
 
 const TokenLogo: React.FC<TokenLogoProps> = (props) => {
   const { size = '24px', square, token, ...restProps } = props
-  const { address } = token
+  const { address: tokenAddress } = token
   const { tokens } = useTokenListState()
-  const validToken = isAddress(address) && tokens
+  const address = getMappedToken(tokenAddress)
+
+  const validToken = address && tokens
   const imageURL = validToken && tokens[address.toLowerCase()]
   const sizeToUse = square && size === '24px' ? '30px' : size
 

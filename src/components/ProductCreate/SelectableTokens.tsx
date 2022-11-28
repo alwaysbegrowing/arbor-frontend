@@ -1,5 +1,4 @@
-import { Chain } from '@rainbow-me/rainbowkit'
-import { chain, chainId } from 'wagmi'
+import { chain } from 'wagmi'
 
 import { FOXIcon } from './icons/FOXIcon'
 import { RBNIcon } from './icons/RBNIcon'
@@ -32,25 +31,27 @@ export const AccessManagerContract = {
   [chain.goerli.id]: '0x6de1Fe949103087Be8dD6471076331379789ba90',
 }
 
-export const TESTNET_TOKEN_MAP: { [key: string]: { [key: string]: string } } = {
-  // goerli
-  [chain.goerli.id]: {
-    // UNI
-    '0x1ee2926BDd6c0A34207BAEb7B8fAa12cdE0BC315': '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
-    // FOX
-    '0xB514a1237860308db88758D26Bc9B065BC310748': '0xc770EEfAd204B5180dF6a14Ee197D99d808ee52d',
-  },
+export const TESTNET_TOKEN_MAP: { [key: string]: string } = {
+  // UNI goerli
+  ['0x1ee2926BDd6c0A34207BAEb7B8fAa12cdE0BC315'.toLowerCase()]:
+    '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
+  // FOX goerli
+  ['0xB514a1237860308db88758D26Bc9B065BC310748'.toLowerCase()]:
+    '0xc770EEfAd204B5180dF6a14Ee197D99d808ee52d',
+  // USDC goerli
+  ['0x5a2D26D95b07C28d735ff76406bd82fE64222Dc1'.toLowerCase()]:
+    '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
 }
 export const RIBBON_TOKEN = '0x6123b0049f904d730db3c36a31167d9d4121fa6b'
 
-export const getMappedToken = (tokenContractAddress?: string, chain?: Chain) => {
+export const getMappedToken = (tokenContractAddress?: string) => {
   if (!isGoerli) {
     return tokenContractAddress
   }
-  if (!tokenContractAddress || !chain) {
+  if (!tokenContractAddress) {
     return null
   }
-  const mappedToken = TESTNET_TOKEN_MAP[chain?.id || chainId.mainnet][tokenContractAddress]
+  const mappedToken = TESTNET_TOKEN_MAP[tokenContractAddress.toLowerCase()]
   return mappedToken?.toLowerCase()
 }
 
