@@ -81,8 +81,10 @@ export const getAuctionState = ({
 }) => {
   if (!end || !orderCancellationEndDate) return AuctionState.CLAIMING
   const now = dayjs(new Date())
-  const pastEnd = dayjs(end).utc().isBefore(now)
-  const pastCancellation = dayjs(orderCancellationEndDate).utc().isBefore(now)
+  const endDate = dayjs.unix(Number(end)).utc()
+  const cancellationDate = dayjs.unix(Number(orderCancellationEndDate)).utc()
+  const pastEnd = endDate.isBefore(now)
+  const pastCancellation = cancellationDate.isBefore(now)
 
   if (!pastCancellation) return AuctionState.ORDER_PLACING_AND_CANCELING
   if (!pastEnd) return AuctionState.ORDER_PLACING
@@ -92,7 +94,7 @@ export const getAuctionState = ({
 
 export const useGraphDerivedAuctionInfo = (auctionId?: number, chainId?: number) => {
   const { data: graphInfo, loading } = useAuction(auctionId)
-  if (loading) {
+  if (loading || !graphInfo) {
     return { data: null, loading: true }
   }
   const auctioningToken = new Token(
