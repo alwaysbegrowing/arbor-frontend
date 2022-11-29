@@ -13,7 +13,7 @@ const graphUrl = 'https://api.thegraph.com/subgraphs/name/divaprotocol/diva-goer
 export const useOrderbookPair = (
   baseToken?: string,
   quoteToken?: string,
-): { bids: { records: any[] }; asks: {}; loading: boolean } => {
+): { bids: { records: any[] }; asks: { records: any[] }; loading: boolean } => {
   const { data, error } = useSWR(
     `${orderbookPairURL}?baseToken=${baseToken}&quoteToken=${quoteToken}`,
     fetcher,
