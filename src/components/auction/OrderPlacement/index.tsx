@@ -284,7 +284,10 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
 
   const cancelCutoff =
     graphInfo?.orderCancellationEndDate &&
-    dayjs(graphInfo?.orderCancellationEndDate).utc().tz().format('LL HH:mm z')
+    dayjs(graphInfo?.orderCancellationEndDate * 1000)
+      .utc()
+      .tz()
+      .format('LL HH:mm z')
   const reviewData = getReviewData({
     amount: Number(sellAmount),
     maturityDate: graphInfo?.bond?.maturityDate,
