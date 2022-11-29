@@ -22,6 +22,7 @@ import { useBond } from '../../hooks/useBond'
 import { useBondExtraDetails } from '../../hooks/useBondExtraDetails'
 import { ConvertButtonOutline, LoadingTwoGrid, SimpleButtonOutline, TwoGridPage } from '../Auction'
 import BondManagement from './BondManagement'
+import OrderbookManagement from './OrderbookManagement'
 
 import { Bond } from '@/generated/graphql'
 import { useActiveWeb3React } from '@/hooks'
@@ -310,6 +311,7 @@ const BondDetail: React.FC = () => {
               )}
               {!isMatured && !isPaid && !isDefaulted && <RedeemError />}
               <BondManagement />
+              <OrderbookManagement />
             </>
           }
         />
