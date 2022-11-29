@@ -18,6 +18,7 @@ import {
 } from '../../pureStyledComponents/FieldRow'
 
 import Tooltip from '@/components/common/Tooltip'
+import { isGoerli } from '@/connectors'
 import { DerivedAuctionInfo } from '@/state/orderPlacement/hooks'
 
 export const FieldRowLabelStyled = styled(FieldRowLabel)`
@@ -108,6 +109,7 @@ const PriceInputPanel = (props: Props) => {
                       .toSignificant(derivedAuctionInfo?.biddingToken.decimals)}`,
                   )
                 }
+                style={{ visibility: isGoerli ? 'hidden' : 'visible' }}
               >
                 Min price
               </button>
