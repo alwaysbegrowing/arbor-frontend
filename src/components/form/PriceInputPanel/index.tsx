@@ -95,7 +95,6 @@ const PriceInputPanel = (props: Props) => {
             {account && (
               <button
                 className="btn-xs btn !border-[#2A2B2C] px-3 text-xs font-normal normal-case !text-[#E0E0E0]"
-                disabled={isGoerli}
                 onClick={() =>
                   onUserPriceInput(
                     `${derivedAuctionInfo?.initialPrice
@@ -110,6 +109,7 @@ const PriceInputPanel = (props: Props) => {
                       .toSignificant(derivedAuctionInfo?.biddingToken.decimals)}`,
                   )
                 }
+                style={{ visibility: isGoerli ? 'hidden' : 'visible' }}
               >
                 Min price
               </button>
