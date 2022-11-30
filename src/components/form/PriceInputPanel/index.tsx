@@ -1,9 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { BigNumber } from '@ethersproject/bignumber'
-import { Fraction } from '@josojo/honeyswap-sdk'
-
 import { useAuction } from '../../../hooks/useAuction'
 import { TokenPill } from '../../bond/BondAction'
 import {
@@ -18,7 +15,6 @@ import {
 } from '../../pureStyledComponents/FieldRow'
 
 import Tooltip from '@/components/common/Tooltip'
-import { isGoerli } from '@/connectors'
 import { DerivedAuctionInfo } from '@/state/orderPlacement/hooks'
 
 export const FieldRowLabelStyled = styled(FieldRowLabel)`
@@ -53,6 +49,9 @@ const PriceInputPanel = (props: Props) => {
   } = props
   const { data: graphInfo } = useAuction(auctionId)
   const error = info?.type === InfoType.error
+
+  const bondPriceNumber = Number(graphInfo.minimumBondPrice)
+  const minBondPrice = bondPriceNumber + 0.00001
 
   return (
     <>
@@ -95,21 +94,7 @@ const PriceInputPanel = (props: Props) => {
             {account && (
               <button
                 className="btn-xs btn !border-[#2A2B2C] px-3 text-xs font-normal normal-case !text-[#E0E0E0]"
-                onClick={() =>
-                  onUserPriceInput(
-                    `${derivedAuctionInfo?.initialPrice
-                      .add(
-                        new Fraction(
-                          BigNumber.from(1).toString(),
-                          BigNumber.from(10)
-                            .pow(derivedAuctionInfo?.biddingToken.decimals)
-                            .toString(),
-                        ),
-                      )
-                      .toSignificant(derivedAuctionInfo?.biddingToken.decimals)}`,
-                  )
-                }
-                style={{ visibility: isGoerli ? 'hidden' : 'visible' }}
+                onClick={() => onUserPriceInput(`${minBondPrice}`)}
               >
                 Min price
               </button>
