@@ -17,6 +17,7 @@ import { ExtraDetailsItem, Props as ExtraDetailsItemProps } from '../ExtraDetail
 import { AuctionStatusPill } from '../OrderbookTable'
 
 import { Auction } from '@/generated/graphql'
+import { bondInformation } from '@/pages/BondDetail/bondInformation'
 
 const TokenValue = styled.span`
   line-height: 1.2;
@@ -197,6 +198,114 @@ const AuctionDetails = (props: Props) => {
     },
   ]
 
+  const bondDetails = () => {
+    for (let i = 0; i < bondInformation.length; i++) {
+      const currentBond = bondInformation[i]
+
+      if (
+        auction.id === currentBond.auction &&
+        currentBond.creditAnalysis &&
+        currentBond.prime &&
+        currentBond.defiLlama
+      ) {
+        return (
+          <>
+            <div className="flex flex-col justify-end">
+              <ExtraDetailsItem
+                bordered={false}
+                title="Documents"
+                titleClass="justify-end"
+                value={<LinkIcon href={currentBond.creditAnalysis}>Credit analysis</LinkIcon>}
+              />
+            </div>
+            <div className="flex flex-col justify-end">
+              <ExtraDetailsItem
+                bordered={false}
+                title="Documents"
+                titleClass="justify-end"
+                value={<LinkIcon href={currentBond.prime}>PrimeRating</LinkIcon>}
+              />
+            </div>
+            <div className="flex flex-col justify-end">
+              <ExtraDetailsItem
+                bordered={false}
+                title="Documents"
+                titleClass="justify-end"
+                value={<LinkIcon href={currentBond.defiLlama}>Defi Llama</LinkIcon>}
+              />
+            </div>
+          </>
+        )
+      } else if (
+        auction.id === currentBond.auction &&
+        !currentBond.creditAnalysis &&
+        currentBond.prime &&
+        currentBond.defiLlama
+      ) {
+        return (
+          <>
+            <div className="flex flex-col justify-end">
+              <ExtraDetailsItem
+                bordered={false}
+                title="Documents"
+                titleClass="justify-end"
+                value={<LinkIcon href={currentBond.prime}>PrimeRating</LinkIcon>}
+              />
+            </div>
+            <div className="flex flex-col justify-end">
+              <ExtraDetailsItem
+                bordered={false}
+                title="Documents"
+                titleClass="justify-end"
+                value={<LinkIcon href={currentBond.defiLlama}>Defi Llama</LinkIcon>}
+              />
+            </div>
+          </>
+        )
+      } else if (
+        auction.id === currentBond.auction &&
+        !currentBond.prime &&
+        currentBond.defiLlama
+      ) {
+        return (
+          <>
+            <div className="flex flex-col justify-end">
+              <ExtraDetailsItem
+                bordered={false}
+                title="Documents"
+                titleClass="justify-end"
+                value={<LinkIcon href={currentBond.creditAnalysis}>Credit analysis</LinkIcon>}
+              />
+            </div>
+            <div className="flex flex-col justify-end">
+              <ExtraDetailsItem
+                bordered={false}
+                title="Documents"
+                titleClass="justify-end"
+                value={<LinkIcon href={currentBond.defiLlama}>Defi Llama</LinkIcon>}
+              />
+            </div>
+          </>
+        )
+      } else if (
+        auction.id === currentBond.auction &&
+        !currentBond.prime &&
+        !currentBond.defiLlama
+      ) {
+        return (
+          <div className="flex flex-col justify-end">
+            <ExtraDetailsItem
+              bordered={false}
+              title="Documents"
+              titleClass="justify-end"
+              value={<LinkIcon href={currentBond.creditAnalysis}>Credit analysis</LinkIcon>}
+            />
+          </div>
+        )
+      }
+    }
+  }
+
   return (
     <div className="card">
       <div className="card-body">
@@ -208,16 +317,7 @@ const AuctionDetails = (props: Props) => {
           color="blue"
           endDate={auction?.end}
           endText="End date"
-          rightOfCountdown={
-            <div className="flex flex-col justify-end">
-              <ExtraDetailsItem
-                bordered={false}
-                title="Documents"
-                titleClass="justify-end"
-                value={<LinkIcon href="/pdf/Ribbon DAO Prospectus.pdf">Prospectus</LinkIcon>}
-              />
-            </div>
-          }
+          rightOfCountdown={bondDetails()}
           startDate={auction?.start}
           startText="Start date"
           text="Ends in"

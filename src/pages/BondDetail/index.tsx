@@ -22,6 +22,7 @@ import { useBond } from '../../hooks/useBond'
 import { useBondExtraDetails } from '../../hooks/useBondExtraDetails'
 import { ConvertButtonOutline, LoadingTwoGrid, SimpleButtonOutline, TwoGridPage } from '../Auction'
 import BondManagement from './BondManagement'
+import { bondInformation } from './bondInformation'
 
 import { Bond } from '@/generated/graphql'
 import { useActiveWeb3React } from '@/hooks'
@@ -31,27 +32,6 @@ export enum BondActions {
   Convert,
   Mint,
 }
-
-const bondInformation = [
-  {
-    bond: '0x11f1f978f7944579bb3791b765176de3e68bffc6',
-    creditAnalysis: 'https://shapeshift.com/',
-    prime: 'https://www.prime.xyz/ratings/shapeshift',
-    defiLlama: 'https://defillama.com/protocol/shapeshift',
-  },
-  {
-    bond: '0xe34c023c0ea9899a8f8e9381437a604908e8b719',
-    creditAnalysis: '/pdf/Ribbon DAO Collateral & Credit Analysis.pdf',
-    prime: 'https://www.prime.xyz/ratings/ribbon-finance',
-    defiLlama: 'https://defillama.com/protocol/ribbon',
-  },
-  {
-    bond: '0x0ce1f1cd784bd2341abf21444add0681fe5a526c',
-    creditAnalysis: 'https://shapeshift.com/',
-    prime: 'httips://wwww.prime.xyz/ratings/shapeshift',
-    defiLlama: 'https://defillama.com/protocol/shapeshift',
-  },
-]
 
 const GlobalStyle = createGlobalStyle`
   .siteHeader {
@@ -235,17 +215,31 @@ const BondDetail: React.FC = () => {
             </div>
           </>
         )
-      } else if (bondId === currentBond.bond && !currentBond.prime && !currentBond.defiLlama) {
-        console.log('hi')
+      } else if (
+        bondId === currentBond.bond &&
+        !currentBond.creditAnalysis &&
+        currentBond.prime &&
+        currentBond.defiLlama
+      ) {
         return (
-          <div className="flex flex-col justify-end">
-            <ExtraDetailsItem
-              bordered={false}
-              title="Documents"
-              titleClass="justify-end"
-              value={<LinkIcon href={currentBond.creditAnalysis}>Credit analysis</LinkIcon>}
-            />
-          </div>
+          <>
+            <div className="flex flex-col justify-end">
+              <ExtraDetailsItem
+                bordered={false}
+                title="Documents"
+                titleClass="justify-end"
+                value={<LinkIcon href={currentBond.prime}>PrimeRating</LinkIcon>}
+              />
+            </div>
+            <div className="flex flex-col justify-end">
+              <ExtraDetailsItem
+                bordered={false}
+                title="Documents"
+                titleClass="justify-end"
+                value={<LinkIcon href={currentBond.defiLlama}>Defi Llama</LinkIcon>}
+              />
+            </div>
+          </>
         )
       } else if (bondId === currentBond.bond && !currentBond.prime && currentBond.defiLlama) {
         return (
@@ -267,6 +261,17 @@ const BondDetail: React.FC = () => {
               />
             </div>
           </>
+        )
+      } else if (bondId === currentBond.bond && !currentBond.prime && !currentBond.defiLlama) {
+        return (
+          <div className="flex flex-col justify-end">
+            <ExtraDetailsItem
+              bordered={false}
+              title="Documents"
+              titleClass="justify-end"
+              value={<LinkIcon href={currentBond.creditAnalysis}>Credit analysis</LinkIcon>}
+            />
+          </div>
         )
       }
     }
