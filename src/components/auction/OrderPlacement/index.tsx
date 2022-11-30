@@ -229,7 +229,7 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
 
   const priceInfo = React.useMemo(
     () =>
-      errorPrice || numericalPrice >= 1
+      errorPrice || numericalPrice > 1
         ? {
             text: errorPrice,
             type: InfoType.error,
@@ -248,7 +248,7 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
       showTokenConfirm ||
       sellAmount === '' ||
       price === '' ||
-      numericalPrice >= 1) &&
+      numericalPrice > 1) &&
     true
 
   const auctioningTokenAddress = auctioningToken && auctioningToken?.address
