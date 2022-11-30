@@ -198,112 +198,41 @@ const AuctionDetails = (props: Props) => {
     },
   ]
 
-  const bondDetails = () => {
+  const bondDetailProps = () => {
     for (let i = 0; i < bondInformation.length; i++) {
       const currentBond = bondInformation[i]
-
-      if (
-        auction.id === currentBond.auction &&
-        currentBond.creditAnalysis &&
-        currentBond.prime &&
-        currentBond.defiLlama
-      ) {
-        return (
-          <>
-            <div className="flex flex-col justify-end">
-              <ExtraDetailsItem
-                bordered={false}
-                title="Documents"
-                titleClass="justify-end"
-                value={<LinkIcon href={currentBond.creditAnalysis}>Credit analysis</LinkIcon>}
-              />
-            </div>
-            <div className="flex flex-col justify-end">
-              <ExtraDetailsItem
-                bordered={false}
-                title="Documents"
-                titleClass="justify-end"
-                value={<LinkIcon href={currentBond.prime}>PrimeRating</LinkIcon>}
-              />
-            </div>
-            <div className="flex flex-col justify-end">
-              <ExtraDetailsItem
-                bordered={false}
-                title="Documents"
-                titleClass="justify-end"
-                value={<LinkIcon href={currentBond.defiLlama}>Defi Llama</LinkIcon>}
-              />
-            </div>
-          </>
-        )
-      } else if (
-        auction.id === currentBond.auction &&
-        !currentBond.creditAnalysis &&
-        currentBond.prime &&
-        currentBond.defiLlama
-      ) {
-        return (
-          <>
-            <div className="flex flex-col justify-end">
-              <ExtraDetailsItem
-                bordered={false}
-                title="Documents"
-                titleClass="justify-end"
-                value={<LinkIcon href={currentBond.prime}>PrimeRating</LinkIcon>}
-              />
-            </div>
-            <div className="flex flex-col justify-end">
-              <ExtraDetailsItem
-                bordered={false}
-                title="Documents"
-                titleClass="justify-end"
-                value={<LinkIcon href={currentBond.defiLlama}>Defi Llama</LinkIcon>}
-              />
-            </div>
-          </>
-        )
-      } else if (
-        auction.id === currentBond.auction &&
-        !currentBond.prime &&
-        currentBond.defiLlama
-      ) {
-        return (
-          <>
-            <div className="flex flex-col justify-end">
-              <ExtraDetailsItem
-                bordered={false}
-                title="Documents"
-                titleClass="justify-end"
-                value={<LinkIcon href={currentBond.creditAnalysis}>Credit analysis</LinkIcon>}
-              />
-            </div>
-            <div className="flex flex-col justify-end">
-              <ExtraDetailsItem
-                bordered={false}
-                title="Documents"
-                titleClass="justify-end"
-                value={<LinkIcon href={currentBond.defiLlama}>Defi Llama</LinkIcon>}
-              />
-            </div>
-          </>
-        )
-      } else if (
-        auction.id === currentBond.auction &&
-        !currentBond.prime &&
-        !currentBond.defiLlama
-      ) {
-        return (
-          <div className="flex flex-col justify-end">
-            <ExtraDetailsItem
-              bordered={false}
-              title="Documents"
-              titleClass="justify-end"
-              value={<LinkIcon href={currentBond.creditAnalysis}>Credit analysis</LinkIcon>}
-            />
-          </div>
-        )
+      const { creditAnalysis, defiLlama, prime } = currentBond
+      if (auction.id === currentBond.auction) {
+        return { creditAnalysis, prime, defiLlama }
       }
     }
+  }
+
+  const { creditAnalysis, defiLlama, prime } = bondDetailProps() || {}
+
+  const BondDetailItems = (props) => {
+    return (
+      <div className="flex flex-col justify-end">
+        <ExtraDetailsItem
+          bordered={false}
+          title="Documents"
+          titleClass="justify-end"
+          value={props.value}
+        />
+      </div>
+    )
+  }
+
+  const bondDetails = (creditAnalysis, prime, defiLlama) => {
+    return (
+      <>
+        {creditAnalysis && (
+          <BondDetailItems value={<LinkIcon href={creditAnalysis}>Credit Analysis</LinkIcon>} />
+        )}
+        {prime && <BondDetailItems value={<LinkIcon href={prime}>Prime Rating</LinkIcon>} />}
+        {defiLlama && <BondDetailItems value={<LinkIcon href={defiLlama}>DeFi Llama</LinkIcon>} />}
+      </>
+    )
   }
 
   return (
@@ -317,7 +246,7 @@ const AuctionDetails = (props: Props) => {
           color="blue"
           endDate={auction?.end}
           endText="End date"
-          rightOfCountdown={bondDetails()}
+          rightOfCountdown={bondDetails(creditAnalysis, prime, defiLlama)}
           startDate={auction?.start}
           startText="Start date"
           text="Ends in"

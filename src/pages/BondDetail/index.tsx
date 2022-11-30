@@ -177,104 +177,41 @@ const BondDetail: React.FC = () => {
   const data = calculatePortfolioRow(bond)
   const positionData = data && [data]
 
-  const bondDetails = () => {
+  const bondDetailProps = () => {
     for (let i = 0; i < bondInformation.length; i++) {
       const currentBond = bondInformation[i]
-
-      if (
-        bondId === currentBond.bond &&
-        currentBond.creditAnalysis &&
-        currentBond.prime &&
-        currentBond.defiLlama
-      ) {
-        return (
-          <>
-            <div className="flex flex-col justify-end">
-              <ExtraDetailsItem
-                bordered={false}
-                title="Documents"
-                titleClass="justify-end"
-                value={<LinkIcon href={currentBond.creditAnalysis}>Credit analysis</LinkIcon>}
-              />
-            </div>
-            <div className="flex flex-col justify-end">
-              <ExtraDetailsItem
-                bordered={false}
-                title="Documents"
-                titleClass="justify-end"
-                value={<LinkIcon href={currentBond.prime}>PrimeRating</LinkIcon>}
-              />
-            </div>
-            <div className="flex flex-col justify-end">
-              <ExtraDetailsItem
-                bordered={false}
-                title="Documents"
-                titleClass="justify-end"
-                value={<LinkIcon href={currentBond.defiLlama}>Defi Llama</LinkIcon>}
-              />
-            </div>
-          </>
-        )
-      } else if (
-        bondId === currentBond.bond &&
-        !currentBond.creditAnalysis &&
-        currentBond.prime &&
-        currentBond.defiLlama
-      ) {
-        return (
-          <>
-            <div className="flex flex-col justify-end">
-              <ExtraDetailsItem
-                bordered={false}
-                title="Documents"
-                titleClass="justify-end"
-                value={<LinkIcon href={currentBond.prime}>PrimeRating</LinkIcon>}
-              />
-            </div>
-            <div className="flex flex-col justify-end">
-              <ExtraDetailsItem
-                bordered={false}
-                title="Documents"
-                titleClass="justify-end"
-                value={<LinkIcon href={currentBond.defiLlama}>Defi Llama</LinkIcon>}
-              />
-            </div>
-          </>
-        )
-      } else if (bondId === currentBond.bond && !currentBond.prime && currentBond.defiLlama) {
-        return (
-          <>
-            <div className="flex flex-col justify-end">
-              <ExtraDetailsItem
-                bordered={false}
-                title="Documents"
-                titleClass="justify-end"
-                value={<LinkIcon href={currentBond.creditAnalysis}>Credit analysis</LinkIcon>}
-              />
-            </div>
-            <div className="flex flex-col justify-end">
-              <ExtraDetailsItem
-                bordered={false}
-                title="Documents"
-                titleClass="justify-end"
-                value={<LinkIcon href={currentBond.defiLlama}>Defi Llama</LinkIcon>}
-              />
-            </div>
-          </>
-        )
-      } else if (bondId === currentBond.bond && !currentBond.prime && !currentBond.defiLlama) {
-        return (
-          <div className="flex flex-col justify-end">
-            <ExtraDetailsItem
-              bordered={false}
-              title="Documents"
-              titleClass="justify-end"
-              value={<LinkIcon href={currentBond.creditAnalysis}>Credit analysis</LinkIcon>}
-            />
-          </div>
-        )
+      const { creditAnalysis, defiLlama, prime } = currentBond
+      if (bondId === currentBond.bond) {
+        return { creditAnalysis, prime, defiLlama }
       }
     }
+  }
+
+  const { creditAnalysis, defiLlama, prime } = bondDetailProps() || {}
+
+  const BondDetailItems = (props) => {
+    return (
+      <div className="flex flex-col justify-end">
+        <ExtraDetailsItem
+          bordered={false}
+          title="Documents"
+          titleClass="justify-end"
+          value={props.value}
+        />
+      </div>
+    )
+  }
+
+  const bondDetails = () => {
+    return (
+      <>
+        {creditAnalysis && (
+          <BondDetailItems value={<LinkIcon href={creditAnalysis}>Credit Analysis</LinkIcon>} />
+        )}
+        {prime && <BondDetailItems value={<LinkIcon href={prime}>Prime Rating</LinkIcon>} />}
+        {defiLlama && <BondDetailItems value={<LinkIcon href={defiLlama}>DeFi Llama</LinkIcon>} />}
+      </>
+    )
   }
 
   if (isLoading) {
