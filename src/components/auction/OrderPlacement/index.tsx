@@ -214,6 +214,8 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
   )
   const signatureAvailable = React.useMemo(() => signature && signature.length > 10, [signature])
 
+  const numericalPrice = Number(price)
+
   const amountInfo = React.useMemo(
     () =>
       errorAmount
@@ -227,13 +229,13 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
 
   const priceInfo = React.useMemo(
     () =>
-      errorPrice
+      errorPrice || numericalPrice >= 1
         ? {
             text: errorPrice,
             type: InfoType.error,
           }
         : null,
-    [errorPrice],
+    [errorPrice, numericalPrice],
   )
 
   const disablePlaceOrder =
@@ -245,7 +247,8 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
       showConfirm ||
       showTokenConfirm ||
       sellAmount === '' ||
-      price === '') &&
+      price === '' ||
+      numericalPrice >= 1) &&
     true
 
   const auctioningTokenAddress = auctioningToken && auctioningToken?.address
