@@ -229,13 +229,13 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
 
   const priceInfo = React.useMemo(
     () =>
-      errorPrice || numericalPrice > 1
+      errorPrice || numericalPrice > 1 || numericalPrice <= graphInfo?.minimumBondPrice
         ? {
             text: errorPrice,
             type: InfoType.error,
           }
         : null,
-    [errorPrice, numericalPrice],
+    [errorPrice, numericalPrice, graphInfo],
   )
 
   const disablePlaceOrder =
@@ -248,7 +248,8 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
       showTokenConfirm ||
       sellAmount === '' ||
       price === '' ||
-      numericalPrice > 1) &&
+      numericalPrice > 1 ||
+      numericalPrice <= graphInfo?.minimumBondPrice) &&
     true
 
   const auctioningTokenAddress = auctioningToken && auctioningToken?.address
