@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { ActionButton } from '@/components/auction/Claimer'
+import Tooltip from '@/components/common/Tooltip'
 import { useBond } from '@/hooks/useBond'
 import { useOrderbookPair } from '@/hooks/useOrderbook'
 
@@ -24,7 +25,7 @@ const OrderbookManagement = () => {
           <thead className="sticky top-0 z-[1]">
             <tr className="border-b border-b-[#D5D5D519]">
               <th className="bg-transparent text-xs font-normal tracking-widest text-[#696969]">
-                Current Sell Orders
+                <Tooltip tip="Investors currently selling bonds" /> Current Sell Orders
               </th>
             </tr>
             <tr>
@@ -52,7 +53,7 @@ const OrderbookManagement = () => {
           <thead className="sticky top-0 z-[1]">
             <tr className="border-b border-b-[#D5D5D519]">
               <th className="bg-transparent text-xs font-normal tracking-widest text-[#696969]">
-                Current Buy Orders
+                <Tooltip tip="Investors currently buying bonds" /> Current Buy Orders
               </th>
             </tr>
             <tr>
