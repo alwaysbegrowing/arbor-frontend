@@ -53,7 +53,8 @@ export const calculateInterestRate = ({
   const years = Math.abs(startingDate.diff(maturityDate * 1000, 'year', true))
   let interestRate = (1 / nPrice) ** (1 / years) - 1
 
-  interestRate = isNaN(interestRate) || interestRate === Infinity ? 0 : interestRate
+  interestRate =
+    isNaN(interestRate) || interestRate === Infinity || interestRate < 0 ? 0 : interestRate
 
   if (display) {
     return `${round(interestRate * 100, 1).toLocaleString()}%`
