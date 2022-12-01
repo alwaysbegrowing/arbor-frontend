@@ -22,7 +22,7 @@ import { useBond } from '../../hooks/useBond'
 import { useBondExtraDetails } from '../../hooks/useBondExtraDetails'
 import { ConvertButtonOutline, LoadingTwoGrid, SimpleButtonOutline, TwoGridPage } from '../Auction'
 import BondManagement from './BondManagement'
-import { bondInformation } from './bondInformation'
+import bondInformation from './bondInformation.json'
 
 import { Bond } from '@/generated/graphql'
 import { useActiveWeb3React } from '@/hooks'
@@ -178,13 +178,9 @@ const BondDetail: React.FC = () => {
   const positionData = data && [data]
 
   const bondDetailProps = () => {
-    for (let i = 0; i < bondInformation.length; i++) {
-      const currentBond = bondInformation[i]
-      const { creditAnalysis, defiLlama, prime } = currentBond
-      if (bondId === currentBond.bond) {
-        return { creditAnalysis, prime, defiLlama }
-      }
-    }
+    const currentBond = bondInformation[bondId]
+    const { creditAnalysis, defiLlama, prime } = currentBond || {}
+    return { creditAnalysis, prime, defiLlama }
   }
 
   const { creditAnalysis, defiLlama, prime } = bondDetailProps() || {}

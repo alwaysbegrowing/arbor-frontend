@@ -17,7 +17,7 @@ import { ExtraDetailsItem, Props as ExtraDetailsItemProps } from '../ExtraDetail
 import { AuctionStatusPill } from '../OrderbookTable'
 
 import { Auction } from '@/generated/graphql'
-import { bondInformation } from '@/pages/BondDetail/bondInformation'
+import bondInformation from '@/pages/BondDetail/bondInformation.json'
 
 const TokenValue = styled.span`
   line-height: 1.2;
@@ -199,13 +199,10 @@ const AuctionDetails = (props: Props) => {
   ]
 
   const bondDetailProps = () => {
-    for (let i = 0; i < bondInformation.length; i++) {
-      const currentBond = bondInformation[i]
-      const { creditAnalysis, defiLlama, prime } = currentBond
-      if (auction.id === currentBond.auction) {
-        return { creditAnalysis, prime, defiLlama }
-      }
-    }
+    const bondId = auction.bond.id
+    const currentBond = bondInformation[bondId]
+    const { creditAnalysis, defiLlama, prime } = currentBond || {}
+    return { creditAnalysis, prime, defiLlama }
   }
 
   const { creditAnalysis, defiLlama, prime } = bondDetailProps() || {}
