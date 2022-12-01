@@ -59,7 +59,7 @@ const AuctionDetails = (props: Props) => {
   const { data: auction } = useAuction(auctionIdentifier?.auctionId)
   let { orderbookPrice: auctionCurrentPrice } = useOrderbookState()
 
-  if (auctionCurrentPrice == 0) {
+  if (auctionCurrentPrice == 0 || auctionCurrentPrice > 1) {
     // use the price from the subgraph if not found on API
     auctionCurrentPrice = Number(auction.minimumBondPrice)
   }
@@ -129,6 +129,8 @@ const AuctionDetails = (props: Props) => {
       startDate: auction.end,
     }) as string
   }
+
+  console.log({ currentBondYTM, auctionCurrentPrice })
 
   const currentBondPrice = {
     fullNumberHint: auctionCurrentPrice.toLocaleString(),
