@@ -55,7 +55,7 @@ export const GhostActionLink = ({ children, ...props }) => (
   </a>
 )
 
-const TokenItem = styled.div`
+export const TokenItem = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
