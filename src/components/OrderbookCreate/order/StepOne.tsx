@@ -14,6 +14,7 @@ import { addDays } from './StepTwo'
 
 import { ExchangeProxy } from '@/components/ProductCreate/SelectableTokens'
 import BorrowTokenSelector from '@/components/ProductCreate/selectors/BorrowTokenSelector'
+import { ActionButton } from '@/components/auction/Claimer'
 import TooltipElement from '@/components/common/Tooltip'
 import BOND_ABI from '@/constants/abis/bond.json'
 import { useActiveWeb3React } from '@/hooks'
@@ -32,6 +33,38 @@ export const StepOne = () => {
     'expiry',
   ])
   const addRecentTransaction = useAddRecentTransaction()
+
+  const ExpiryDate = () => {
+    return (
+      <div className="form-control w-full">
+        <label className="label">
+          <TooltipElement
+            left={<span className="label-text">Order expiration date</span>}
+            tip="Date the order must be fulfilled by. If not fulfilled, the order will be expired and removed from the orderbook. This is UTC time."
+          />
+        </label>
+        <input
+          className="input-bordered input w-full"
+          defaultValue={`${addDays(new Date(), 0).toISOString().substring(0, 10)} 23:59`}
+          min={dayjs(new Date()).utc().add(0, 'day').format('YYYY-MM-DD HH:mm')}
+          placeholder="MM/DD/YYYY HH:mm"
+          type="datetime-local"
+          {...register('expiry', {
+            required: 'Order expiration date',
+            validate: {
+              validDate: (expiry) =>
+                dayjs(expiry).isValid() || 'The expiration date must be in the future',
+              afterNow: (expiry) =>
+                dayjs(expiry).diff(new Date()) > 0 || 'The expiration date must be in the future',
+              before10Years: (expiry) =>
+                dayjs(new Date()).add(10, 'years').isAfter(expiry) ||
+                'The expiration date must be within 10 years',
+            },
+          })}
+        />
+      </div>
+    )
+  }
 
   const { data: bondAllowance } = useContractRead({
     addressOrName: bondToAuction?.id || AddressZero,
@@ -158,41 +191,15 @@ export const StepOne = () => {
             },
           })}
         />
-        <div className="form-control w-full">
-          <label className="label">
-            <TooltipElement
-              left={<span className="label-text">Order expiration date</span>}
-              tip="Date the order must be fulfilled by. If not fulfilled, the order will be expired and removed from the orderbook. This is UTC time."
-            />
-          </label>
-          <input
-            className="input-bordered input w-full"
-            defaultValue={`${addDays(new Date(), 0).toISOString().substring(0, 10)} 23:59`}
-            min={dayjs(new Date()).utc().add(0, 'day').format('YYYY-MM-DD HH:mm')}
-            placeholder="MM/DD/YYYY HH:mm"
-            type="datetime-local"
-            {...register('expiry', {
-              required: 'Order expiration date',
-              validate: {
-                validDate: (expiry) =>
-                  dayjs(expiry).isValid() || 'The expiration date must be in the future',
-                afterNow: (expiry) =>
-                  dayjs(expiry).diff(new Date()) > 0 || 'The expiration date must be in the future',
-                before10Years: (expiry) =>
-                  dayjs(new Date()).add(10, 'years').isAfter(expiry) ||
-                  'The expiration date must be within 10 years',
-              },
-            })}
-          />
-        </div>
+        <ExpiryDate />
         {!account ? (
           <button className="btn my-10" onClick={toggleWalletModal}>
             connect wallet
           </button>
         ) : (
-          <button className="btn my-10" onClick={sellLimit}>
-            do the order
-          </button>
+          <ActionButton className="btn my-10" onClick={sellLimit}>
+            SIGN ORDER
+          </ActionButton>
         )}
       </div>
     </>
