@@ -76,7 +76,8 @@ export const CollateralTokens = {
   ],
 }
 
+// Make sure the address is all lowercase
 export const IssuerAllowList = [
   '0xfab4af4ea2eb609868cdb4f744155d67f0a5bf41',
-  '0xF544286b80BC5E0Ae4E37421A8C5C15A7cB813cC',
+  '0xf544286b80bc5e0ae4e37421a8c5c15a7cb813cc',
 ]
