@@ -185,9 +185,10 @@ export const useAuctions = () => {
   const { data, error, loading } = useQuery(AllAuctionsDocument, {
     fetchPolicy: 'no-cache',
   })
+  const filteredAuctions = data?.auctions?.filter((auction) => auction.id !== '394')
   if (error) {
     logger.error('Error getting useAuctions info', error)
   }
 
-  return { data: data?.auctions, loading }
+  return { data: filteredAuctions, loading }
 }
