@@ -16,13 +16,14 @@ import BondAction from '../../components/bond/BondAction'
 import { ErrorBoundaryWithFallback } from '../../components/common/ErrorAndReload'
 import { calculateInterestRate } from '../../components/form/InterestRateInputPanel'
 import WarningModal from '../../components/modals/WarningModal'
-import TokenLink, { LinkIcon } from '../../components/token/TokenLink'
+import TokenLink from '../../components/token/TokenLink'
 import TokenLogo from '../../components/token/TokenLogo'
 import { useBond } from '../../hooks/useBond'
 import { useBondExtraDetails } from '../../hooks/useBondExtraDetails'
 import { ConvertButtonOutline, LoadingTwoGrid, SimpleButtonOutline, TwoGridPage } from '../Auction'
 import BondManagement from './BondManagement'
 
+import { BondDetails } from '@/components/auction/AuctionDetails'
 import { Bond } from '@/generated/graphql'
 import { useActiveWeb3React } from '@/hooks'
 
@@ -243,20 +244,7 @@ const BondDetail: React.FC = () => {
                     endDate={bond?.maturityDate}
                     endText="Maturity date"
                     endTip="Date each bond can be redeemed for $1 assuming no default. Convertible bonds cannot be converted after this date."
-                    rightOfCountdown={
-                      <div className="flex flex-col justify-end">
-                        <ExtraDetailsItem
-                          bordered={false}
-                          title="Documents"
-                          titleClass="justify-end"
-                          value={
-                            <LinkIcon href="/pdf/Ribbon DAO Collateral & Credit Analysis.pdf">
-                              Credit analysis
-                            </LinkIcon>
-                          }
-                        />
-                      </div>
-                    }
+                    rightOfCountdown={<BondDetails bondId={bond?.id} />}
                     startDate={bond?.createdAt}
                     startText="Issuance date"
                     startTip="Time the bonds were minted."
