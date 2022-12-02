@@ -59,6 +59,12 @@ export const CollateralTokens = {
       address: '0x6123b0049f904d730db3c36a31167d9d4121fa6b',
       decimals: 18,
     },
+    {
+      name: 'FOX',
+      icon: FOXIcon,
+      address: '0xc770eefad204b5180df6a14ee197d99d808ee52d',
+      decimals: 18,
+    },
   ],
   [chain.goerli.id]: [
     {
