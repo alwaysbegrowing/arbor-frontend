@@ -172,8 +172,8 @@ const Orderbook = () => {
     bids,
     loading: loadingOrderbook,
   } = useOrderbookPair(
-    '0x552ffa3838af607432e7261328c15a89a93e75be',
     '0x5a2d26d95b07c28d735ff76406bd82fe64222dc1',
+    '0x0d2147db3fa5e39b4821a1ed6553a7fa56554726',
   )
   const { data: bonds, loading: loadingBonds } = useBonds()
   if (!bids?.records) return

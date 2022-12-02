@@ -5,10 +5,12 @@ import { LimitOrderFields } from '@0x/protocol-utils'
 import { AddressZero } from '@ethersproject/constants'
 import { parseUnits } from '@ethersproject/units'
 import { useAddRecentTransaction } from '@rainbow-me/rainbowkit'
+import dayjs from 'dayjs'
 import { useFormContext } from 'react-hook-form'
 import { useContract, useContractRead } from 'wagmi'
 
 import { BondSelector } from '../../ProductCreate/selectors/CollateralTokenSelector'
+import { addDays } from './StepTwo'
 
 import { ExchangeProxy } from '@/components/ProductCreate/SelectableTokens'
 import BorrowTokenSelector from '@/components/ProductCreate/selectors/BorrowTokenSelector'
@@ -78,11 +80,12 @@ export const StepOne = () => {
       taker: AddressZero,
       sender: AddressZero,
       feeRecipient: '0xafded11c6fc769aaae90630fd205a2713e544ce3',
-      expiry: Math.floor(Date.now() / 1000 + 3000).toString() as any,
+      expiry: Math.floor(dayjs(expiry).unix()).toString() as any,
       salt: Date.now().toString() as any,
       chainId,
       verifyingContract: ExchangeProxy[chainId],
     }
+    console.log(Date.now)
     const postSellLimitOrder = async () => {
       await sellLimitOrder(orderData, { signer })
     }
@@ -155,6 +158,33 @@ export const StepOne = () => {
             },
           })}
         />
+        <div className="form-control w-full">
+          <label className="label">
+            <TooltipElement
+              left={<span className="label-text">Order expiration date</span>}
+              tip="Date the order must be fulfilled by. If not fulfilled, the order will be expired and removed from the orderbook. This is UTC time."
+            />
+          </label>
+          <input
+            className="input-bordered input w-full"
+            defaultValue={`${addDays(new Date(), 0).toISOString().substring(0, 10)} 23:59`}
+            min={dayjs(new Date()).utc().add(0, 'day').format('YYYY-MM-DD HH:mm')}
+            placeholder="MM/DD/YYYY HH:mm"
+            type="datetime-local"
+            {...register('expiry', {
+              required: 'Order expiration date',
+              validate: {
+                validDate: (expiry) =>
+                  dayjs(expiry).isValid() || 'The expiration date must be in the future',
+                afterNow: (expiry) =>
+                  dayjs(expiry).diff(new Date()) > 0 || 'The expiration date must be in the future',
+                before10Years: (expiry) =>
+                  dayjs(new Date()).add(10, 'years').isAfter(expiry) ||
+                  'The expiration date must be within 10 years',
+              },
+            })}
+          />
+        </div>
         {!account ? (
           <button className="btn my-10" onClick={toggleWalletModal}>
             connect wallet
