@@ -36,7 +36,7 @@ export const TESTNET_TOKEN_MAP: { [key: string]: string } = {
   ['0x1ee2926BDd6c0A34207BAEb7B8fAa12cdE0BC315'.toLowerCase()]:
     '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
   // FOX goerli
-  ['0xB514a1237860308db88758D26Bc9B065BC310748'.toLowerCase()]:
+  ['0x11f1f978f7944579bb3791b765176de3e68bffc6'.toLowerCase()]:
     '0xc770EEfAd204B5180dF6a14Ee197D99d808ee52d',
   // USDC goerli
   ['0x5a2D26D95b07C28d735ff76406bd82fE64222Dc1'.toLowerCase()]:
