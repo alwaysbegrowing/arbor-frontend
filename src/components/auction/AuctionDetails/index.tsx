@@ -1,8 +1,10 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
 import { formatUnits } from '@ethersproject/units'
+import { DoubleArrowRightIcon } from '@radix-ui/react-icons'
 import { ceil } from 'lodash'
 
 import { useAuction } from '../../../hooks/useAuction'
@@ -11,12 +13,13 @@ import { AuctionIdentifier } from '../../../state/orderPlacement/reducer'
 import { useOrderbookState } from '../../../state/orderbook/hooks'
 import { abbreviation } from '../../../utils/numeral'
 import { calculateInterestRate } from '../../form/InterestRateInputPanel'
-import TokenLink, { LinkIcon } from '../../token/TokenLink'
+import TokenLink from '../../token/TokenLink'
 import { AuctionTimer } from '../AuctionTimer'
 import { ExtraDetailsItem, Props as ExtraDetailsItemProps } from '../ExtraDetailsItem'
 import { AuctionStatusPill } from '../OrderbookTable'
 
 import { Auction } from '@/generated/graphql'
+import { BOND_INFORMATION } from '@/pages/BondDetail'
 
 const TokenValue = styled.span`
   line-height: 1.2;
@@ -55,6 +58,7 @@ export const TokenInfoWithLink = ({
 
 const AuctionDetails = (props: Props) => {
   const { auctionIdentifier } = props
+  const navigate = useNavigate()
 
   const { data: auction } = useAuction(auctionIdentifier?.auctionId)
   let { orderbookPrice: auctionCurrentPrice } = useOrderbookState()
@@ -129,8 +133,6 @@ const AuctionDetails = (props: Props) => {
       startDate: auction.end,
     }) as string
   }
-
-  console.log({ currentBondYTM, auctionCurrentPrice })
 
   const currentBondPrice = {
     fullNumberHint: auctionCurrentPrice.toLocaleString(),
@@ -210,7 +212,19 @@ const AuctionDetails = (props: Props) => {
           color="blue"
           endDate={auction?.end}
           endText="End date"
-          rightOfCountdown={<BondDetails bondId={auction.bond.id} />}
+          rightOfCountdown={
+            auction?.bond.id in BOND_INFORMATION && (
+              <button
+                className="btn btn-primary btn-sm space-x-2 rounded-md bg-[#293327] !text-xxs font-normal"
+                onClick={() => navigate(`/bonds/${auction?.bond.id || ''}`)}
+              >
+                <span>Issuer Information</span>
+                <span>
+                  <DoubleArrowRightIcon />
+                </span>
+              </button>
+            )
+          }
           startDate={auction?.start}
           startText="Start date"
           text="Ends in"
@@ -223,51 +237,6 @@ const AuctionDetails = (props: Props) => {
         </div>
       </div>
     </div>
-  )
-}
-
-export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
-  '0x11f1f978f7944579bb3791b765176de3e68bffc6': {
-    prime: 'https://www.prime.xyz/ratings/shapeshift',
-    defiLlama: 'https://defillama.com/protocol/shapeshift',
-  },
-  '0xe34c023c0ea9899a8f8e9381437a604908e8b719': {
-    creditAnalysis: '/pdf/Ribbon DAO Collateral & Credit Analysis.pdf',
-    prime: 'https://www.prime.xyz/ratings/ribbon-finance',
-    defiLlama: 'https://defillama.com/protocol/ribbon',
-  },
-  '0x0ce1f1cd784bd2341abf21444add0681fe5a526c': {
-    prime: 'https://www.prime.xyz/ratings/shapeshift',
-    defiLlama: 'https://defillama.com/protocol/shapeshift',
-  },
-}
-
-const BondDetailItem = ({ title, value }: { value: ReactElement; title: string }) => {
-  return (
-    <div className="flex flex-col justify-end">
-      <ExtraDetailsItem bordered={false} title={title} titleClass="justify-end" value={value} />
-    </div>
-  )
-}
-
-export const BondDetails = ({ bondId }) => {
-  const currentBond = BOND_INFORMATION[bondId]
-  const { creditAnalysis, defiLlama, prime } = currentBond || {}
-  return (
-    <>
-      {creditAnalysis && (
-        <BondDetailItem
-          title="Documents"
-          value={<LinkIcon href={creditAnalysis}>Credit Analysis</LinkIcon>}
-        />
-      )}
-      {prime && (
-        <BondDetailItem title="Website" value={<LinkIcon href={prime}>Prime Rating</LinkIcon>} />
-      )}
-      {defiLlama && (
-        <BondDetailItem title="Website" value={<LinkIcon href={defiLlama}>DeFi Llama</LinkIcon>} />
-      )}
-    </>
   )
 }
 
