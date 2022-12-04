@@ -6,7 +6,7 @@ import { useTokenListState } from '../../../state/tokenList/hooks'
 import { UnregisteredToken } from '../UnregisteredToken'
 
 import { getMappedToken } from '@/components/ProductCreate/SelectableTokens'
-import { DEV_bondImage } from '@/state/tokenList/reducer'
+import { DEV_bondImage, DEV_tokens } from '@/state/tokenList/reducer'
 
 const Wrapper = styled.div<{ size: string }>`
   background-color: #e0e0e0;
@@ -56,16 +56,20 @@ const TokenLogo: React.FC<TokenLogoProps> = (props) => {
 
   // Example used in dev
   let forceSvg = false
-  if (DEV_bondImage.includes(address)) forceSvg = true
+  if (DEV_bondImage.includes(tokenAddress)) forceSvg = true
+
+  let chosenImage = false
+  if (tokenAddress in DEV_tokens) chosenImage = true
 
   const UnTok = !imageURL && <UnregisteredToken size={sizeToUse} token={token} {...restProps} />
   const ImageToken = (
     <Wrapper className="tokenLogo" size={sizeToUse} {...restProps}>
+      {chosenImage && <Image alt="token image" src={DEV_tokens[tokenAddress]?.image} />}
       {forceSvg && (
         <UnicornSvg height={sizeToUse} style={{ borderRadius: '100%' }} width={sizeToUse} />
       )}
       {!forceSvg && UnTok}
-      {imageURL && <Image alt="token image" src={imageURL} />}
+      {!chosenImage && imageURL && <Image alt="token image" src={imageURL} />}
     </Wrapper>
   )
 
