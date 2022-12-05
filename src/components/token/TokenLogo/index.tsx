@@ -55,20 +55,22 @@ const TokenLogo: React.FC<TokenLogoProps> = (props) => {
   const sizeToUse = square && size === '24px' ? '30px' : size
 
   // Example used in dev
+
+  const lowerTokenAddress = tokenAddress.toLocaleLowerCase()
   let forceSvg = false
   if (DEV_bondImage.includes(tokenAddress)) forceSvg = true
 
   let chosenImage = false
-  if (tokenAddress in DEV_tokens) chosenImage = true
+  if (lowerTokenAddress in DEV_tokens) chosenImage = true
 
   const UnTok = !imageURL && <UnregisteredToken size={sizeToUse} token={token} {...restProps} />
   const ImageToken = (
     <Wrapper className="tokenLogo" size={sizeToUse} {...restProps}>
-      {chosenImage && <Image alt="token image" src={DEV_tokens[tokenAddress]?.image} />}
+      {chosenImage && <Image alt="token image" src={DEV_tokens[lowerTokenAddress]?.image} />}
       {forceSvg && (
         <UnicornSvg height={sizeToUse} style={{ borderRadius: '100%' }} width={sizeToUse} />
       )}
-      {!forceSvg && UnTok}
+      {!chosenImage && !forceSvg && UnTok}
       {!chosenImage && imageURL && <Image alt="token image" src={imageURL} />}
     </Wrapper>
   )
