@@ -35,6 +35,7 @@ export enum BondActions {
 export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
   '0x11f1f978f7944579bb3791b765176de3e68bffc6': {
     website: 'https://shapeshift.com/',
+    creditAnalysisCredora: '/pdf/Shapeshift_-_Factors_Model_Description (1).pdf',
     prime: 'https://www.prime.xyz/ratings/shapeshift',
     defiLlama: 'https://defillama.com/protocol/shapeshift',
   },
@@ -46,6 +47,7 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
   },
   '0x0ce1f1cd784bd2341abf21444add0681fe5a526c': {
     website: 'https://shapeshift.com/',
+    creditAnalysisCredora: '/pdf/Shapeshift_-_Factors_Model_Description (1).pdf',
     prime: 'https://www.prime.xyz/ratings/shapeshift',
     defiLlama: 'https://defillama.com/protocol/shapeshift',
   },
@@ -63,7 +65,7 @@ const BondDetailItem = ({ title, value }: { value: ReactElement; title: string }
 
 export const BondDetails = ({ bondId }) => {
   const currentBond = BOND_INFORMATION[bondId]
-  const { creditAnalysis, defiLlama, prime, website } = currentBond || {}
+  const { creditAnalysis, creditAnalysisCredora, defiLlama, prime, website } = currentBond || {}
   return (
     <>
       {creditAnalysis && (
@@ -71,6 +73,14 @@ export const BondDetails = ({ bondId }) => {
           <BondDetailItem
             title="Documents"
             value={<LinkIcon href={creditAnalysis}>Credit Analysis</LinkIcon>}
+          />
+        </div>
+      )}
+      {creditAnalysisCredora && (
+        <div className="col-span-1 border-b border-[#222222]">
+          <BondDetailItem
+            title="Documents"
+            value={<LinkIcon href={creditAnalysisCredora}>Credora Credit Analysis</LinkIcon>}
           />
         </div>
       )}
