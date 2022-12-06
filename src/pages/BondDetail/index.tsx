@@ -119,8 +119,7 @@ export const getBondStates = (
   const isPaid = bond?.state === 'paidEarly' || bond?.state === 'paid'
   const isActive = bond?.state === 'active'
   const isMatured =
-    isDefaulted ||
-    (isPaid && bond?.maturityDate < dayjs(new Date()).unix().toString());
+    isDefaulted || (isPaid && bond?.maturityDate < dayjs(new Date()).unix().toString())
 
   return {
     isMatured,
