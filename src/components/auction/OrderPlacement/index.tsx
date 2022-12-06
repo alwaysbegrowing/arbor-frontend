@@ -172,7 +172,7 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
   const minBidSize = graphInfo?.minimumBidSize / 10 ** 6
 
   useEffect(() => {
-    if (Number(sellAmount) * Number(price) < minBidSize) {
+    if (price !== '' && Number(sellAmount) * Number(price) < minBidSize) {
       setError(true)
       setErrorText(
         `The amount of USDC you pay must exceed the minimum bid size of ${minBidSize} USDC.`,
@@ -182,7 +182,7 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
       setErrorText(
         'The price you pay per bond must be smaller than the face value of the bond, $1.',
       )
-    } else if (Number(price) < graphInfo?.minimumBondPrice) {
+    } else if (price !== '' && Number(price) < graphInfo?.minimumBondPrice) {
       setError(true)
       setErrorText(
         `The price you pay per bond must be greater than the minimum bond price of ${graphInfo?.minimumBondPrice} USDC.`,
@@ -254,13 +254,13 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
 
   const priceInfo = React.useMemo(
     () =>
-      errorPrice || numericalPrice > 1 || numericalPrice <= graphInfo?.minimumBondPrice
+      errorPrice
         ? {
             text: errorPrice,
             type: InfoType.error,
           }
         : null,
-    [errorPrice, numericalPrice, graphInfo],
+    [errorPrice],
   )
 
   const disablePlaceOrder =
