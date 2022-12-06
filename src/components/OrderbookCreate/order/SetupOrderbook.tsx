@@ -173,7 +173,13 @@ const SetupOrderbook = () => {
 
   return (
     <>
-      <div className="btn-group justify-center">
+      <FormSteps
+        midComponents={midComponents}
+        showSell={showSell}
+        steps={steps}
+        title="Limit Order Creation"
+      />
+      <div className="btn-group absolute left-1/2 -translate-x-1/2">
         <button
           className={`btn ${!showSell && 'btn-active'} w-[85px]`}
           onClick={() => showSell && setShowSell(false)}
@@ -187,12 +193,6 @@ const SetupOrderbook = () => {
           Sell
         </button>
       </div>
-      <FormSteps
-        midComponents={midComponents}
-        showSell={showSell}
-        steps={steps}
-        title="Limit Order Creation"
-      />
     </>
   )
 }
