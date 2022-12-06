@@ -56,7 +56,7 @@ const TokenLogo: React.FC<TokenLogoProps> = (props) => {
 
   // Example used in dev
 
-  const lowerTokenAddress = tokenAddress.toLocaleLowerCase()
+  const lowerTokenAddress = tokenAddress.toLowerCase()
   let forceSvg = false
   if (DEV_bondImage.includes(tokenAddress)) forceSvg = true
 
