@@ -21,7 +21,7 @@ import { useActiveWeb3React } from '@/hooks'
 import { sellLimitOrder } from '@/pages/BondDetail/OrderbookApi'
 import { useWalletModalToggle } from '@/state/application/hooks'
 
-export const StepOne = () => {
+export const StepOne = (showSell) => {
   const { register, watch } = useFormContext()
   const { account, chainId, signer } = useActiveWeb3React()
   const toggleWalletModal = useWalletModalToggle()
@@ -72,15 +72,21 @@ export const StepOne = () => {
     functionName: 'allowance',
     args: [account, ExchangeProxy[chainId]],
   })
-  const contract = useContract({
+  const contractBond = useContract({
     addressOrName: bondToAuction?.id || AddressZero,
     contractInterface: BOND_ABI,
     signerOrProvider: signer,
   })
+  const constractToken = useContract({
+    addressOrName: borrowToken?.address || AddressZero,
+    contractInterface: BOND_ABI,
+    signerOrProvider: signer,
+  })
+
   const sellLimit = () => {
     console.log(bondAllowance)
     if (bondToAuction && (bondAllowance as unknown as BigNumber).eq(0)) {
-      return contract
+      return contractBond
         .approve(ExchangeProxy[chainId], parseUnits(`${makerAmount || 0}`, bondToAuction?.decimals))
         .then((result) => {
           addRecentTransaction({
@@ -118,22 +124,67 @@ export const StepOne = () => {
       chainId,
       verifyingContract: ExchangeProxy[chainId],
     }
-    console.log(Date.now)
     const postSellLimitOrder = async () => {
       await sellLimitOrder(orderData, { signer })
     }
     postSellLimitOrder()
   }
+
+  const buyLimit = () => {
+    console.log(bondAllowance)
+    if (borrowToken?.address && (bondAllowance as unknown as BigNumber).eq(0)) {
+      return constractToken
+        .approve(ExchangeProxy[chainId], parseUnits(`${makerAmount || 0}`, bondToAuction?.decimals))
+        .then((result) => {
+          addRecentTransaction({
+            hash: result?.hash,
+            description: `Approve ${borrowToken?.symbol || borrowToken?.name} for ${makerAmount}`,
+          })
+          return result.wait()
+        })
+        .then(() => {
+          console.log('setCurrentApproveStep(1)')
+        })
+        .catch((e) => {
+          console.log(e?.message || e)
+        })
+    }
+    if (!signer || !chainId) {
+      return
+    }
+    // need "as any" otherwise signing data breaks on type check
+    const orderData: LimitOrderFields = {
+      makerToken: borrowToken.address,
+      takerToken: bondToAuction.id,
+      makerAmount: takerAmount.toString(),
+      takerAmount: makerAmount.toString(),
+      takerTokenFeeAmount: '0' as any,
+      maker: account,
+      pool: '0x0000000000000000000000000000000000000000000000000000000000000000',
+      taker: AddressZero,
+      sender: AddressZero,
+      feeRecipient: '0xafded11c6fc769aaae90630fd205a2713e544ce3',
+      expiry: Math.floor(dayjs(expiry).unix()).toString() as any,
+      salt: Date.now().toString() as any,
+      chainId,
+      verifyingContract: ExchangeProxy[chainId],
+    }
+    const postBuyLimitOrder = async () => {
+      await sellLimitOrder(orderData, { signer })
+    }
+    postBuyLimitOrder()
+  }
+
   return (
     <>
       <div className="form-control w-full">
+        <div className="flex items-center"></div>
         <label className="label">
           <TooltipElement
             left={<span className="label-text">Bond</span>}
             tip="Bond you will be trading"
           />
         </label>
-
         <BondSelector />
       </div>
 
@@ -141,7 +192,7 @@ export const StepOne = () => {
         <label className="label">
           <TooltipElement
             left={<span className="label-text">Number of bonds</span>}
-            tip="Number of bonds you will be selling"
+            tip="Number of bonds you will be trading"
           />
         </label>
         <input
@@ -151,10 +202,10 @@ export const StepOne = () => {
           placeholder="0"
           type="number"
           {...register('makerAmount', {
-            required: 'Some bonds must be sold',
+            required: 'Some bonds must be traded',
             valueAsNumber: true,
             validate: {
-              greaterThanZero: (value) => value > 0 || 'Some bonds must be sold',
+              greaterThanZero: (value) => value > 0 || 'Some bonds must be traded',
             },
           })}
         />
@@ -164,7 +215,7 @@ export const StepOne = () => {
         <label className="label">
           <TooltipElement
             left={<span className="label-text">Token</span>}
-            tip="Token that will be bought"
+            tip="Token that will be traded"
           />
         </label>
         <BorrowTokenSelector />
@@ -197,7 +248,16 @@ export const StepOne = () => {
             connect wallet
           </button>
         ) : (
-          <ActionButton className="btn my-10" onClick={sellLimit}>
+          <ActionButton
+            className="btn my-10"
+            onClick={() => {
+              if (showSell) {
+                sellLimit()
+              } else {
+                buyLimit()
+              }
+            }}
+          >
             SIGN ORDER
           </ActionButton>
         )}
