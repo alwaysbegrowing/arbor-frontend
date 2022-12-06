@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
 
@@ -16,14 +16,13 @@ import BondAction from '../../components/bond/BondAction'
 import { ErrorBoundaryWithFallback } from '../../components/common/ErrorAndReload'
 import { calculateInterestRate } from '../../components/form/InterestRateInputPanel'
 import WarningModal from '../../components/modals/WarningModal'
-import TokenLink from '../../components/token/TokenLink'
+import TokenLink, { LinkIcon } from '../../components/token/TokenLink'
 import TokenLogo from '../../components/token/TokenLogo'
 import { useBond } from '../../hooks/useBond'
 import { useBondExtraDetails } from '../../hooks/useBondExtraDetails'
 import { ConvertButtonOutline, LoadingTwoGrid, SimpleButtonOutline, TwoGridPage } from '../Auction'
 import BondManagement from './BondManagement'
 
-import { BondDetails } from '@/components/auction/AuctionDetails'
 import { Bond } from '@/generated/graphql'
 import { useActiveWeb3React } from '@/hooks'
 
@@ -31,6 +30,94 @@ export enum BondActions {
   Redeem,
   Convert,
   Mint,
+}
+
+export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
+  '0x11f1f978f7944579bb3791b765176de3e68bffc6': {
+    website: 'https://shapeshift.com/',
+    creditAnalysisArbor: '/pdf/ShapeShift Prospectus.pdf',
+    creditAnalysisCredora: '/pdf/Shapeshift_-_Factors_Model_Description (1).pdf',
+    prime: 'https://www.prime.xyz/ratings/shapeshift',
+    defiLlama: 'https://defillama.com/protocol/shapeshift',
+  },
+  '0xe34c023c0ea9899a8f8e9381437a604908e8b719': {
+    website: 'https://www.ribbon.finance/',
+    creditAnalysis: '/pdf/Ribbon DAO Collateral & Credit Analysis.pdf',
+    prime: 'https://www.prime.xyz/ratings/ribbon-finance',
+    defiLlama: 'https://defillama.com/protocol/ribbon',
+  },
+  '0x0ce1f1cd784bd2341abf21444add0681fe5a526c': {
+    website: 'https://shapeshift.com/',
+    creditAnalysisArbor: '/pdf/ShapeShift Prospectus.pdf',
+    creditAnalysisCredora: '/pdf/Shapeshift_-_Factors_Model_Description (1).pdf',
+    prime: 'https://www.prime.xyz/ratings/shapeshift',
+    defiLlama: 'https://defillama.com/protocol/shapeshift',
+  },
+}
+
+const BondDetailItem = ({ title, value }: { value: ReactElement; title: string }) => {
+  return (
+    <span className="flex items-center space-x-1">
+      <div className="flex flex-col justify-start">
+        <ExtraDetailsItem bordered={true} title={title} titleClass="justify-start" value={value} />
+      </div>
+    </span>
+  )
+}
+
+export const BondDetails = ({ bondId }) => {
+  const currentBond = BOND_INFORMATION[bondId]
+  const { creditAnalysis, creditAnalysisArbor, creditAnalysisCredora, defiLlama, prime, website } =
+    currentBond || {}
+  return (
+    <>
+      {creditAnalysisArbor && (
+        <div className="col-span-1 border-b border-[#222222]">
+          <BondDetailItem
+            title="Documents"
+            value={<LinkIcon href={creditAnalysisArbor}>Arbor Credit Analysis</LinkIcon>}
+          />
+        </div>
+      )}
+      {creditAnalysis && (
+        <div className="col-span-1 border-b border-[#222222]">
+          <BondDetailItem
+            title="Documents"
+            value={<LinkIcon href={creditAnalysis}>Credit Analysis</LinkIcon>}
+          />
+        </div>
+      )}
+      {creditAnalysisCredora && (
+        <div className="col-span-1 border-b border-[#222222]">
+          <BondDetailItem
+            title="Documents"
+            value={<LinkIcon href={creditAnalysisCredora}>Credora Credit Analysis</LinkIcon>}
+          />
+        </div>
+      )}
+      {website && (
+        <div className="col-span-1 border-b border-[#222222]">
+          <BondDetailItem
+            title="Website"
+            value={<LinkIcon href={website}>Issuer Website</LinkIcon>}
+          />
+        </div>
+      )}
+      {prime && (
+        <div className="col-span-1 border-b border-[#222222]">
+          <BondDetailItem title="Website" value={<LinkIcon href={prime}>Prime Rating</LinkIcon>} />
+        </div>
+      )}
+      {defiLlama && (
+        <div className="col-span-1 border-b border-[#222222]">
+          <BondDetailItem
+            title="Website"
+            value={<LinkIcon href={defiLlama}>DeFi Llama</LinkIcon>}
+          />
+        </div>
+      )}
+    </>
+  )
 }
 
 const GlobalStyle = createGlobalStyle`
@@ -244,7 +331,6 @@ const BondDetail: React.FC = () => {
                     endDate={bond?.maturityDate}
                     endText="Maturity date"
                     endTip="Date each bond can be redeemed for $1 assuming no default. Convertible bonds cannot be converted after this date."
-                    rightOfCountdown={<BondDetails bondId={bond?.id} />}
                     startDate={bond?.createdAt}
                     startText="Issuance date"
                     startTip="Time the bonds were minted."
@@ -262,6 +348,23 @@ const BondDetail: React.FC = () => {
                   </div>
                 </div>
               </div>
+
+              {bond?.id in BOND_INFORMATION && (
+                <div className="card">
+                  <div className="card-body">
+                    <h2 className="card-title flex flex-row items-center justify-between">
+                      <span>Issuer information</span>
+                    </h2>
+                    <div
+                      className={`grid grid-cols-1 gap-x-12 gap-y-8 pt-12 ${
+                        isConvertBond ? 'md:grid-cols-3' : 'md:grid-cols-4'
+                      }`}
+                    >
+                      <BondDetails bondId={bond?.id} />
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <BondGraphCard bond={bond as Bond} />
 
