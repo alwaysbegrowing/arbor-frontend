@@ -58,8 +58,8 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
 const BondDetailItem = ({ title, value }: { value: ReactElement; title: string }) => {
   return (
     <span className="flex items-center space-x-1">
-      <div className="flex flex-col justify-end">
-        <ExtraDetailsItem bordered={true} title={title} titleClass="justify-end" value={value} />
+      <div className="flex flex-col justify-start">
+        <ExtraDetailsItem bordered={true} title={title} titleClass="justify-start" value={value} />
       </div>
     </span>
   )
@@ -355,9 +355,6 @@ const BondDetail: React.FC = () => {
                     <h2 className="card-title flex flex-row items-center justify-between">
                       <span>Issuer information</span>
                     </h2>
-                    <div className="flex flex-row items-center justify-between border-b border-[#222222]">
-                      <span>Obtain more information about the bond issuer.</span>
-                    </div>
                     <div
                       className={`grid grid-cols-1 gap-x-12 gap-y-8 pt-12 ${
                         isConvertBond ? 'md:grid-cols-3' : 'md:grid-cols-4'
