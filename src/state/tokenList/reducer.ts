@@ -69,7 +69,6 @@ export const DEV_bondImage = ['0xf16aaab318b61a0820a95207b54b7598b1eadc0c']
 export default createReducer<TokenListState>(initialState, (builder) =>
   builder.addCase(loadTokenListFromAPI, (state: TokenListState, { payload: { tokenList } }) => {
     const tokens = tokenList ?? {}
-    // DEV_tokens.forEach(([token, image]) => (tokens[token] = image))
     return {
       ...state,
       tokens,
