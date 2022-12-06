@@ -24,7 +24,7 @@ export interface OrderPlacementState {
 
 const initialState: OrderPlacementState = {
   chainId: undefined,
-  price: '-',
+  price: '',
   interestRate: '-',
   sellAmount: '',
   showPriceInverted: false,
