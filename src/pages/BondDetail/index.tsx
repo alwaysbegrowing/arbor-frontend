@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
 
 import { formatUnits } from '@ethersproject/units'
+import { DoubleArrowRightIcon } from '@radix-ui/react-icons'
 import dayjs from 'dayjs'
 
 import { ReactComponent as ConnectIcon } from '../../assets/svg/connect.svg'
@@ -34,6 +35,7 @@ export enum BondActions {
 
 export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
   '0x11f1f978f7944579bb3791b765176de3e68bffc6': {
+    auctionId: '20',
     website: 'https://shapeshift.com/',
     creditAnalysisArbor: '/pdf/ShapeShift Prospectus.pdf',
     creditAnalysisCredora: '/pdf/Shapeshift_-_Factors_Model_Description (1).pdf',
@@ -41,12 +43,14 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     defiLlama: 'https://defillama.com/protocol/shapeshift',
   },
   '0xe34c023c0ea9899a8f8e9381437a604908e8b719': {
+    auctionId: '270',
     website: 'https://www.ribbon.finance/',
     creditAnalysis: '/pdf/Ribbon DAO Collateral & Credit Analysis.pdf',
     prime: 'https://www.prime.xyz/ratings/ribbon-finance',
     defiLlama: 'https://defillama.com/protocol/ribbon',
   },
   '0x0ce1f1cd784bd2341abf21444add0681fe5a526c': {
+    auctionId: '20',
     website: 'https://shapeshift.com/',
     creditAnalysisArbor: '/pdf/ShapeShift Prospectus.pdf',
     creditAnalysisCredora: '/pdf/Shapeshift_-_Factors_Model_Description (1).pdf',
@@ -333,6 +337,21 @@ const BondDetail: React.FC = () => {
                     endDate={bond?.maturityDate}
                     endText="Maturity date"
                     endTip="Date each bond can be redeemed for $1 assuming no default. Convertible bonds cannot be converted after this date."
+                    rightOfCountdown={
+                      bond?.id in BOND_INFORMATION && (
+                        <button
+                          className="btn btn-primary btn-sm space-x-2 rounded-md bg-[#293327] !text-xxs font-normal"
+                          onClick={() =>
+                            navigate(`/offerings/${BOND_INFORMATION[bond?.id].auctionId || ''}`)
+                          }
+                        >
+                          <span>Auction Information</span>
+                          <span>
+                            <DoubleArrowRightIcon />
+                          </span>
+                        </button>
+                      )
+                    }
                     startDate={bond?.createdAt}
                     startText="Issuance date"
                     startTip="Time the bonds were minted."
