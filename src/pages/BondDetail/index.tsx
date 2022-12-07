@@ -1,11 +1,10 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
 
 import { formatUnits } from '@ethersproject/units'
 import { DoubleArrowRightIcon } from '@radix-ui/react-icons'
 import dayjs from 'dayjs'
-import { _TypedDataEncoder, hashMessage } from 'ethers/lib/utils'
 
 import { ReactComponent as ConnectIcon } from '../../assets/svg/connect.svg'
 import { ReactComponent as WalletIcon } from '../../assets/svg/wallet.svg'
@@ -25,11 +24,8 @@ import { useBondExtraDetails } from '../../hooks/useBondExtraDetails'
 import { ConvertButtonOutline, LoadingTwoGrid, SimpleButtonOutline, TwoGridPage } from '../Auction'
 import BondManagement from './BondManagement'
 
-import {
-  ARBOR_PROMISSORY_NOTE_DOMAIN,
-  ARBOR_PROMISSORY_NOTE_TYPES,
-  ARBOR_PROMISSORY_NOTE_VALUE,
-} from '@/components/CreditEnhancers/promissory/SignatureRequest'
+import { getPayload } from '@/components/CreditEnhancers/promissory/SignatureRequest'
+import PromissoryNoteModal from '@/components/PromissoryNoteModal'
 import { Bond } from '@/generated/graphql'
 import { useActiveWeb3React } from '@/hooks'
 
@@ -48,7 +44,6 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     creditAnalysisCredora: '/pdf/Shapeshift_-_Factors_Model_Description (1).pdf',
     prime: 'https://www.prime.xyz/ratings/shapeshift',
     contractAddress: '0xc770eefad204b5180df6a14ee197d99d808ee52d',
-    messageHash: '0xb1af62ead1f323ebd50de66da3519c47b85b5220078e1592103ee0f92ff68d69',
     description:
       'Shapeshift DAO is a borderless, cross-chain crypto trading platform and portfolio manager enabling user sovereignty.',
   },
@@ -70,7 +65,6 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     creditAnalysisCredora: '/pdf/Shapeshift_-_Factors_Model_Description (1).pdf',
     prime: 'https://www.prime.xyz/ratings/shapeshift',
     contractAddress: '0xc770eefad204b5180df6a14ee197d99d808ee52d',
-    messageHash: '0xb1af62ead1f323ebd50de66da3519c47b85b5220078e1592103ee0f92ff68d69',
     description:
       'Shapeshift DAO is a borderless, cross-chain crypto trading platform and portfolio manager enabling user sovereignty.',
   },
@@ -95,27 +89,14 @@ export const BondDetails = ({ id }) => {
     creditAnalysis,
     creditAnalysisArbor,
     creditAnalysisCredora,
-    messageHash,
     name,
     prime,
+    promissoryLink,
+    promissoryMessageHash,
     website,
   } = currentBond || {}
-  const calculatedMessageHash = _TypedDataEncoder.hash(
-    ARBOR_PROMISSORY_NOTE_DOMAIN({ chainId: 1 }),
-    ARBOR_PROMISSORY_NOTE_TYPES,
-    ARBOR_PROMISSORY_NOTE_VALUE('0x87a075d5c330c8b22faa65c62dcd1c982f43f314'),
-  )
-  const payload = _TypedDataEncoder.getPayload(
-    ARBOR_PROMISSORY_NOTE_DOMAIN({ chainId: 1 }),
-    ARBOR_PROMISSORY_NOTE_TYPES,
-    ARBOR_PROMISSORY_NOTE_VALUE('0x87a075d5c330c8b22faa65c62dcd1c982f43f314'),
-  )
-  const otherHash = hashMessage(payload.message)
-  console.log(otherHash)
-  console.log(calculatedMessageHash)
-  console.log(messageHash)
-  const promissoryNote = messageHash == calculatedMessageHash
-
+  const promissoryContent = getPayload({ address: bond?.id, chainId })
+  const [isPromissoryModalOpen, setIsPromissoryModalOpen] = useState(false)
   return (
     <>
       {creditAnalysisArbor && (
@@ -123,7 +104,7 @@ export const BondDetails = ({ id }) => {
           <BondDetailItem
             title="Documents"
             value={
-              <LinkIcon color={'#1c731c'} href={creditAnalysisArbor}>
+              <LinkIcon color={'#75ed02'} href={creditAnalysisArbor}>
                 Arbor Credit Analysis
               </LinkIcon>
             }
@@ -171,13 +152,24 @@ export const BondDetails = ({ id }) => {
           <BondDetailItem title="Website" value={<LinkIcon href={prime}>Prime Rating</LinkIcon>} />
         </div>
       )}
-      {promissoryNote && (
-        <div className="col-span-1 border-b border-[#222222]">
-          <BondDetailItem
-            title="Signature"
-            value={<LinkIcon href={promissoryNote}>Promissory Note</LinkIcon>}
+      {promissoryMessageHash && (
+        <>
+          <PromissoryNoteModal
+            close={() => setIsPromissoryModalOpen(false)}
+            content={JSON.stringify(promissoryContent, null, 2)}
+            isOpen={isPromissoryModalOpen}
+            issuer={bond?.owner}
+            promissoryLink={promissoryLink}
           />
-        </div>
+          <div className="col-span-1 border-b border-[#222222]">
+            <div className="cursor-pointer" onClick={() => setIsPromissoryModalOpen(true)}>
+              <BondDetailItem
+                title="Signature"
+                value={<span className="text-[#6CADFB]">Promissory Note</span>}
+              />
+            </div>
+          </div>
+        </>
       )}
     </>
   )
