@@ -18,7 +18,8 @@ export const arborTypes = {
 export const signPromissoryNote = async ({ bondToSign, chainId, signer }) => {
   const value = {
     bond: bondToSign?.id,
-    content: 'This signature represents a promise to pay the bond unconditionally.',
+    content:
+      'This signature represents a promise to unconditionally pay the bond by the maturity date.',
   }
   const signedTypedData = await signer._signTypedData(
     ARBOR_PROMISSORY_NOTE_DOMAIN({ chainId }),
