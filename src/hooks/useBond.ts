@@ -78,6 +78,7 @@ const allBondsQuery = gql`
       }
       collateralRatio
       convertibleRatio
+      maxSupply
     }
   }
 `
