@@ -127,13 +127,13 @@ export const BondDetails = ({ id }) => {
           />
         </div>
       )}
-      {contractAddress && (
+      {bond?.owner && (
         <div className="col-span-1 border-b border-[#222222]">
           <BondDetailItem
             title="Etherscan"
             value={
-              <LinkIcon href={`https://etherscan.io/address/${contractAddress}`}>
-                Contract Address
+              <LinkIcon href={`https://etherscan.io/address/${bond?.owner}`}>
+                Issuer Address
               </LinkIcon>
             }
           />
