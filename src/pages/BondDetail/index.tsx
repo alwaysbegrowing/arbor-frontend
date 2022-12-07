@@ -406,18 +406,19 @@ const BondDetail: React.FC = () => {
                     endText="Maturity date"
                     endTip="Date each bond can be redeemed for $1 assuming no default. Convertible bonds cannot be converted after this date."
                     rightOfCountdown={
-                      bond?.id in BOND_INFORMATION && (
-                        <button
-                          className="btn btn-primary btn-sm space-x-2 rounded-md bg-[#293327] !text-xxs font-normal"
-                          onClick={() =>
-                            navigate(`/offerings/${BOND_INFORMATION[bond?.id].auctionId || ''}`)
-                          }
+                      !(bond?.id in BOND_INFORMATION) && (
+                        <a
+                          href={`https://etherscan.io/address/${bond?.owner || ''}`}
+                          rel="noreferrer"
+                          target="_blank"
                         >
-                          <span>Auction Information</span>
-                          <span>
-                            <DoubleArrowRightIcon />
-                          </span>
-                        </button>
+                          <button className="btn btn-primary btn-sm space-x-2 rounded-md bg-[#293327] !text-xxs font-normal">
+                            <span>Issuer Information</span>
+                            <span>
+                              <DoubleArrowRightIcon />
+                            </span>
+                          </button>
+                        </a>
                       )
                     }
                     startDate={bond?.createdAt}
