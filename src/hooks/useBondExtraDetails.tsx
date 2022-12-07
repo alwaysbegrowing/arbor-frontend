@@ -133,7 +133,7 @@ export const useBondExtraDetails = (bondId: string): ExtraDetailsItemProps[] => 
     },
     {
       title: 'Total Supply',
-      tooltip: 'Total supply of bonds issued.',
+      tooltip: 'Total number of bonds issued.',
       value: (
         <span className="flex items-center space-x-1">
           <span>{totalSupply.toLocaleString()}</span>

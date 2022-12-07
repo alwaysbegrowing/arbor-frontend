@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
 
 import { formatUnits } from '@ethersproject/units'
+import { DoubleArrowRightIcon } from '@radix-ui/react-icons'
 import dayjs from 'dayjs'
 
 import { ReactComponent as ConnectIcon } from '../../assets/svg/connect.svg'
@@ -333,6 +334,22 @@ const BondDetail: React.FC = () => {
                     endDate={bond?.maturityDate}
                     endText="Maturity date"
                     endTip="Date each bond can be redeemed for $1 assuming no default. Convertible bonds cannot be converted after this date."
+                    rightOfCountdown={
+                      !(bond?.id in BOND_INFORMATION) && (
+                        <a
+                          href={`https://etherscan.io/address/${bond?.owner || ''}`}
+                          rel="noreferrer"
+                          target="_blank"
+                        >
+                          <button className="btn btn-primary btn-sm space-x-2 rounded-md bg-[#293327] !text-xxs font-normal">
+                            <span>Issuer Information</span>
+                            <span>
+                              <DoubleArrowRightIcon />
+                            </span>
+                          </button>
+                        </a>
+                      )
+                    }
                     startDate={bond?.createdAt}
                     startText="Issuance date"
                     startTip="Time the bonds were minted."
