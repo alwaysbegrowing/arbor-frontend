@@ -60,7 +60,7 @@ export const useBondExtraDetails = (bondId: string): ExtraDetailsItemProps[] => 
   // const decimals = bond?.decimals ? bond?.decimals : 0
 
   const outstandingBondAmount = formatUnits(bond?.amountUnpaid || '0', bond?.decimals)
-  // const totalSupply = bond?.maxSupply / 10 ** decimals
+  const totalSupply = formatUnits(bond?.maxSupply || '0', bond?.decimals)
 
   return [
     {
@@ -133,15 +133,15 @@ export const useBondExtraDetails = (bondId: string): ExtraDetailsItemProps[] => 
         </span>
       ),
     },
-    // {
-    //   title: 'Total Supply',
-    //   tooltip: 'Total number of bonds issued.',
-    //   value: (
-    //     <span className="flex items-center space-x-1">
-    //       <span>{totalSupply.toLocaleString()}</span>
-    //     </span>
-    //   ),
-    // },
+    {
+      title: 'Total Supply',
+      tooltip: 'Total number of bonds issued.',
+      value: (
+        <span className="flex items-center space-x-1">
+          <span>{totalSupply}</span>
+        </span>
+      ),
+    },
     {
       title: 'Clearing Price',
       tooltip: 'Price per bond at the latest auction.',
