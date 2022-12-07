@@ -6,25 +6,26 @@ export const ARBOR_PROMISSORY_NOTE_DOMAIN = ({ chainId }: { chainId: number }) =
   version: '1.0.0',
 })
 
-const ARBOR_PROMISSORY_NOTE_STRUCT = [
-  { type: 'address', name: 'bond' },
-  { type: 'string', name: 'content' },
-]
-
-export const arborTypes = {
-  PromissoryNote: ARBOR_PROMISSORY_NOTE_STRUCT,
+export const ARBOR_PROMISSORY_NOTE_TYPES = {
+  PromissoryNote: [
+    { type: 'address', name: 'bond' },
+    { type: 'string', name: 'content' },
+  ],
 }
 
+export const ARBOR_PROMISSORY_NOTE_VALUE = (bondAddress: string) => ({
+  bond: bondAddress,
+  content:
+    'This signature represents a promise to unconditionally pay the bond by the maturity date.',
+})
+
 export const signPromissoryNote = async ({ bondToSign, chainId, signer }) => {
-  const value = {
-    bond: bondToSign?.id,
-    content:
-      'This signature represents a promise to unconditionally pay the bond by the maturity date.',
-  }
+  if (!bondToSign?.id) return
+
   const signedTypedData = await signer._signTypedData(
     ARBOR_PROMISSORY_NOTE_DOMAIN({ chainId }),
-    arborTypes,
-    value,
+    ARBOR_PROMISSORY_NOTE_TYPES,
+    ARBOR_PROMISSORY_NOTE_VALUE(bondToSign.id),
   )
 
   // Gnosis Safe
@@ -39,6 +40,11 @@ export const signPromissoryNote = async ({ bondToSign, chainId, signer }) => {
   }
   console.log(signature)
   console.log(
-    verifyTypedData(ARBOR_PROMISSORY_NOTE_DOMAIN({ chainId }), arborTypes, value, signature),
+    verifyTypedData(
+      ARBOR_PROMISSORY_NOTE_DOMAIN({ chainId }),
+      ARBOR_PROMISSORY_NOTE_TYPES,
+      ARBOR_PROMISSORY_NOTE_VALUE(bondToSign.id),
+      signature,
+    ),
   )
 }

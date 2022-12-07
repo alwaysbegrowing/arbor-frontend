@@ -11,7 +11,7 @@ export const CreditEnhancers = () => {
           icon: <AuctionCreateIcon />,
           url: '/credit-enhancers/promissory-note',
           title: 'Promissory Note',
-          learn: 'https://docs.arbor.finance/issuers/credit-enhancers',
+          learn: 'https://docs.arbor.finance/borrowers/credit-enhancers',
           description:
             'Enhance credit by adding a signed promise of intent to pay the bond in full.',
         },

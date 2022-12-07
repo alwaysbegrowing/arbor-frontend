@@ -5,6 +5,7 @@ import { createGlobalStyle } from 'styled-components'
 import { formatUnits } from '@ethersproject/units'
 import { DoubleArrowRightIcon } from '@radix-ui/react-icons'
 import dayjs from 'dayjs'
+import { _TypedDataEncoder, hashMessage } from 'ethers/lib/utils'
 
 import { ReactComponent as ConnectIcon } from '../../assets/svg/connect.svg'
 import { ReactComponent as WalletIcon } from '../../assets/svg/wallet.svg'
@@ -24,6 +25,11 @@ import { useBondExtraDetails } from '../../hooks/useBondExtraDetails'
 import { ConvertButtonOutline, LoadingTwoGrid, SimpleButtonOutline, TwoGridPage } from '../Auction'
 import BondManagement from './BondManagement'
 
+import {
+  ARBOR_PROMISSORY_NOTE_DOMAIN,
+  ARBOR_PROMISSORY_NOTE_TYPES,
+  ARBOR_PROMISSORY_NOTE_VALUE,
+} from '@/components/CreditEnhancers/promissory/SignatureRequest'
 import { Bond } from '@/generated/graphql'
 import { useActiveWeb3React } from '@/hooks'
 
@@ -42,6 +48,7 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     creditAnalysisCredora: '/pdf/Shapeshift_-_Factors_Model_Description (1).pdf',
     prime: 'https://www.prime.xyz/ratings/shapeshift',
     contractAddress: '0xc770eefad204b5180df6a14ee197d99d808ee52d',
+    messageHash: '0xb1af62ead1f323ebd50de66da3519c47b85b5220078e1592103ee0f92ff68d69',
     description:
       'Shapeshift DAO is a borderless, cross-chain crypto trading platform and portfolio manager enabling user sovereignty.',
   },
@@ -63,6 +70,7 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     creditAnalysisCredora: '/pdf/Shapeshift_-_Factors_Model_Description (1).pdf',
     prime: 'https://www.prime.xyz/ratings/shapeshift',
     contractAddress: '0xc770eefad204b5180df6a14ee197d99d808ee52d',
+    messageHash: '0xb1af62ead1f323ebd50de66da3519c47b85b5220078e1592103ee0f92ff68d69',
     description:
       'Shapeshift DAO is a borderless, cross-chain crypto trading platform and portfolio manager enabling user sovereignty.',
   },
@@ -78,17 +86,36 @@ const BondDetailItem = ({ title, value }: { value: ReactElement; title: string }
   )
 }
 
-export const BondDetails = ({ bondId }) => {
-  const currentBond = BOND_INFORMATION[bondId]
+export const BondDetails = ({ id }) => {
+  const { data: bond } = useBond(id)
+  const { chainId } = useActiveWeb3React()
+  const currentBond = BOND_INFORMATION[bond?.id]
   const {
     contractAddress,
     creditAnalysis,
     creditAnalysisArbor,
     creditAnalysisCredora,
+    messageHash,
     name,
     prime,
     website,
   } = currentBond || {}
+  const calculatedMessageHash = _TypedDataEncoder.hash(
+    ARBOR_PROMISSORY_NOTE_DOMAIN({ chainId: 1 }),
+    ARBOR_PROMISSORY_NOTE_TYPES,
+    ARBOR_PROMISSORY_NOTE_VALUE('0x87a075d5c330c8b22faa65c62dcd1c982f43f314'),
+  )
+  const payload = _TypedDataEncoder.getPayload(
+    ARBOR_PROMISSORY_NOTE_DOMAIN({ chainId: 1 }),
+    ARBOR_PROMISSORY_NOTE_TYPES,
+    ARBOR_PROMISSORY_NOTE_VALUE('0x87a075d5c330c8b22faa65c62dcd1c982f43f314'),
+  )
+  const otherHash = hashMessage(payload.message)
+  console.log(otherHash)
+  console.log(calculatedMessageHash)
+  console.log(messageHash)
+  const promissoryNote = messageHash == calculatedMessageHash
+
   return (
     <>
       {creditAnalysisArbor && (
@@ -142,6 +169,14 @@ export const BondDetails = ({ bondId }) => {
       {prime && (
         <div className="col-span-1 border-b border-[#222222]">
           <BondDetailItem title="Website" value={<LinkIcon href={prime}>Prime Rating</LinkIcon>} />
+        </div>
+      )}
+      {promissoryNote && (
+        <div className="col-span-1 border-b border-[#222222]">
+          <BondDetailItem
+            title="Signature"
+            value={<LinkIcon href={promissoryNote}>Promissory Note</LinkIcon>}
+          />
         </div>
       )}
     </>
@@ -280,7 +315,7 @@ export const calculatePortfolioRow = (
 }
 
 const BondDetail: React.FC = () => {
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const navigate = useNavigate()
   const { bondId } = useParams()
 
@@ -356,7 +391,7 @@ const BondDetail: React.FC = () => {
                         isConvertBond ? 'md:grid-cols-3' : 'md:grid-cols-4'
                       }`}
                     >
-                      <BondDetails bondId={bond?.id} />
+                      <BondDetails id={bond?.id} />
                     </div>
                   </div>
                 </div>
