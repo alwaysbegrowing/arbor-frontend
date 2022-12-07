@@ -402,9 +402,7 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
                 <>
                   <ActionButton
                     disabled={disablePlaceOrder || error}
-                    onClick={() =>
-                      disabledCountry ? setShowCountryDisabledModal(true) : handleShowConfirm()
-                    }
+                    onClick={() => handleShowConfirm()}
                   >
                     Review order
                   </ActionButton>
