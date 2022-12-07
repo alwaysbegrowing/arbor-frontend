@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
 
@@ -24,6 +24,8 @@ import { useBondExtraDetails } from '../../hooks/useBondExtraDetails'
 import { ConvertButtonOutline, LoadingTwoGrid, SimpleButtonOutline, TwoGridPage } from '../Auction'
 import BondManagement from './BondManagement'
 
+import { getPayload } from '@/components/CreditEnhancers/promissory/SignatureRequest'
+import PromissoryNoteModal from '@/components/PromissoryNoteModal'
 import { Bond } from '@/generated/graphql'
 import { useActiveWeb3React } from '@/hooks'
 
@@ -78,8 +80,10 @@ const BondDetailItem = ({ title, value }: { value: ReactElement; title: string }
   )
 }
 
-export const BondDetails = ({ bondId }) => {
-  const currentBond = BOND_INFORMATION[bondId]
+export const BondDetails = ({ id }) => {
+  const { data: bond } = useBond(id)
+  const { chainId } = useActiveWeb3React()
+  const currentBond = BOND_INFORMATION[bond?.id]
   const {
     contractAddress,
     creditAnalysis,
@@ -87,8 +91,12 @@ export const BondDetails = ({ bondId }) => {
     creditAnalysisCredora,
     name,
     prime,
+    promissoryLink,
+    promissoryMessageHash,
     website,
   } = currentBond || {}
+  const promissoryContent = getPayload({ address: bond?.id, chainId })
+  const [isPromissoryModalOpen, setIsPromissoryModalOpen] = useState(false)
   return (
     <>
       {creditAnalysisArbor && (
@@ -96,7 +104,7 @@ export const BondDetails = ({ bondId }) => {
           <BondDetailItem
             title="Documents"
             value={
-              <LinkIcon color={'#1c731c'} href={creditAnalysisArbor}>
+              <LinkIcon color={'#75ed02'} href={creditAnalysisArbor}>
                 Arbor Credit Analysis
               </LinkIcon>
             }
@@ -143,6 +151,25 @@ export const BondDetails = ({ bondId }) => {
         <div className="col-span-1 border-b border-[#222222]">
           <BondDetailItem title="Website" value={<LinkIcon href={prime}>Prime Rating</LinkIcon>} />
         </div>
+      )}
+      {promissoryMessageHash && (
+        <>
+          <PromissoryNoteModal
+            close={() => setIsPromissoryModalOpen(false)}
+            content={JSON.stringify(promissoryContent, null, 2)}
+            isOpen={isPromissoryModalOpen}
+            issuer={bond?.owner}
+            promissoryLink={promissoryLink}
+          />
+          <div className="col-span-1 border-b border-[#222222]">
+            <div className="cursor-pointer" onClick={() => setIsPromissoryModalOpen(true)}>
+              <BondDetailItem
+                title="Signature"
+                value={<span className="text-[#6CADFB]">Promissory Note</span>}
+              />
+            </div>
+          </div>
+        </>
       )}
     </>
   )
@@ -280,7 +307,7 @@ export const calculatePortfolioRow = (
 }
 
 const BondDetail: React.FC = () => {
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const navigate = useNavigate()
   const { bondId } = useParams()
 
@@ -356,7 +383,7 @@ const BondDetail: React.FC = () => {
                         isConvertBond ? 'md:grid-cols-3' : 'md:grid-cols-4'
                       }`}
                     >
-                      <BondDetails bondId={bond?.id} />
+                      <BondDetails id={bond?.id} />
                     </div>
                   </div>
                 </div>
