@@ -1,3 +1,4 @@
+import { utils } from 'ethers'
 import React from 'react'
 
 import dayjs from 'dayjs'
@@ -14,7 +15,8 @@ export const StepOne = () => {
   const { watch } = useFormContext()
   const { address } = useAccount()
   const [bondToAuction] = watch(['bondToAuction'])
-  const maxSupply = parseInt(bondToAuction?.maxSupply || 0)
+  const totalPayment =
+    bondToAuction && utils.formatUnits(bondToAuction.maxSupply, bondToAuction.decimals)
   const maturityDate = dayjs(bondToAuction?.maturityDate * 1000)
     .utc()
     .tz()
@@ -48,26 +50,13 @@ export const StepOne = () => {
           <div className="form-control w-full">
             <label className="label">
               <TooltipElement
-                left={<span className="label-text">Total Number of Bonds</span>}
-                tip="Number of bonds you will be paying"
-              />
-            </label>
-
-            <TokenItem>
-              <div>{maxSupply.toLocaleString()}</div>
-            </TokenItem>
-          </div>
-
-          <div className="form-control w-full">
-            <label className="label">
-              <TooltipElement
                 left={<span className="label-text">Total Payment Amount</span>}
                 tip="The total amount to be paid denominated in the payment token"
               />
             </label>
 
             <TokenItem>
-              <div>{maxSupply.toLocaleString()}</div>
+              <div>{totalPayment.toLocaleString()}</div>
 
               <TokenPill token={bondToAuction.paymentToken} />
             </TokenItem>
@@ -88,7 +77,7 @@ export const StepOne = () => {
 
           {bondToAuction && (
             <span className="card-title border border-[#333333] p-4 text-[#9F9F9F]">
-              {`This signature represents a promise to pay the bond unconditionally.`}
+              {`This signature represents a promise to unconditionally pay the bond by the maturity date.`}
             </span>
           )}
         </>
