@@ -348,7 +348,7 @@ const BondDetail: React.FC = () => {
                     </h2>
                     <span>{BOND_INFORMATION[bond?.id].description}</span>
                     <div
-                      className={`grid grid-cols-1 gap-x-12 gap-y-8 pt-12 ${
+                      className={`grid grid-cols-1 gap-x-12 gap-y-8 pt-8 ${
                         isConvertBond ? 'md:grid-cols-3' : 'md:grid-cols-4'
                       }`}
                     >
