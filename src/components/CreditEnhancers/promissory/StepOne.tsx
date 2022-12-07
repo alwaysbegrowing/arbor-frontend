@@ -77,7 +77,8 @@ export const StepOne = () => {
 
           {bondToAuction && (
             <span className="card-title border border-[#333333] p-4 text-[#9F9F9F]">
-              {`This signature represents a promise to unconditionally pay the bond by the maturity date.`}
+              This signature represents a promise to unconditionally repay the bond in full by the
+              maturity date.
             </span>
           )}
         </>
