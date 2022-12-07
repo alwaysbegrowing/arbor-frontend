@@ -35,6 +35,7 @@ export enum BondActions {
 
 export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
   '0x11f1f978f7944579bb3791b765176de3e68bffc6': {
+    auctionId: '20',
     name: 'Shapeshift DAO',
     website: 'https://shapeshift.com/',
     creditAnalysisArbor: '/pdf/ShapeShift Prospectus.pdf',
@@ -45,6 +46,7 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
       'Shapeshift DAO is a borderless, cross-chain crypto trading platform and portfolio manager enabling user sovereignty.',
   },
   '0xe34c023c0ea9899a8f8e9381437a604908e8b719': {
+    auctionId: '270',
     name: 'Ribbon Finance',
     website: 'https://www.ribbon.finance/',
     creditAnalysis: '/pdf/Ribbon DAO Collateral & Credit Analysis.pdf',
@@ -54,6 +56,7 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
       'Ribbon Finance is a suite of DeFi protocols seeking to enhance access to crypto products.',
   },
   '0x0ce1f1cd784bd2341abf21444add0681fe5a526c': {
+    auctionId: '20',
     name: 'Shapeshift DAO',
     website: 'https://shapeshift.com/',
     creditAnalysisArbor: '/pdf/ShapeShift Prospectus.pdf',
