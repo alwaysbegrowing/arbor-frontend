@@ -56,6 +56,9 @@ export const useBondExtraDetails = (bondId: string): ExtraDetailsItemProps[] => 
   const strikePrice =
     convertiblePerBond > 0 ? (paymentTokenPrice / convertiblePerBond).toLocaleString() : 0
   const isConvertBond = bond?.type === 'convert'
+  const decimals = bond?.decimals ? bond?.decimals : 6
+  const outstandingBondAmount = bond?.amountUnpaid / 10 ** decimals
+  const totalSupply = bond?.maxSupply / 10 ** decimals
 
   return [
     {
@@ -118,6 +121,37 @@ export const useBondExtraDetails = (bondId: string): ExtraDetailsItemProps[] => 
       ),
 
       show: isConvertBond,
+    },
+    {
+      title: 'Outstanding Bonds',
+      tooltip: 'Number of unpaid bonds.',
+      value: (
+        <span className="flex items-center space-x-1">
+          <span>{outstandingBondAmount.toLocaleString()}</span>
+        </span>
+      ),
+    },
+    {
+      title: 'Total Supply',
+      tooltip: 'Total supply of bonds issued.',
+      value: (
+        <span className="flex items-center space-x-1">
+          <span>{totalSupply.toLocaleString()}</span>
+        </span>
+      ),
+    },
+    {
+      title: 'Clearing Price',
+      tooltip: 'Price per bond at the latest auction.',
+      value: bond?.clearingPrice ? (
+        <span className="flex items-center space-x-1">
+          <span>{bond?.clearingPrice.toLocaleString()}</span>
+        </span>
+      ) : (
+        <span className="flex items-center space-x-1">
+          <span>Auction Ongoing</span>
+        </span>
+      ),
     },
   ]
 }
