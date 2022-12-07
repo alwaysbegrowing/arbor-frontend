@@ -61,6 +61,11 @@ export const DEV_tokens: { [key: string]: { [key: string]: string } } = {
     image:
       'https://assets.website-files.com/5cec55545d0f47cfe2a39a8e/61895a7ef8500fada381641f_FOX_token.svg',
   },
+  //FOX
+  '0x2e2a42fbe7c7e2ffc031baf7442dbe1f8957770a': {
+    image:
+      'https://assets.website-files.com/5cec55545d0f47cfe2a39a8e/61895a7ef8500fada381641f_FOX_token.svg',
+  },
 }
 
 // Shows unicorn simple bond svg for these
