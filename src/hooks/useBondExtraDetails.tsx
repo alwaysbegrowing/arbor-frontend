@@ -62,7 +62,7 @@ export const useBondExtraDetails = (bondId: string): ExtraDetailsItemProps[] => 
   const outstandingBondAmount = Math.round(
     Number(formatUnits(bond?.amountUnpaid || '0', bond?.decimals)),
   )
-  const totalSupply = formatUnits(bond?.maxSupply || '0', bond?.decimals)
+  const totalSupply = Math.round(Number(formatUnits(bond?.maxSupply || '0', bond?.decimals)))
 
   return [
     {
