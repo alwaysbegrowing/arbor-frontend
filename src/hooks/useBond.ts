@@ -80,7 +80,6 @@ const allBondsQuery = gql`
       convertibleRatio
       maxSupply
       clearingPrice
-      maxSupply
     }
   }
 `
