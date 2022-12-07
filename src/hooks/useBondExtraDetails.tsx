@@ -59,7 +59,7 @@ export const useBondExtraDetails = (bondId: string): ExtraDetailsItemProps[] => 
 
   // const decimals = bond?.decimals ? bond?.decimals : 0
 
-  // const outstandingBondAmount = bond?.amountUnpaid / 10 ** decimals
+  const outstandingBondAmount = formatUnits(bond?.amountUnpaid || '0', bond?.decimals)
   // const totalSupply = bond?.maxSupply / 10 ** decimals
 
   return [
@@ -124,15 +124,15 @@ export const useBondExtraDetails = (bondId: string): ExtraDetailsItemProps[] => 
 
       show: isConvertBond,
     },
-    // {
-    //   title: 'Outstanding Bonds',
-    //   tooltip: 'Number of unpaid bonds.',
-    //   value: (
-    //     <span className="flex items-center space-x-1">
-    //       <span>{outstandingBondAmount.toLocaleString()}</span>
-    //     </span>
-    //   ),
-    // },
+    {
+      title: 'Outstanding Bonds',
+      tooltip: 'Number of unpaid bonds.',
+      value: (
+        <span className="flex items-center space-x-1">
+          <span>{outstandingBondAmount}</span>
+        </span>
+      ),
+    },
     // {
     //   title: 'Total Supply',
     //   tooltip: 'Total number of bonds issued.',
