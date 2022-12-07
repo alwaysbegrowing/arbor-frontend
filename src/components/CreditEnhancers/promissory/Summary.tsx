@@ -3,7 +3,7 @@ import React from 'react'
 import dayjs from 'dayjs'
 import { useFormContext } from 'react-hook-form'
 
-import { Inputs } from './PaymentPromise'
+import { Inputs } from './PromissoryNote'
 import { SummaryItem } from './SummaryItem'
 
 export const Summary = ({ currentStep }) => {

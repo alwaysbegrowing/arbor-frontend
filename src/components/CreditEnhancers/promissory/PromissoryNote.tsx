@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { FormSteps } from '../../ProductCreate/FormSteps'
 import { ActionSteps } from './ActionSteps'
+import { FormSteps } from './FormSteps'
 import { StepOne } from './StepOne'
 import { Summary } from './Summary'
 
@@ -19,9 +19,9 @@ export type Inputs = {
   bondToAuction: Token
 }
 
-const PaymentPromise = () => {
+const PromissoryNote = () => {
   const midComponents = [<StepOne key={0} />]
-  const steps = ['Payment promise']
+  const steps = ['Signature Request']
 
   return (
     <FormSteps
@@ -29,9 +29,9 @@ const PaymentPromise = () => {
       Summary={Summary}
       midComponents={midComponents}
       steps={steps}
-      title="Payment promise"
+      title="Promissory Note"
     />
   )
 }
 
-export default PaymentPromise
+export default PromissoryNote
