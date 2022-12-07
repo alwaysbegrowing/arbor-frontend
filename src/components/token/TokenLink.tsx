@@ -4,7 +4,7 @@ import { getExplorerLink } from '../../utils'
 
 import { Token } from '@/generated/graphql'
 
-export const LinkIcon = ({ children, href }) => {
+export const LinkIcon = ({ children, color = 'white', href }) => {
   const noPropagation = (e) => e.stopPropagation()
 
   return (
@@ -13,6 +13,7 @@ export const LinkIcon = ({ children, href }) => {
       href={href}
       onClick={noPropagation}
       rel="noreferrer"
+      style={{ color: color }}
       target="_blank"
     >
       <span>{children}</span>

@@ -36,26 +36,35 @@ export enum BondActions {
 export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
   '0x11f1f978f7944579bb3791b765176de3e68bffc6': {
     auctionId: '20',
+    name: 'Shapeshift DAO',
     website: 'https://shapeshift.com/',
     creditAnalysisArbor: '/pdf/ShapeShift Prospectus.pdf',
     creditAnalysisCredora: '/pdf/Shapeshift_-_Factors_Model_Description (1).pdf',
     prime: 'https://www.prime.xyz/ratings/shapeshift',
-    defiLlama: 'https://defillama.com/protocol/shapeshift',
+    contractAddress: '0xc770eefad204b5180df6a14ee197d99d808ee52d',
+    description:
+      'Shapeshift DAO is a borderless, cross-chain crypto trading platform and portfolio manager enabling user sovereignty.',
   },
   '0xe34c023c0ea9899a8f8e9381437a604908e8b719': {
     auctionId: '270',
+    name: 'Ribbon Finance',
     website: 'https://www.ribbon.finance/',
     creditAnalysis: '/pdf/Ribbon DAO Collateral & Credit Analysis.pdf',
     prime: 'https://www.prime.xyz/ratings/ribbon-finance',
-    defiLlama: 'https://defillama.com/protocol/ribbon',
+    contractAddress: '0x6123b0049f904d730db3c36a31167d9d4121fa6b',
+    description:
+      'Ribbon Finance is a suite of DeFi protocols seeking to enhance access to crypto products.',
   },
   '0x0ce1f1cd784bd2341abf21444add0681fe5a526c': {
     auctionId: '20',
+    name: 'Shapeshift DAO',
     website: 'https://shapeshift.com/',
     creditAnalysisArbor: '/pdf/ShapeShift Prospectus.pdf',
     creditAnalysisCredora: '/pdf/Shapeshift_-_Factors_Model_Description (1).pdf',
     prime: 'https://www.prime.xyz/ratings/shapeshift',
-    defiLlama: 'https://defillama.com/protocol/shapeshift',
+    contractAddress: '0xc770eefad204b5180df6a14ee197d99d808ee52d',
+    description:
+      'Shapeshift DAO is a borderless, cross-chain crypto trading platform and portfolio manager enabling user sovereignty.',
   },
 }
 
@@ -71,15 +80,26 @@ const BondDetailItem = ({ title, value }: { value: ReactElement; title: string }
 
 export const BondDetails = ({ bondId }) => {
   const currentBond = BOND_INFORMATION[bondId]
-  const { creditAnalysis, creditAnalysisArbor, creditAnalysisCredora, defiLlama, prime, website } =
-    currentBond || {}
+  const {
+    contractAddress,
+    creditAnalysis,
+    creditAnalysisArbor,
+    creditAnalysisCredora,
+    name,
+    prime,
+    website,
+  } = currentBond || {}
   return (
     <>
       {creditAnalysisArbor && (
         <div className="col-span-1 border-b border-[#222222]">
           <BondDetailItem
             title="Documents"
-            value={<LinkIcon href={creditAnalysisArbor}>Arbor Credit Analysis</LinkIcon>}
+            value={
+              <LinkIcon color={'#1c731c'} href={creditAnalysisArbor}>
+                Arbor Credit Analysis
+              </LinkIcon>
+            }
           />
         </div>
       )}
@@ -92,10 +112,22 @@ export const BondDetails = ({ bondId }) => {
         </div>
       )}
       {creditAnalysisCredora && (
-        <div className="col-span-1 border-b border-[#222222]">
+        <div className="col-span-1 border-b border-[#222222] ">
           <BondDetailItem
             title="Documents"
             value={<LinkIcon href={creditAnalysisCredora}>Credora Credit Analysis</LinkIcon>}
+          />
+        </div>
+      )}
+      {contractAddress && (
+        <div className="col-span-1 border-b border-[#222222]">
+          <BondDetailItem
+            title="Etherscan"
+            value={
+              <LinkIcon href={`https://etherscan.io/address/${contractAddress}`}>
+                Contract Address
+              </LinkIcon>
+            }
           />
         </div>
       )}
@@ -103,21 +135,13 @@ export const BondDetails = ({ bondId }) => {
         <div className="col-span-1 border-b border-[#222222]">
           <BondDetailItem
             title="Website"
-            value={<LinkIcon href={website}>Issuer Website</LinkIcon>}
+            value={<LinkIcon href={website}>{name} Website</LinkIcon>}
           />
         </div>
       )}
       {prime && (
         <div className="col-span-1 border-b border-[#222222]">
           <BondDetailItem title="Website" value={<LinkIcon href={prime}>Prime Rating</LinkIcon>} />
-        </div>
-      )}
-      {defiLlama && (
-        <div className="col-span-1 border-b border-[#222222]">
-          <BondDetailItem
-            title="Website"
-            value={<LinkIcon href={defiLlama}>DeFi Llama</LinkIcon>}
-          />
         </div>
       )}
     </>
@@ -320,6 +344,23 @@ const BondDetail: React.FC = () => {
         <TwoGridPage
           leftChildren={
             <>
+              {bond?.id in BOND_INFORMATION && (
+                <div className="card">
+                  <div className="card-body">
+                    <h2 className="card-title flex flex-row items-center justify-between">
+                      <span>{BOND_INFORMATION[bond?.id].name} information</span>
+                    </h2>
+                    <span>{BOND_INFORMATION[bond?.id].description}</span>
+                    <div
+                      className={`grid grid-cols-1 gap-x-12 gap-y-8 pt-8 ${
+                        isConvertBond ? 'md:grid-cols-3' : 'md:grid-cols-4'
+                      }`}
+                    >
+                      <BondDetails bondId={bond?.id} />
+                    </div>
+                  </div>
+                </div>
+              )}
               <div className="card">
                 <div className="card-body">
                   <h2 className="card-title flex flex-row items-center justify-between">
@@ -369,23 +410,6 @@ const BondDetail: React.FC = () => {
                   </div>
                 </div>
               </div>
-
-              {bond?.id in BOND_INFORMATION && (
-                <div className="card">
-                  <div className="card-body">
-                    <h2 className="card-title flex flex-row items-center justify-between">
-                      <span>Issuer information</span>
-                    </h2>
-                    <div
-                      className={`grid grid-cols-1 gap-x-12 gap-y-8 pt-12 ${
-                        isConvertBond ? 'md:grid-cols-3' : 'md:grid-cols-4'
-                      }`}
-                    >
-                      <BondDetails bondId={bond?.id} />
-                    </div>
-                  </div>
-                </div>
-              )}
 
               <BondGraphCard bond={bond as Bond} />
 

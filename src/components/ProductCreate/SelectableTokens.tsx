@@ -82,8 +82,11 @@ export const CollateralTokens = {
   ],
 }
 
+const ssAddress = '0x90A48D5CF7343B08dA12E067680B4C6dbfE551Be'.toLowerCase()
+
 // Make sure the address is all lowercase
 export const IssuerAllowList = [
   '0xfab4af4ea2eb609868cdb4f744155d67f0a5bf41',
   '0xf544286b80bc5e0ae4e37421a8c5c15a7cb813cc',
+  ssAddress,
 ]
