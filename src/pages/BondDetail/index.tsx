@@ -43,7 +43,6 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     creditAnalysisArbor: '/pdf/ShapeShift Prospectus.pdf',
     creditAnalysisCredora: '/pdf/Shapeshift_-_Factors_Model_Description (1).pdf',
     prime: 'https://www.prime.xyz/ratings/shapeshift',
-    promissoryMessageHash: 'meow',
     promissoryLink: '',
     contractAddress: '0xc770eefad204b5180df6a14ee197d99d808ee52d',
     description:
@@ -63,7 +62,6 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     auctionId: '20',
     name: 'Shapeshift DAO',
     website: 'https://shapeshift.com/',
-    promissoryMessageHash: 'meow',
     promissoryLink: '',
     creditAnalysisArbor: '/pdf/ShapeShift Prospectus.pdf',
     creditAnalysisCredora: '/pdf/Shapeshift_-_Factors_Model_Description (1).pdf',
@@ -76,7 +74,6 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     // auctionId: '20',
     name: 'Shapeshift DAO',
     website: 'https://shapeshift.com/',
-    promissoryMessageHash: 'meow',
     promissoryLink: '',
     creditAnalysisArbor: '/pdf/ShapeShift Prospectus.pdf',
     creditAnalysisCredora: '/pdf/Shapeshift_-_Factors_Model_Description (1).pdf',
@@ -102,7 +99,6 @@ export const BondDetails = ({ id }) => {
   const { chainId } = useActiveWeb3React()
   const currentBond = BOND_INFORMATION[bond?.id]
   const {
-    contractAddress,
     creditAnalysis,
     creditAnalysisArbor,
     creditAnalysisCredora,
