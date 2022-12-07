@@ -72,6 +72,19 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     description:
       'Shapeshift DAO is a borderless, cross-chain crypto trading platform and portfolio manager enabling user sovereignty.',
   },
+  '0x2e2a42fbe7c7e2ffc031baf7442dbe1f8957770a': {
+    // auctionId: '20',
+    name: 'Shapeshift DAO',
+    website: 'https://shapeshift.com/',
+    promissoryMessageHash: 'meow',
+    promissoryLink: '',
+    creditAnalysisArbor: '/pdf/ShapeShift Prospectus.pdf',
+    creditAnalysisCredora: '/pdf/Shapeshift_-_Factors_Model_Description (1).pdf',
+    prime: 'https://www.prime.xyz/ratings/shapeshift',
+    contractAddress: '0xc770eefad204b5180df6a14ee197d99d808ee52d',
+    description:
+      'Shapeshift DAO is a borderless, cross-chain crypto trading platform and portfolio manager enabling user sovereignty.',
+  },
 }
 
 const BondDetailItem = ({ title, value }: { value: ReactElement; title: string }) => {
