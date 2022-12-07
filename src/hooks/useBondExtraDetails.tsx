@@ -56,9 +56,11 @@ export const useBondExtraDetails = (bondId: string): ExtraDetailsItemProps[] => 
   const strikePrice =
     convertiblePerBond > 0 ? (paymentTokenPrice / convertiblePerBond).toLocaleString() : 0
   const isConvertBond = bond?.type === 'convert'
-  const decimals = bond?.decimals ? bond?.decimals : 6
-  const outstandingBondAmount = bond?.amountUnpaid / 10 ** decimals
-  const totalSupply = bond?.maxSupply / 10 ** decimals
+
+  const outstandingBondAmount = Math.round(
+    Number(formatUnits(bond?.amountUnpaid || '0', bond?.decimals)),
+  )
+  const totalSupply = Math.round(Number(formatUnits(bond?.maxSupply || '0', bond?.decimals)))
 
   return [
     {
