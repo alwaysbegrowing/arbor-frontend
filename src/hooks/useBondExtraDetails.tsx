@@ -142,18 +142,18 @@ export const useBondExtraDetails = (bondId: string): ExtraDetailsItemProps[] => 
     //     </span>
     //   ),
     // },
-    // {
-    //   title: 'Clearing Price',
-    //   tooltip: 'Price per bond at the latest auction.',
-    //   value: bond?.clearingPrice ? (
-    //     <span className="flex items-center space-x-1">
-    //       <span>{bond?.clearingPrice.toLocaleString()}</span>
-    //     </span>
-    //   ) : (
-    //     <span className="flex items-center space-x-1">
-    //       <span>Auction Ongoing</span>
-    //     </span>
-    //   ),
-    // },
+    {
+      title: 'Clearing Price',
+      tooltip: 'Price per bond at the latest auction.',
+      value: bond?.clearingPrice ? (
+        <span className="flex items-center space-x-1">
+          <span>{bond?.clearingPrice.toLocaleString()}</span>
+        </span>
+      ) : (
+        <span className="flex items-center space-x-1">
+          <span>Auction Ongoing</span>
+        </span>
+      ),
+    },
   ]
 }
