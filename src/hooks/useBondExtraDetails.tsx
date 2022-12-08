@@ -151,13 +151,9 @@ export const useBondExtraDetails = (bondId: string): ExtraDetailsItemProps[] => 
         <span className="flex items-center space-x-1">
           <span>{bond?.clearingPrice.toLocaleString()}</span>
         </span>
-      ) : bond?.auctions.length != 0 ? (
-        <span className="flex items-center space-x-1">
-          <span>Auction Ongoing</span>
-        </span>
       ) : (
         <span className="flex items-center space-x-1">
-          <span>None Sold</span>
+          {bond?.auctions.length != 0 ? 'Auction Ongoing' : 'None Sold'}
         </span>
       ),
     },
