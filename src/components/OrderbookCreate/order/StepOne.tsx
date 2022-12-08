@@ -1,5 +1,5 @@
 import { BigNumber } from 'ethers'
-import React from 'react'
+import React, { useState } from 'react'
 
 import { LimitOrderFields } from '@0x/protocol-utils'
 import { AddressZero } from '@ethersproject/constants'
@@ -21,7 +21,7 @@ import { useActiveWeb3React } from '@/hooks'
 import { sellLimitOrder } from '@/pages/BondDetail/OrderbookApi'
 import { useWalletModalToggle } from '@/state/application/hooks'
 
-export const StepOne = (showSell) => {
+export const StepOne = () => {
   const { register, watch } = useFormContext()
   const { account, chainId, signer } = useActiveWeb3React()
   const toggleWalletModal = useWalletModalToggle()
@@ -33,10 +33,21 @@ export const StepOne = (showSell) => {
     'expiry',
   ])
   const addRecentTransaction = useAddRecentTransaction()
+  const [showSell, setShowSell] = useState(true)
+
+  console.log(makerAmount)
+
+  const orderState = () => {
+    if (showSell) {
+      return 'Sell bonds for USDC.'
+    } else {
+      return 'Buy bonds for USDC.'
+    }
+  }
 
   const ExpiryDate = () => {
     return (
-      <div className="form-control w-full">
+      <div className="form-control mt-4 w-full">
         <label className="label">
           <TooltipElement
             left={<span className="label-text">Order expiration date</span>}
@@ -77,7 +88,7 @@ export const StepOne = (showSell) => {
     contractInterface: BOND_ABI,
     signerOrProvider: signer,
   })
-  const constractToken = useContract({
+  const contractToken = useContract({
     addressOrName: borrowToken?.address || AddressZero,
     contractInterface: BOND_ABI,
     signerOrProvider: signer,
@@ -126,6 +137,7 @@ export const StepOne = (showSell) => {
     }
     const postSellLimitOrder = async () => {
       await sellLimitOrder(orderData, { signer })
+      console.log('sell limit order')
     }
     postSellLimitOrder()
   }
@@ -133,7 +145,7 @@ export const StepOne = (showSell) => {
   const buyLimit = () => {
     console.log(bondAllowance)
     if (borrowToken?.address && (bondAllowance as unknown as BigNumber).eq(0)) {
-      return constractToken
+      return contractToken
         .approve(ExchangeProxy[chainId], parseUnits(`${makerAmount || 0}`, bondToAuction?.decimals))
         .then((result) => {
           addRecentTransaction({
@@ -171,12 +183,30 @@ export const StepOne = (showSell) => {
     }
     const postBuyLimitOrder = async () => {
       await sellLimitOrder(orderData, { signer })
+      console.log('buy limit order')
     }
     postBuyLimitOrder()
   }
 
   return (
     <>
+      <div className="form-control flex w-full items-center">
+        <h2 className="!text-md card-title">{orderState()}</h2>
+        <div className="btn-group ">
+          <button
+            className={`btn ${!showSell && 'btn-active'} w-[85px]`}
+            onClick={() => showSell && setShowSell(false)}
+          >
+            Buy
+          </button>
+          <button
+            className={`btn ${showSell && 'btn-active'} w-[85px]`}
+            onClick={() => !showSell && setShowSell(true)}
+          >
+            Sell
+          </button>
+        </div>
+      </div>
       <div className="form-control w-full">
         <div className="flex items-center"></div>
         <label className="label">
@@ -243,6 +273,15 @@ export const StepOne = (showSell) => {
           })}
         />
         <ExpiryDate />
+        {makerAmount >= 0 && (
+          <div className="form-control mt-4 w-full">
+            <span>
+              {showSell
+                ? `Sell ${makerAmount} bonds for ${takerAmount} USDC.`
+                : `Buy ${takerAmount} bonds for ${makerAmount} USDC.`}
+            </span>
+          </div>
+        )}
         {!account ? (
           <button className="btn my-10" onClick={toggleWalletModal}>
             connect wallet

@@ -13,7 +13,7 @@ import { Token } from '@/generated/graphql'
 import { useActiveWeb3React } from '@/hooks'
 import { useWalletModalToggle } from '@/state/application/hooks'
 
-export const FormSteps = ({ color = 'blue', midComponents, showSell, steps, title }) => {
+export const FormSteps = ({ color = 'blue', midComponents, steps, title }) => {
   const [currentStep, setCurrentStep] = useState(0)
 
   const methods = useForm({
@@ -28,14 +28,6 @@ export const FormSteps = ({ color = 'blue', midComponents, showSell, steps, titl
   const toggleWalletModal = useWalletModalToggle()
   const onSubmit = (data) => console.log('onSubmit', data)
   const totalErrors = Object.keys(errors).length
-
-  const orderState = () => {
-    if (showSell) {
-      return 'Sell bonds for USDC.'
-    } else {
-      return 'Buy bonds for USDC.'
-    }
-  }
 
   return (
     <FormProvider {...methods}>
@@ -75,12 +67,9 @@ export const FormSteps = ({ color = 'blue', midComponents, showSell, steps, titl
           </div>
           <div className="card w-[425px] overflow-visible">
             <div className="card-body">
-              <h1 className="card-title !text-2xl border-b border-[#2C2C2C] pb-4">
+              <h1 className="card-title border-b border-[#2C2C2C] pb-4 !text-2xl">
                 {steps[currentStep]}
               </h1>
-              <div>
-                <h2 className="!text-md card-title">{orderState()}</h2>
-              </div>
               <div className="space-y-4">
                 {!account && (
                   <ActionButton className="mt-4" color={color} onClick={toggleWalletModal}>
@@ -158,41 +147,13 @@ export type Inputs = {
 }
 
 const SetupOrderbook = () => {
-  const [showSell, setShowSell] = useState(true)
-  const midComponents = [<StepOne key={0} showSell />, <StepTwo key={1} />]
+  const midComponents = [<StepOne key={0} />, <StepTwo key={1} />]
 
-  const headerText = () => {
-    if (showSell) {
-      return 'Sell'
-    } else {
-      return 'Buy'
-    }
-  }
-
-  const steps = [`Configure ${headerText()} Order`, 'Blast Off']
+  const steps = [`Configure Limit Order`, 'Blast Off']
 
   return (
     <>
-      <FormSteps
-        midComponents={midComponents}
-        showSell={showSell}
-        steps={steps}
-        title="Limit Order Creation"
-      />
-      <div className="btn-group absolute left-1/2 -translate-x-1/2">
-        <button
-          className={`btn ${!showSell && 'btn-active'} w-[85px]`}
-          onClick={() => showSell && setShowSell(false)}
-        >
-          Buy
-        </button>
-        <button
-          className={`btn ${showSell && 'btn-active'} w-[85px]`}
-          onClick={() => !showSell && setShowSell(true)}
-        >
-          Sell
-        </button>
-      </div>
+      <FormSteps midComponents={midComponents} steps={steps} title="Limit Order Creation" />
     </>
   )
 }
