@@ -131,7 +131,7 @@ export const useBondExtraDetails = (bondId: string): ExtraDetailsItemProps[] => 
       tooltip: 'Number of unpaid bonds.',
       value: (
         <span className="flex items-center space-x-1">
-          <span>{outstandingBondAmount}</span>
+          <span>{outstandingBondAmount.toLocaleString()}</span>
         </span>
       ),
     },
@@ -140,7 +140,7 @@ export const useBondExtraDetails = (bondId: string): ExtraDetailsItemProps[] => 
       tooltip: 'Total number of bonds issued.',
       value: (
         <span className="flex items-center space-x-1">
-          <span>{totalSupply}</span>
+          <span>{totalSupply.toLocaleString()}</span>
         </span>
       ),
     },
@@ -151,9 +151,13 @@ export const useBondExtraDetails = (bondId: string): ExtraDetailsItemProps[] => 
         <span className="flex items-center space-x-1">
           <span>{bond?.clearingPrice.toLocaleString()}</span>
         </span>
-      ) : (
+      ) : bond?.auctions.length != 0 ? (
         <span className="flex items-center space-x-1">
           <span>Auction Ongoing</span>
+        </span>
+      ) : (
+        <span className="flex items-center space-x-1">
+          <span>None Sold</span>
         </span>
       ),
     },
