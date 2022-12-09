@@ -151,44 +151,20 @@ export const StepOne = () => {
   //   }
   // }
 
-  const sellLimit = async () => {
+  const limitOrder = () => {
     if (!signer || !chainId) {
       return
     }
-    // need "as any" otherwise signing data breaks on type check
-    const orderData: LimitOrderFields = {
-      makerToken: bondToAuction.id,
-      takerToken: borrowToken.address,
-      makerAmount: parseUnits(makerAmount.toString(), bondToAuction.decimals).toString() as any,
-      takerAmount: parseUnits(takerAmount.toString(), borrowToken.decimals).toString() as any,
-      takerTokenFeeAmount: '0' as any,
-      maker: account,
-      pool: '0x0000000000000000000000000000000000000000000000000000000000000000',
-      taker: AddressZero,
-      sender: AddressZero,
-      feeRecipient: '0xafded11c6fc769aaae90630fd205a2713e544ce3',
-      expiry: Math.floor(dayjs(expiry).unix()).toString() as any,
-      salt: Date.now().toString() as any,
-      chainId,
-      verifyingContract: ExchangeProxy[chainId],
-    }
-    const postSellLimitOrder = async () => {
-      await sellLimitOrder(orderData, { signer })
-      console.log('sell limit order')
-    }
-    postSellLimitOrder()
-  }
 
-  const buyLimit = () => {
-    if (!signer || !chainId) {
-      return
-    }
-    // need "as any" otherwise signing data breaks on type check
     const orderData: LimitOrderFields = {
-      makerToken: borrowToken.address,
-      takerToken: bondToAuction.id,
-      makerAmount: parseUnits(takerAmount.toString(), borrowToken.decimals).toString() as any,
-      takerAmount: parseUnits(makerAmount.toString(), bondToAuction.decimals).toString() as any,
+      makerToken: showSell ? bondToAuction.id : borrowToken.address,
+      takerToken: showSell ? borrowToken.address : bondToAuction.id,
+      makerAmount: showSell
+        ? (parseUnits(makerAmount.toString(), bondToAuction.decimals).toString() as any)
+        : (parseUnits(takerAmount.toString(), borrowToken.decimals).toString() as any),
+      takerAmount: showSell
+        ? (parseUnits(takerAmount.toString(), borrowToken.decimals).toString() as any)
+        : (parseUnits(makerAmount.toString(), bondToAuction.decimals).toString() as any),
       takerTokenFeeAmount: '0' as any,
       maker: account,
       pool: '0x0000000000000000000000000000000000000000000000000000000000000000',
@@ -200,11 +176,10 @@ export const StepOne = () => {
       chainId,
       verifyingContract: ExchangeProxy[chainId],
     }
-    const postBuyLimitOrder = async () => {
+    const postLimitOrder = async () => {
       await sellLimitOrder(orderData, { signer })
-      console.log('buy limit order')
     }
-    postBuyLimitOrder()
+    postLimitOrder()
   }
 
   return (
@@ -325,11 +300,7 @@ export const StepOne = () => {
               //   }
               // }}
               onClick={() => {
-                if (showSell) {
-                  sellLimit()
-                } else {
-                  buyLimit()
-                }
+                limitOrder()
               }}
             >
               SIGN ORDER
