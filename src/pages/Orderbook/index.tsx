@@ -173,7 +173,7 @@ const Orderbook = () => {
     loading: loadingOrderbook,
   } = useOrderbookPair(
     '0x5a2d26d95b07c28d735ff76406bd82fe64222dc1',
-    '0x0412a693da0f5af8948e70c6806bcb950b15d6d2',
+    '0x21a6e009924989673ed8c487a6719cd248b227df',
   )
 
   console.log({ asks, bids })

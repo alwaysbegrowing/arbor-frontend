@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+// import { BigNumber } from 'ethers'
 import React, { useState } from 'react'
 
 import { LimitOrderFields } from '@0x/protocol-utils'
@@ -34,6 +34,7 @@ export const StepOne = () => {
   ])
   const addRecentTransaction = useAddRecentTransaction()
   const [showSell, setShowSell] = useState(true)
+  const [isApproved, setIsApproved] = useState(false)
 
   console.log(makerAmount)
 
@@ -94,27 +95,63 @@ export const StepOne = () => {
     signerOrProvider: signer,
   })
 
-  const sellLimit = () => {
-    console.log(bondAllowance)
-    if (bondToAuction && (bondAllowance as unknown as BigNumber).eq(0)) {
-      return contractBond
-        .approve(ExchangeProxy[chainId], parseUnits(`${makerAmount || 0}`, bondToAuction?.decimals))
-        .then((result) => {
-          addRecentTransaction({
-            hash: result?.hash,
-            description: `Approve ${
-              bondToAuction?.symbol || bondToAuction?.name
-            } for ${makerAmount}`,
-          })
-          return result.wait()
-        })
-        .then(() => {
-          console.log('setCurrentApproveStep(1)')
-        })
-        .catch((e) => {
-          console.log(e?.message || e)
-        })
-    }
+  //NEED TO TEST ON MAIN - DIVA APPROVES CUMMULATIVE, NOT LARGEST
+
+  // const approveTransaction = () => {
+  //   if (showSell) {
+  //     console.log({ bondAllowance, showSell, bondToAuction })
+  //     if (bondToAuction && (bondAllowance as unknown as BigNumber).lt(makerAmount)) {
+  //       return contractBond
+  //         .approve(
+  //           ExchangeProxy[chainId],
+  //           parseUnits(`${makerAmount || 0}`, bondToAuction?.decimals),
+  //         )
+  //         .then((result) => {
+  //           console.log({ result })
+  //           addRecentTransaction({
+  //             hash: result?.hash,
+  //             description: `Approve ${
+  //               bondToAuction?.symbol || bondToAuction?.name
+  //             } for ${makerAmount}`,
+  //           })
+  //           return result.wait()
+  //         })
+  //         .then(() => {
+  //           setApproval(true)
+  //           console.log('setCurrentApproveStep(1)')
+  //         })
+  //         .catch((e) => {
+  //           console.log(e?.message || e)
+  //         })
+  //     }
+  //   } else {
+  //     console.log({ bondAllowance })
+  //     if (borrowToken?.address && (borrowToken as unknown as BigNumber).lt(makerAmount)) {
+  //       contractToken
+  //         .approve(
+  //           ExchangeProxy[chainId],
+  //           parseUnits(`${makerAmount || 0}`, bondToAuction?.decimals),
+  //         )
+  //         .then((result) => {
+  //           console.log({ result })
+  //           addRecentTransaction({
+  //             hash: result?.hash,
+  //             description: `Approve ${borrowToken?.symbol || borrowToken?.name} for ${makerAmount}`,
+  //           })
+  //           return result.wait()
+  //         })
+  //         .then(() => {
+  //           setApproval(true)
+  //           console.log('setCurrentApproveStep(1)')
+  //         })
+  //         .catch((e) => {
+  //           console.log(e?.message || e)
+  //         })
+  //     }
+  //   }
+  // }
+
+  const sellLimit = async () => {
     if (!signer || !chainId) {
       return
     }
@@ -122,8 +159,8 @@ export const StepOne = () => {
     const orderData: LimitOrderFields = {
       makerToken: bondToAuction.id,
       takerToken: borrowToken.address,
-      makerAmount: makerAmount.toString(),
-      takerAmount: takerAmount.toString(),
+      makerAmount: parseUnits(makerAmount.toString(), bondToAuction.decimals).toString() as any,
+      takerAmount: parseUnits(takerAmount.toString(), borrowToken.decimals).toString() as any,
       takerTokenFeeAmount: '0' as any,
       maker: account,
       pool: '0x0000000000000000000000000000000000000000000000000000000000000000',
@@ -143,24 +180,6 @@ export const StepOne = () => {
   }
 
   const buyLimit = () => {
-    console.log(bondAllowance)
-    if (borrowToken?.address && (bondAllowance as unknown as BigNumber).eq(0)) {
-      return contractToken
-        .approve(ExchangeProxy[chainId], parseUnits(`${makerAmount || 0}`, bondToAuction?.decimals))
-        .then((result) => {
-          addRecentTransaction({
-            hash: result?.hash,
-            description: `Approve ${borrowToken?.symbol || borrowToken?.name} for ${makerAmount}`,
-          })
-          return result.wait()
-        })
-        .then(() => {
-          console.log('setCurrentApproveStep(1)')
-        })
-        .catch((e) => {
-          console.log(e?.message || e)
-        })
-    }
     if (!signer || !chainId) {
       return
     }
@@ -168,8 +187,8 @@ export const StepOne = () => {
     const orderData: LimitOrderFields = {
       makerToken: borrowToken.address,
       takerToken: bondToAuction.id,
-      makerAmount: takerAmount.toString(),
-      takerAmount: makerAmount.toString(),
+      makerAmount: parseUnits(takerAmount.toString(), borrowToken.decimals).toString() as any,
+      takerAmount: parseUnits(makerAmount.toString(), bondToAuction.decimals).toString() as any,
       takerTokenFeeAmount: '0' as any,
       maker: account,
       pool: '0x0000000000000000000000000000000000000000000000000000000000000000',
@@ -278,7 +297,7 @@ export const StepOne = () => {
             <span>
               {showSell
                 ? `Sell ${makerAmount} bonds for ${takerAmount} USDC.`
-                : `Buy ${takerAmount} bonds for ${makerAmount} USDC.`}
+                : `Buy ${makerAmount} bonds for ${takerAmount} USDC.`}
             </span>
           </div>
         )}
@@ -287,18 +306,35 @@ export const StepOne = () => {
             connect wallet
           </button>
         ) : (
-          <ActionButton
-            className="btn my-10"
-            onClick={() => {
-              if (showSell) {
-                sellLimit()
-              } else {
-                buyLimit()
-              }
-            }}
-          >
-            SIGN ORDER
-          </ActionButton>
+          <>
+            {/* <ActionButton
+              className="btn my-10"
+              onClick={() => {
+                approveTransaction()
+              }}
+            >
+              APPROVE TOKENS
+            </ActionButton> */}
+            <ActionButton
+              className="btn my-10"
+              // disabled={() => {
+              //   if (approval) {
+              //     return false
+              //   } else {
+              //     return true
+              //   }
+              // }}
+              onClick={() => {
+                if (showSell) {
+                  sellLimit()
+                } else {
+                  buyLimit()
+                }
+              }}
+            >
+              SIGN ORDER
+            </ActionButton>
+          </>
         )}
       </div>
     </>
