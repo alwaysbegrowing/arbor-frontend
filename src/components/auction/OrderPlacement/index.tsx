@@ -172,7 +172,7 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
   const minBidSize = graphInfo?.minimumBidSize / 10 ** 6
 
   useEffect(() => {
-    if (price !== '' && Number(sellAmount) < minBidSize) {
+    if (price !== '' && Number(sellAmount) <= minBidSize) {
       setError(true)
       setErrorText(
         `The amount of USDC you pay must exceed the minimum bid size of ${minBidSize} USDC.`,
