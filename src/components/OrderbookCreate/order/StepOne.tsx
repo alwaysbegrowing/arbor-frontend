@@ -9,15 +9,20 @@ import dayjs from 'dayjs'
 import { useFormContext } from 'react-hook-form'
 import { useContract, useContractRead } from 'wagmi'
 
-import { BondSelector } from '../../ProductCreate/selectors/CollateralTokenSelector'
+import { BondSelector, NoBondFound } from '../../ProductCreate/selectors/CollateralTokenSelector'
 import { addDays } from './StepTwo'
 
+import { BondTokenDetails } from '@/components/ProductCreate/BondTokenDetails'
 import { ExchangeProxy } from '@/components/ProductCreate/SelectableTokens'
-import BorrowTokenSelector from '@/components/ProductCreate/selectors/BorrowTokenSelector'
+import BorrowTokenSelector, {
+  Selector,
+} from '@/components/ProductCreate/selectors/BorrowTokenSelector'
 import { ActionButton } from '@/components/auction/Claimer'
 import TooltipElement from '@/components/common/Tooltip'
 import BOND_ABI from '@/constants/abis/bond.json'
 import { useActiveWeb3React } from '@/hooks'
+import { useBonds } from '@/hooks/useBond'
+import { useBondsPortfolio } from '@/hooks/useBondsPortfolio'
 import { sellLimitOrder } from '@/pages/BondDetail/OrderbookApi'
 import { useWalletModalToggle } from '@/state/application/hooks'
 
@@ -36,8 +41,6 @@ export const StepOne = () => {
   const [showSell, setShowSell] = useState(true)
   const [isApproved, setIsApproved] = useState(false)
 
-  console.log(makerAmount)
-
   const orderState = () => {
     if (showSell) {
       return 'Sell bonds for USDC.'
@@ -46,36 +49,30 @@ export const StepOne = () => {
     }
   }
 
-  const ExpiryDate = () => {
-    return (
-      <div className="form-control mt-4 w-full">
-        <label className="label">
-          <TooltipElement
-            left={<span className="label-text">Order expiration date</span>}
-            tip="Date the order must be fulfilled by. If not fulfilled, the order will be expired and removed from the orderbook. This is UTC time."
-          />
-        </label>
-        <input
-          className="input-bordered input w-full"
-          defaultValue={`${addDays(new Date(), 0).toISOString().substring(0, 10)} 23:59`}
-          min={dayjs(new Date()).utc().add(0, 'day').format('YYYY-MM-DD HH:mm')}
-          placeholder="MM/DD/YYYY HH:mm"
-          type="datetime-local"
-          {...register('expiry', {
-            required: 'Order expiration date',
-            validate: {
-              validDate: (expiry) =>
-                dayjs(expiry).isValid() || 'The expiration date must be in the future',
-              afterNow: (expiry) =>
-                dayjs(expiry).diff(new Date()) > 0 || 'The expiration date must be in the future',
-              before10Years: (expiry) =>
-                dayjs(new Date()).add(10, 'years').isAfter(expiry) ||
-                'The expiration date must be within 10 years',
-            },
-          })}
-        />
-      </div>
-    )
+  const { data: dataPortfolio } = useBondsPortfolio()
+
+  const portfolioData = {}
+
+  dataPortfolio?.forEach((bond) => {
+    portfolioData[bond.id] = bond
+  })
+
+  const AllBondsList = () => {
+    const { data, loading } = useBonds()
+
+    const fullData = data?.map((bond) => {
+      if (bond.id in portfolioData) {
+        const tokenBalances = portfolioData[bond.id].tokenBalances
+        return { ...bond, tokenBalances }
+      } else {
+        return { ...bond }
+      }
+    })
+
+    if (!data?.length && !loading) {
+      return <Selector OptionEl={NoBondFound} disabled name="bondToAuction" options={fullData} />
+    }
+    return <Selector OptionEl={BondTokenDetails} name="bondToAuction" options={fullData} />
   }
 
   const { data: bondAllowance } = useContractRead({
@@ -209,7 +206,7 @@ export const StepOne = () => {
             tip="Bond you will be trading"
           />
         </label>
-        <BondSelector />
+        {showSell ? <BondSelector /> : <AllBondsList />}
       </div>
 
       <div className="form-control w-full">
@@ -266,7 +263,33 @@ export const StepOne = () => {
             },
           })}
         />
-        <ExpiryDate />
+        <div className="form-control mt-4 w-full">
+          <label className="label">
+            <TooltipElement
+              left={<span className="label-text">Order expiration date</span>}
+              tip="Date the order must be fulfilled by. If not fulfilled, the order will be expired and removed from the orderbook. This is UTC time."
+            />
+          </label>
+          <input
+            className="input-bordered input w-full"
+            defaultValue={`${addDays(new Date(), 0).toISOString().substring(0, 10)} 23:59`}
+            min={dayjs(new Date()).utc().add(0, 'day').format('YYYY-MM-DD HH:mm')}
+            placeholder="MM/DD/YYYY HH:mm"
+            type="datetime-local"
+            {...register('expiry', {
+              required: 'Order expiration date',
+              validate: {
+                validDate: (expiry) =>
+                  dayjs(expiry).isValid() || 'The expiration date must be in the future',
+                afterNow: (expiry) =>
+                  dayjs(expiry).diff(new Date()) > 0 || 'The expiration date must be in the future',
+                before10Years: (expiry) =>
+                  dayjs(new Date()).add(10, 'years').isAfter(expiry) ||
+                  'The expiration date must be within 10 years',
+              },
+            })}
+          />
+        </div>
         {makerAmount >= 0 && (
           <div className="form-control mt-4 w-full">
             <span>

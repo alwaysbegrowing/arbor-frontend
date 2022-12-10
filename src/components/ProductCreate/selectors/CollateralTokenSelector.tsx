@@ -48,7 +48,7 @@ const CollateralTokenSelector = () => {
   return <Selector OptionEl={TokenDetails} name="collateralToken" options={tokens} />
 }
 
-const NoBondFound = () => {
+export const NoBondFound = () => {
   const { address } = useAccount()
   return (
     <div className="form-control w-full space-y-4 rounded-md p-4 text-xs text-white">

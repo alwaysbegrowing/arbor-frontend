@@ -1,19 +1,16 @@
 import React from 'react'
 import { createGlobalStyle } from 'styled-components'
 
-import { formatUnits } from '@ethersproject/units'
-import dayjs from 'dayjs'
-
-import { getBondStates } from '../BondDetail'
+// import { formatUnits } from '@ethersproject/units'
+// import dayjs from 'dayjs'
 
 import { ReactComponent as AuctionsIcon } from '@/assets/svg/auctions.svg'
 import { ReactComponent as ConvertIcon } from '@/assets/svg/convert.svg'
 import { ReactComponent as SimpleIcon } from '@/assets/svg/simple.svg'
-import { ActiveStatusPill } from '@/components/auction/OrderbookTable'
+// import { ActiveStatusPill } from '@/components/auction/OrderbookTable'
+import Table from '@/components/auctions/Table'
 import { ErrorBoundaryWithFallback } from '@/components/common/ErrorAndReload'
-import { calculateInterestRate } from '@/components/form/InterestRateInputPanel'
 import TokenLogo from '@/components/token/TokenLogo'
-import { Bond } from '@/generated/graphql'
 import { useBonds } from '@/hooks/useBond'
 import { useOrderbookPair } from '@/hooks/useOrderbook'
 
@@ -97,74 +94,15 @@ export const BondIcon = ({ auctionId = null, icon = null, id, name, symbol, type
   )
 }
 
-export const createTable = (data?: Bond[]) =>
-  data.map((bond: Bond) => {
-    const {
-      auctions,
-      clearingPrice,
-      createdAt,
-      decimals,
-      id,
-      maturityDate,
-      maxSupply,
-      name,
-      paymentToken,
-      symbol,
-      type,
-    } = bond
-
-    const fixedYTM =
-      calculateInterestRate({
-        price: clearingPrice,
-        maturityDate,
-        startDate: auctions?.[0]?.end,
-      }) || '-'
-
+export const createTable = (data) => {
+  console.log(data)
+  data?.records?.map((metaData: { remainingFillableTakerAmount }, order: { maker }) => {
     return {
-      id,
-      search: JSON.stringify(bond),
-      type,
-      issuanceDate: (
-        <span className="uppercase">
-          {dayjs(createdAt * 1000)
-            .utc()
-            .tz()
-            .format('LL')}
-        </span>
-      ),
-      cost: clearingPrice
-        ? `${Number(formatUnits(BigInt(clearingPrice * maxSupply), decimals)).toLocaleString()} ${
-            paymentToken.symbol
-          }`
-        : '-',
-      fixedYTM,
-      bond: <BondIcon id={id} name={name} symbol={symbol} type={type} />,
-
-      amountIssued: maxSupply ? Number(formatUnits(maxSupply, decimals)).toLocaleString() : '-',
-      amount: maxSupply ? `${Number(formatUnits(maxSupply, decimals)).toLocaleString()}` : '-',
-      maturityValue: maxSupply
-        ? `${Number(formatUnits(maxSupply, decimals)).toLocaleString()} ${paymentToken.symbol}`
-        : `1 ${paymentToken.symbol}`,
-
-      currency: paymentToken.symbol,
-
-      status: getBondStates(bond).isMatured ? (
-        <ActiveStatusPill disabled dot={false} title="Matured" />
-      ) : (
-        <ActiveStatusPill dot={false} title="Active" />
-      ),
-      maturityDate: (
-        <span className="uppercase">
-          {dayjs(maturityDate * 1000)
-            .utc()
-            .tz()
-            .format('ll')}
-        </span>
-      ),
-
-      url: `/bonds/${id}`,
+      metaData,
+      order,
     }
   })
+}
 
 const Orderbook = () => {
   const {
@@ -175,24 +113,40 @@ const Orderbook = () => {
     '0x5a2d26d95b07c28d735ff76406bd82fe64222dc1',
     '0x21a6e009924989673ed8c487a6719cd248b227df',
   )
+  // console.log({ asks, bids })
 
-  console.log({ asks, bids })
+  // console.log(bids, typeof asks)
+
+  // const askData = Object.values(asks?.records)
+
+  // console.log({ askData })
+
+  // const { data, loading } = useBonds()
+  // const [tableFilter, setTableFilter] = useState(TABLE_FILTERS.ALL)
+
+  const askData = !asks ? [] : createTable(asks)
+
   const { data: bonds, loading: loadingBonds } = useBonds()
   if (!bids?.records) return
-  console.log(bids)
   return (
     <>
       <GlobalStyle />
       <ErrorBoundaryWithFallback>
-        {bids?.records?.map(
-          ({ metaData: { remainingFillableTakerAmount }, order: { maker, taker } }) => (
+        <Table
+          columns={columns()}
+          data={askData}
+          emptyActionClass="!bg-[#293327]"
+          emptyDescription="There are no bonds at the moment"
+          emptyLogo={
             <>
-              <span>remainingFillableTakerAmount: {remainingFillableTakerAmount}</span>
-              <span>maker: {maker}</span>
-              <span>taker: {taker}</span>
+              <ConvertIcon height={36} width={36} /> <SimpleIcon height={36} width={36} />
             </>
-          ),
-        )}
+          }
+          legendIcons={undefined}
+          loading={loadingOrderbook}
+          name="bonds"
+          title="Bonds"
+        />
       </ErrorBoundaryWithFallback>
     </>
   )

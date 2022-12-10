@@ -21,7 +21,7 @@ const OrderbookManagement = () => {
     if (!bids?.records && !asks?.records) return
     return (
       <>
-        <table className="table overflow-scroll h-full w-full">
+        <table className="table h-full w-full overflow-scroll">
           <thead className="sticky top-0 z-[1]">
             <tr className="border-b border-b-[#D5D5D519]">
               <th className="bg-transparent text-xs font-normal tracking-widest text-[#696969]">
@@ -40,7 +40,7 @@ const OrderbookManagement = () => {
                 <>
                   <tr>
                     <td>
-                      <div className="overflow-x-scroll h-full w-40">{maker}</div>
+                      <div className="h-full w-40 overflow-x-scroll">{maker}</div>
                     </td>
                     <td>{remainingFillableTakerAmount}</td>
                   </tr>
@@ -65,11 +65,11 @@ const OrderbookManagement = () => {
           <tbody className="h-[57px] bg-transparent text-sm text-[#D2D2D2]">
             {/* Double check that taker is the correct variable here */}
             {asks?.records?.map(
-              ({ metaData: { remainingFillableTakerAmount }, order: { taker } }) => (
+              ({ metaData: { remainingFillableTakerAmount }, order: { maker } }) => (
                 <>
                   <tr>
                     <td>
-                      <div className="overflow-x-scroll h-full w-40">{taker}</div>
+                      <div className="h-full w-40 overflow-x-scroll">{maker}</div>
                     </td>
                     <td>{remainingFillableTakerAmount}</td>
                   </tr>
@@ -90,7 +90,7 @@ const OrderbookManagement = () => {
         </ActionButton>
       </div>
       <div
-        className="card card-bordered"
+        className="card-bordered card"
         style={{ visibility: orderbookVisible ? 'visible' : 'hidden' }}
       >
         <div className="card-body">
@@ -99,7 +99,7 @@ const OrderbookManagement = () => {
           </div>
           <div className="mb-6 space-y-6">
             <div className="text-base">
-              <div className="flex justify-center items-center w-full">
+              <div className="flex w-full items-center justify-center">
                 <a href="/orderbook/create">
                   <ActionButton className="mt-4">Create Limit Order</ActionButton>
                 </a>
