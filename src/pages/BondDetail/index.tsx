@@ -74,7 +74,9 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     // auctionId: '20',
     name: 'Shapeshift DAO',
     website: 'https://shapeshift.com/',
-    promissoryLink: '',
+    promissoryMessageHash: '0x3736a8b0abf8fb1f17f9f3f0e88c637a36696a222378c21b9c76d0d33c0cd20a',
+    promissoryLink:
+      'https://etherscan.io/tx/0x6bdde3d81d3bc3b3824f7eb3038f6c5caa1c9032a3866c23993886d97a4a7c54',
     creditAnalysisArbor: '/pdf/ShapeShift Prospectus.pdf',
     creditAnalysisCredora: '/pdf/Shapeshift_-_Factors_Model_Description (1).pdf',
     prime: 'https://www.prime.xyz/ratings/shapeshift',
