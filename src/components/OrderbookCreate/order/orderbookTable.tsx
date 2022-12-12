@@ -29,14 +29,6 @@ const SectionTitle = styled(PageTitle)`
   margin: 0;
 `
 
-const TableControls = styled.div`
-  @media (min-width: ${({ theme }) => theme.themeBreakPoints.md}) {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-  }
-`
-
 const columns = [
   {
     Header: 'Type',
@@ -157,8 +149,6 @@ const OrderbookTable = () => {
     })
   })
 
-  console.log(typeof columns)
-
   const { getTableBodyProps, getTableProps, headerGroups, prepareRow, rows } = useTable({
     columns,
     data,
@@ -167,16 +157,14 @@ const OrderbookTable = () => {
   return (
     <>
       <Wrapper ref={sectionHead}>
-        <div className="mb-10 flex flex-wrap content-center items-end justify-center py-2 md:justify-between">
+        <div className="mb-10 flex flex-wrap content-center items-end py-2 md:justify-between">
           <div className="flex flex-col space-y-4">
             <SectionTitle>Limit Orders</SectionTitle>
           </div>
-
-          <div>
+          <div className="bg-[#1F2123]] form-control w-96">
             <AllBondsList />
           </div>
         </div>
-
         <div
           className="min-h-[492px] overflow-auto overscroll-contain scrollbar-thin scrollbar-track-zinc-800 scrollbar-thumb-zinc-700"
           style={{
@@ -185,7 +173,7 @@ const OrderbookTable = () => {
           }}
         >
           <table className="table h-full w-full" {...getTableProps()}>
-            <thead className="sticky top-0 z-[1]">
+            <thead className="sticky top-3 z-[1]">
               {headerGroups.map((headerGroup, i) => (
                 <tr
                   className="border-b border-b-[#D5D5D519]"
