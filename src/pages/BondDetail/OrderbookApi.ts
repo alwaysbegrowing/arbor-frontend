@@ -70,3 +70,21 @@ export const sellLimitOrder = async (orderData: LimitOrderFields, { signer }) =>
   }
   return resp
 }
+
+const getFillLimitOrder = async (orderData: LimitOrderFields, { signer }) => {
+  const order = orderData
+  const signedTypedData = await signer._signTypedData(zeroXDomain(orderData), zeroXTypes, order)
+  const { r, s, v } = splitSignature(signedTypedData)
+
+  const signedOrder = {
+    ...order,
+    signature: {
+      v,
+      r,
+      s,
+      signatureType: 2,
+    },
+  }
+
+  const resp = await fetch()
+}

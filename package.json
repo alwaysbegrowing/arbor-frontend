@@ -92,6 +92,7 @@
     "url": "^0.11.0"
   },
   "dependencies": {
+    "@0x/contract-wrappers": "^13.22.12",
     "@0x/protocol-utils": "^11.17.0",
     "@0x/subproviders": "^7.0.0",
     "@0x/utils": "^7.0.0",
