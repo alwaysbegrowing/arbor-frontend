@@ -41,7 +41,7 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     name: 'Shapeshift DAO',
     website: 'https://shapeshift.com/',
     creditAnalysisArbor: '/pdf/ShapeShift Prospectus.pdf',
-    creditAnalysisCredora: '/pdf/Shapeshift_-_Factors_Model_Description (1).pdf',
+    creditAnalysisCredora: '/pdf/Shapeshift_Credora <> Arbor.pdf',
     prime: 'https://www.prime.xyz/ratings/shapeshift',
     promissoryLink: '',
     contractAddress: '0xc770eefad204b5180df6a14ee197d99d808ee52d',
@@ -64,7 +64,7 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     website: 'https://shapeshift.com/',
     promissoryLink: '',
     creditAnalysisArbor: '/pdf/ShapeShift Prospectus.pdf',
-    creditAnalysisCredora: '/pdf/Shapeshift_-_Factors_Model_Description (1).pdf',
+    creditAnalysisCredora: '/pdf/Shapeshift_Credora <> Arbor.pdf',
     prime: 'https://www.prime.xyz/ratings/shapeshift',
     contractAddress: '0xc770eefad204b5180df6a14ee197d99d808ee52d',
     description:
@@ -78,7 +78,7 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     promissoryLink:
       'https://etherscan.io/tx/0x6bdde3d81d3bc3b3824f7eb3038f6c5caa1c9032a3866c23993886d97a4a7c54',
     creditAnalysisArbor: '/pdf/ShapeShift Prospectus.pdf',
-    creditAnalysisCredora: '/pdf/Shapeshift_-_Factors_Model_Description (1).pdf',
+    creditAnalysisCredora: '/pdf/Shapeshift_Credora <> Arbor.pdf',
     prime: 'https://www.prime.xyz/ratings/shapeshift',
     contractAddress: '0xc770eefad204b5180df6a14ee197d99d808ee52d',
     description:
