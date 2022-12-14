@@ -64,7 +64,7 @@ const WarningCard = () => {
             decisions.{' '}
             <a
               className="text-sm font-normal normal-case underline"
-              href="https://docs.arbor.garden"
+              href="https://docs.arbor.finance/resources/risks"
               rel="noreferrer"
               target="_blank"
             >

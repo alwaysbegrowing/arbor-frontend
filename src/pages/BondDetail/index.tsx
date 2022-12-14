@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { ReactElement, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
 
 import { formatUnits } from '@ethersproject/units'
+import { DoubleArrowRightIcon } from '@radix-ui/react-icons'
 import dayjs from 'dayjs'
 
 import { ReactComponent as ConnectIcon } from '../../assets/svg/connect.svg'
@@ -24,6 +25,8 @@ import { ConvertButtonOutline, LoadingTwoGrid, SimpleButtonOutline, TwoGridPage 
 import BondManagement from './BondManagement'
 import OrderbookManagement from './OrderbookManagement'
 
+import { getPayload } from '@/components/CreditEnhancers/promissory/SignatureRequest'
+import PromissoryNoteModal from '@/components/PromissoryNoteModal'
 import { Bond } from '@/generated/graphql'
 import { useActiveWeb3React } from '@/hooks'
 
@@ -31,6 +34,161 @@ export enum BondActions {
   Redeem,
   Convert,
   Mint,
+}
+
+export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
+  '0x11f1f978f7944579bb3791b765176de3e68bffc6': {
+    auctionId: '20',
+    name: 'Shapeshift DAO',
+    website: 'https://shapeshift.com/',
+    creditAnalysisArbor: '/pdf/ShapeShift Prospectus.pdf',
+    creditAnalysisCredora: '/pdf/Shapeshift_Credora_Arbor.pdf',
+    prime: 'https://www.prime.xyz/ratings/shapeshift',
+    promissoryLink: '',
+    contractAddress: '0xc770eefad204b5180df6a14ee197d99d808ee52d',
+    description:
+      'Shapeshift DAO is a borderless, cross-chain crypto trading platform and portfolio manager enabling user sovereignty.',
+  },
+  '0xe34c023c0ea9899a8f8e9381437a604908e8b719': {
+    auctionId: '270',
+    name: 'Ribbon Finance',
+    website: 'https://www.ribbon.finance/',
+    creditAnalysis: '/pdf/Ribbon DAO Collateral & Credit Analysis.pdf',
+    prime: 'https://www.prime.xyz/ratings/ribbon-finance',
+    contractAddress: '0x6123b0049f904d730db3c36a31167d9d4121fa6b',
+    description:
+      'Ribbon Finance is a suite of DeFi protocols seeking to enhance access to crypto products.',
+  },
+  '0x0ce1f1cd784bd2341abf21444add0681fe5a526c': {
+    auctionId: '20',
+    name: 'Shapeshift DAO',
+    website: 'https://shapeshift.com/',
+    promissoryLink: '',
+    creditAnalysisArbor: '/pdf/ShapeShift Prospectus.pdf',
+    creditAnalysisCredora: '/pdf/Shapeshift_Credora_Arbor.pdf',
+    prime: 'https://www.prime.xyz/ratings/shapeshift',
+    contractAddress: '0xc770eefad204b5180df6a14ee197d99d808ee52d',
+    description:
+      'Shapeshift DAO is a borderless, cross-chain crypto trading platform and portfolio manager enabling user sovereignty.',
+  },
+  '0x2e2a42fbe7c7e2ffc031baf7442dbe1f8957770a': {
+    // auctionId: '20',
+    name: 'Shapeshift DAO',
+    website: 'https://shapeshift.com/',
+    promissoryMessageHash: '0x3736a8b0abf8fb1f17f9f3f0e88c637a36696a222378c21b9c76d0d33c0cd20a',
+    promissoryLink:
+      'https://etherscan.io/tx/0x6bdde3d81d3bc3b3824f7eb3038f6c5caa1c9032a3866c23993886d97a4a7c54',
+    creditAnalysisArbor: '/pdf/ShapeShift Prospectus.pdf',
+    creditAnalysisCredora: '/pdf/Shapeshift_Credora_Arbor.pdf',
+    prime: 'https://www.prime.xyz/ratings/shapeshift',
+    contractAddress: '0xc770eefad204b5180df6a14ee197d99d808ee52d',
+    description:
+      'Shapeshift DAO is a borderless, cross-chain crypto trading platform and portfolio manager enabling user sovereignty.',
+  },
+}
+
+const BondDetailItem = ({ title, value }: { value: ReactElement; title: string }) => {
+  return (
+    <span className="flex items-center space-x-1">
+      <div className="flex flex-col justify-start">
+        <ExtraDetailsItem bordered={true} title={title} titleClass="justify-start" value={value} />
+      </div>
+    </span>
+  )
+}
+
+export const BondDetails = ({ id }) => {
+  const { data: bond } = useBond(id)
+  const { chainId } = useActiveWeb3React()
+  const currentBond = BOND_INFORMATION[bond?.id]
+  const {
+    creditAnalysis,
+    creditAnalysisArbor,
+    creditAnalysisCredora,
+    name,
+    prime,
+    promissoryLink,
+    promissoryMessageHash,
+    website,
+  } = currentBond || {}
+  const promissoryContent = getPayload({ address: bond?.id, chainId })
+  const [isPromissoryModalOpen, setIsPromissoryModalOpen] = useState(false)
+  return (
+    <>
+      {creditAnalysisArbor && (
+        <div className="col-span-1 border-b border-[#222222]">
+          <BondDetailItem
+            title="Documents"
+            value={
+              <LinkIcon color={'#75ed02'} href={creditAnalysisArbor}>
+                Arbor Credit Analysis
+              </LinkIcon>
+            }
+          />
+        </div>
+      )}
+      {creditAnalysis && (
+        <div className="col-span-1 border-b border-[#222222]">
+          <BondDetailItem
+            title="Documents"
+            value={<LinkIcon href={creditAnalysis}>Credit Analysis</LinkIcon>}
+          />
+        </div>
+      )}
+      {creditAnalysisCredora && (
+        <div className="col-span-1 border-b border-[#222222] ">
+          <BondDetailItem
+            title="Documents"
+            value={<LinkIcon href={creditAnalysisCredora}>Credora Credit Analysis</LinkIcon>}
+          />
+        </div>
+      )}
+      {bond?.owner && (
+        <div className="col-span-1 border-b border-[#222222]">
+          <BondDetailItem
+            title="Etherscan"
+            value={
+              <LinkIcon href={`https://etherscan.io/address/${bond?.owner}`}>
+                Issuer Address
+              </LinkIcon>
+            }
+          />
+        </div>
+      )}
+      {website && (
+        <div className="col-span-1 border-b border-[#222222]">
+          <BondDetailItem
+            title="Website"
+            value={<LinkIcon href={website}>{name} Website</LinkIcon>}
+          />
+        </div>
+      )}
+      {prime && (
+        <div className="col-span-1 border-b border-[#222222]">
+          <BondDetailItem title="Website" value={<LinkIcon href={prime}>Prime Rating</LinkIcon>} />
+        </div>
+      )}
+      {promissoryMessageHash && (
+        <>
+          <PromissoryNoteModal
+            close={() => setIsPromissoryModalOpen(false)}
+            content={JSON.stringify(promissoryContent, null, 2)}
+            isOpen={isPromissoryModalOpen}
+            issuer={bond?.owner}
+            promissoryLink={promissoryLink}
+          />
+          <div className="col-span-1 border-b border-[#222222]">
+            <div className="cursor-pointer" onClick={() => setIsPromissoryModalOpen(true)}>
+              <BondDetailItem
+                title="Signature"
+                value={<span className="text-[#6CADFB]">Promissory Note</span>}
+              />
+            </div>
+          </div>
+        </>
+      )}
+    </>
+  )
 }
 
 const GlobalStyle = createGlobalStyle`
@@ -118,7 +276,9 @@ export const getBondStates = (
   const isPartiallyPaid = bond?.maxSupply - bond?.amountUnpaid > 0 && isDefaulted
   const isPaid = bond?.state === 'paidEarly' || bond?.state === 'paid'
   const isActive = bond?.state === 'active'
-  const isMatured = isDefaulted || bond?.state === 'paid'
+  const isMatured =
+    isDefaulted || (isPaid && bond?.maturityDate < dayjs(new Date()).unix().toString())
+
   return {
     isMatured,
     isConvertBond,
@@ -163,7 +323,7 @@ export const calculatePortfolioRow = (
 }
 
 const BondDetail: React.FC = () => {
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const navigate = useNavigate()
   const { bondId } = useParams()
 
@@ -227,6 +387,23 @@ const BondDetail: React.FC = () => {
         <TwoGridPage
           leftChildren={
             <>
+              {bond?.id in BOND_INFORMATION && (
+                <div className="card">
+                  <div className="card-body">
+                    <h2 className="card-title flex flex-row items-center justify-between">
+                      <span>{BOND_INFORMATION[bond?.id].name} information</span>
+                    </h2>
+                    <span>{BOND_INFORMATION[bond?.id].description}</span>
+                    <div
+                      className={`grid grid-cols-1 gap-x-12 gap-y-8 pt-8 ${
+                        isConvertBond ? 'md:grid-cols-3' : 'md:grid-cols-4'
+                      }`}
+                    >
+                      <BondDetails id={bond?.id} />
+                    </div>
+                  </div>
+                </div>
+              )}
               <div className="card">
                 <div className="card-body">
                   <h2 className="card-title flex flex-row items-center justify-between">
@@ -245,18 +422,20 @@ const BondDetail: React.FC = () => {
                     endText="Maturity date"
                     endTip="Date each bond can be redeemed for $1 assuming no default. Convertible bonds cannot be converted after this date."
                     rightOfCountdown={
-                      <div className="flex flex-col justify-end">
-                        <ExtraDetailsItem
-                          bordered={false}
-                          title="Documents"
-                          titleClass="justify-end"
-                          value={
-                            <LinkIcon href="/pdf/Ribbon DAO Collateral & Credit Analysis.pdf">
-                              Credit analysis
-                            </LinkIcon>
-                          }
-                        />
-                      </div>
+                      !(bond?.id in BOND_INFORMATION) && (
+                        <a
+                          href={`https://etherscan.io/address/${bond?.owner || ''}`}
+                          rel="noreferrer"
+                          target="_blank"
+                        >
+                          <button className="btn btn-primary btn-sm space-x-2 rounded-md bg-[#293327] !text-xxs font-normal">
+                            <span>Issuer Information</span>
+                            <span>
+                              <DoubleArrowRightIcon />
+                            </span>
+                          </button>
+                        </a>
+                      )
                     }
                     startDate={bond?.createdAt}
                     startText="Issuance date"

@@ -55,7 +55,7 @@ export const GhostActionLink = ({ children, ...props }) => (
   </a>
 )
 
-const TokenItem = styled.div`
+export const TokenItem = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
@@ -111,10 +111,9 @@ const Claimer: React.FC<Props> = (props) => {
   )
 
   const { auctioningToken, biddingToken } = derivedAuctionInfo
-
   const isLoading = useMemo(
-    () => (account && isDerivedClaimInfoLoading) || !claimableBidFunds || !claimableBonds,
-    [account, isDerivedClaimInfoLoading, claimableBidFunds, claimableBonds],
+    () => account && isDerivedClaimInfoLoading,
+    [account, isDerivedClaimInfoLoading],
   )
 
   const isClaimButtonDisabled = useMemo(
@@ -145,13 +144,16 @@ const Claimer: React.FC<Props> = (props) => {
 
         <Wrapper>
           <div className="mb-7 space-y-3">
-            {(graphInfo?.bondsSold > 0 || claimableBonds.greaterThan('0')) && (
+            {(graphInfo?.bondsSold > 0 || claimableBonds?.greaterThan('0')) && (
               <>
                 <TokenItem>
                   <div className="text-base text-white">
-                    {claimStatus !== ClaimState.CLAIMED && claimableBonds
+                    {claimStatus !== ClaimState.CLAIMED && claimableBonds != null
                       ? `${Number(
-                          formatUnits(claimableBonds.raw.toString(), claimableBonds.token.decimals),
+                          formatUnits(
+                            claimableBonds?.raw?.toString(),
+                            claimableBonds?.token?.decimals,
+                          ),
                         ).toLocaleString()}`
                       : `-`}
                   </div>
@@ -168,11 +170,11 @@ const Claimer: React.FC<Props> = (props) => {
 
             <TokenItem>
               <div className="text-base text-white">
-                {claimStatus !== ClaimState.CLAIMED && claimableBidFunds
+                {claimStatus !== ClaimState.CLAIMED && claimableBidFunds != null
                   ? `${Number(
                       formatUnits(
-                        claimableBidFunds.raw.toString(),
-                        claimableBidFunds.token.decimals,
+                        claimableBidFunds?.raw?.toString(),
+                        claimableBidFunds?.token?.decimals,
                       ),
                     ).toLocaleString()}`
                   : `-`}
@@ -214,9 +216,16 @@ const Claimer: React.FC<Props> = (props) => {
                 <div className="space-y-2 border-b border-b-[#D5D5D519] pb-4 text-xs text-[#696969]">
                   <TokenInfo
                     token={bondToken}
-                    value={Number(
-                      formatUnits(claimableBonds.raw.toString(), claimableBonds.token.decimals),
-                    ).toLocaleString()}
+                    value={
+                      claimableBonds != null
+                        ? Number(
+                            formatUnits(
+                              claimableBonds?.raw?.toString(),
+                              claimableBonds?.token?.decimals,
+                            ),
+                          ).toLocaleString()
+                        : '-'
+                    }
                   />
                   <div className="text-xs text-[#696969]">
                     <Tooltip
@@ -228,12 +237,16 @@ const Claimer: React.FC<Props> = (props) => {
                 <div className="space-y-2 border-b border-b-[#D5D5D519] pb-4 text-xs text-[#696969]">
                   <TokenInfo
                     token={biddingToken}
-                    value={Number(
-                      formatUnits(
-                        claimableBidFunds.raw.toString(),
-                        claimableBidFunds.token.decimals,
-                      ),
-                    ).toLocaleString()}
+                    value={
+                      claimableBonds != null
+                        ? Number(
+                            formatUnits(
+                              claimableBidFunds?.raw?.toString(),
+                              claimableBidFunds?.token?.decimals,
+                            ),
+                          ).toLocaleString()
+                        : '-'
+                    }
                   />
                   <div className="text-xs text-[#696969]">
                     <Tooltip

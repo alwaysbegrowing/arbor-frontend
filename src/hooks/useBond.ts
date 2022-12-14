@@ -98,10 +98,13 @@ export const useBond = (bondId: string) => {
 }
 
 export const useBonds = () => {
-  const { data, error, loading } = useQuery<AllBondsQuery>(AllBondsDocument)
-
-  if (error) {
-    logger.error('Error getting useAllBondInfo info', error)
+  const allBonds = useQuery<AllBondsQuery>(AllBondsDocument)
+  const data = allBonds?.data?.bonds?.filter((bond) => {
+    // remove test bonds
+    return bond.id.toLowerCase() !== '0x87a075d5C330C8B22faA65C62DCd1C982f43f314'.toLowerCase()
+  })
+  if (allBonds?.error) {
+    logger.error('Error getting useAllBondInfo info', allBonds?.error)
   }
-  return { data: data?.bonds, loading }
+  return { data, loading: allBonds?.loading }
 }

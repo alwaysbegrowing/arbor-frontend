@@ -13,7 +13,7 @@ specifiers:
   '@ethersproject/solidity': ^5.7.0
   '@ethersproject/strings': ^5.7.0
   '@ethersproject/units': ^5.7.0
-  '@gnosis.pm/safe-apps-wagmi': ^1.0.3
+  '@gnosis.pm/safe-apps-wagmi': ^1.2.0
   '@graphql-codegen/cli': 2.12.0
   '@graphql-codegen/fragment-matcher': 3.3.1
   '@graphql-codegen/introspection': ^2.2.1
@@ -128,7 +128,7 @@ dependencies:
   '@ethersproject/solidity': 5.7.0
   '@ethersproject/strings': 5.7.0
   '@ethersproject/units': 5.7.0
-  '@gnosis.pm/safe-apps-wagmi': 1.0.3_@wagmi+core@0.5.5
+  '@gnosis.pm/safe-apps-wagmi': 1.2.0_@wagmi+core@0.5.5
   '@headlessui/react': 1.7.0_biqbaboplfbrettd7655fr4n2y
   '@hookform/error-message': 2.0.0_hphx72akqbietbtf5qajzk3m6q
   '@josojo/honeyswap-sdk': 1.0.0_yjljienepq4eg7gb7dfa2thr3m
@@ -142,7 +142,7 @@ dependencies:
   '@uniswap/v2-core': 1.0.1
   '@wagmi/core': 0.5.5_ethers@5.7.0+react@18.2.0
   ajv: 8.11.0
-  ajv-formats: 2.1.1_ajv@8.11.0
+  ajv-formats: 2.1.1
   csstype: 3.1.0
   dayjs: 1.11.5
   ethers: 5.7.0
@@ -163,7 +163,7 @@ dependencies:
   react-is: 18.2.0
   react-redux: 8.0.2_alqe2diir6zydavr5srjvjfctq
   react-router-dom: 6.3.0_biqbaboplfbrettd7655fr4n2y
-  react-scripts: 5.0.1_jbmprrgbtqpcmrofl7abfebehy
+  react-scripts: 5.0.1_sdz2nkrxubj3kh2tdieese5vie
   react-table: 7.8.0_react@18.2.0
   react-tooltip: 4.2.21_biqbaboplfbrettd7655fr4n2y
   rebass: 4.0.7_react@18.2.0
@@ -228,7 +228,7 @@ devDependencies:
   stream-browserify: 3.0.0
   stream-http: 3.2.0
   tailwind-scrollbar: 2.0.1_tailwindcss@3.1.8
-  tailwindcss: 3.1.8_57znarxsqwmnneadci5z5fd5gu
+  tailwindcss: 3.1.8_ts-node@10.9.1
   typechain: 8.1.0_typescript@4.8.3
   url: 0.11.0
 
@@ -2913,10 +2913,10 @@ packages:
       }
     dev: false
 
-  /@gnosis.pm/safe-apps-provider/0.13.1:
+  /@gnosis.pm/safe-apps-provider/0.15.1:
     resolution:
       {
-        integrity: sha512-v84Apwb5SeDuRexcvzL2fyfYS3SR9MqPSKiSyFFOWo/Tpm4zgF/Z4ZKhsBKkgktqGoc0zFUZeQPVvqyQpixM9g==,
+        integrity: sha512-jVU0jpXf30HFdLHSHkmscIm04BYSwfoddjcHI4uPolP+u4F+tHRgfah1xo4XNRSCDqs4GTq38d7YAipGTj0CLA==,
       }
     dependencies:
       '@gnosis.pm/safe-apps-sdk': 7.8.0
@@ -2941,15 +2941,15 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@gnosis.pm/safe-apps-wagmi/1.0.3_@wagmi+core@0.5.5:
+  /@gnosis.pm/safe-apps-wagmi/1.2.0_@wagmi+core@0.5.5:
     resolution:
       {
-        integrity: sha512-UKzO/+7hRitjAr5uHqPXNzY1s5JV0y5aheLEpGQQlDEg42EMflo2nm+K4NV+S0mrgnTPW+/kk00sv8FuQqaFjA==,
+        integrity: sha512-ecDiNMkQ01m2yM/eKKtt08bTvYjWfacG+vwAeb4Lpiitm8RBI8wkW1jUoOgvd9tNhHZtdykgGETUZGmMo1XDuw==,
       }
     peerDependencies:
-      '@wagmi/core': ^0.3.8
+      '@wagmi/core': '>= 0.3.8 < 0.8.0'
     dependencies:
-      '@gnosis.pm/safe-apps-provider': 0.13.1
+      '@gnosis.pm/safe-apps-provider': 0.15.1
       '@gnosis.pm/safe-apps-sdk': 7.8.0
       '@wagmi/core': 0.5.5_ethers@5.7.0+react@18.2.0
     transitivePeerDependencies:
@@ -4391,7 +4391,7 @@ packages:
       - encoding
     dev: false
 
-  /@react-native-community/cli-plugin-metro/9.1.0_@babel+core@7.19.0:
+  /@react-native-community/cli-plugin-metro/9.1.0:
     resolution:
       {
         integrity: sha512-Y1eJIfYz6lucStFt5GpIR3ErnDDK85eLY8C7zTPA0vexcztDCnjBBkBXkrhGdElrR/Iz2xepuewgOFW616YA9Q==,
@@ -4403,12 +4403,11 @@ packages:
       metro: 0.72.2
       metro-config: 0.72.2
       metro-core: 0.72.2
-      metro-react-native-babel-transformer: 0.72.1_@babel+core@7.19.0
+      metro-react-native-babel-transformer: 0.72.1
       metro-resolver: 0.72.2
       metro-runtime: 0.72.2
       readline: 1.3.0
     transitivePeerDependencies:
-      - '@babel/core'
       - bufferutil
       - encoding
       - supports-color
@@ -4465,7 +4464,7 @@ packages:
       joi: 17.6.0
     dev: false
 
-  /@react-native-community/cli/9.1.0_@babel+core@7.19.0:
+  /@react-native-community/cli/9.1.0:
     resolution:
       {
         integrity: sha512-ShgepA5gSoZjyBauoiFPKtyvqovp6kbH5frOH3n3iI0Qg1CtjhcbKYAoORYGkUA9LusVPvmD7T4ur5yrgNv3IA==,
@@ -4478,7 +4477,7 @@ packages:
       '@react-native-community/cli-debugger-ui': 9.0.0
       '@react-native-community/cli-doctor': 9.1.0
       '@react-native-community/cli-hermes': 9.1.0
-      '@react-native-community/cli-plugin-metro': 9.1.0_@babel+core@7.19.0
+      '@react-native-community/cli-plugin-metro': 9.1.0
       '@react-native-community/cli-server-api': 9.1.0
       '@react-native-community/cli-tools': 9.1.0
       '@react-native-community/cli-types': 9.1.0
@@ -4491,7 +4490,6 @@ packages:
       prompts: 2.4.2
       semver: 6.3.0
     transitivePeerDependencies:
-      - '@babel/core'
       - bufferutil
       - encoding
       - supports-color
@@ -5108,7 +5106,7 @@ packages:
       '@types/use-sync-external-store': 0.0.3
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      react-native: 0.70.0_7pl22fnpq6hvrex6cfemjlqehm
+      react-native: 0.70.0_rocjsg37axnyukexa35uaifwhi
       use-sync-external-store: 1.2.0_react@18.2.0
     dev: false
 
@@ -6606,13 +6604,11 @@ packages:
       indent-string: 4.0.0
     dev: true
 
-  /ajv-formats/2.1.1_ajv@8.11.0:
+  /ajv-formats/2.1.1:
     resolution:
       {
         integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==,
       }
-    peerDependencies:
-      ajv: ^8.0.0
     peerDependenciesMeta:
       ajv:
         optional: true
@@ -10879,7 +10875,7 @@ packages:
       css-selector-tokenizer: 0.8.0
       postcss: 8.4.16
       postcss-js: 4.0.0_postcss@8.4.16
-      tailwindcss: 3.1.8_57znarxsqwmnneadci5z5fd5gu
+      tailwindcss: 3.1.8_ts-node@10.9.1
     transitivePeerDependencies:
       - ts-node
 
@@ -12299,7 +12295,7 @@ packages:
     dependencies:
       fast-glob: 3.2.12
       postcss: 8.4.16
-      tailwindcss: 3.1.8_57znarxsqwmnneadci5z5fd5gu
+      tailwindcss: 3.1.8_ts-node@10.9.1
     transitivePeerDependencies:
       - ts-node
     dev: true
@@ -15646,13 +15642,13 @@ packages:
       '@types/connect': 3.4.35
       '@types/node': 12.20.55
       '@types/ws': 7.4.7
-      JSONStream: 1.3.5
       commander: 2.20.3
       delay: 5.0.0
       es6-promisify: 5.0.0
       eyes: 0.1.8
       isomorphic-ws: 4.0.1_ws@7.5.9
       json-stringify-safe: 5.0.1
+      JSONStream: 1.3.5
       lodash: 4.17.21
       uuid: 8.3.2
       ws: 7.5.9
@@ -17635,13 +17631,11 @@ packages:
       uglify-es: 3.3.9
     dev: false
 
-  /metro-react-native-babel-preset/0.72.1_@babel+core@7.19.0:
+  /metro-react-native-babel-preset/0.72.1:
     resolution:
       {
         integrity: sha512-DlvMw2tFrCqD9OXBoN11fPM09kHC22FZpnkTmG4Pr4kecV+aDmEGxwakjUcjELrX1JCXz2MLPvqeJkbiP1f5CA==,
       }
-    peerDependencies:
-      '@babel/core': '*'
     dependencies:
       '@babel/core': 7.19.0
       '@babel/plugin-proposal-async-generator-functions': 7.19.0_@babel+core@7.19.0
@@ -17686,13 +17680,11 @@ packages:
       - supports-color
     dev: false
 
-  /metro-react-native-babel-preset/0.72.2_@babel+core@7.19.0:
+  /metro-react-native-babel-preset/0.72.2:
     resolution:
       {
         integrity: sha512-OMp77TUUZAoiuUv5uKNc08AnJNQxD28k92eQvo8tPcA8Wx6OZlEUvL7M7SFkef2mEYJ0vnrRjOamSnbBuq/+1w==,
       }
-    peerDependencies:
-      '@babel/core': '*'
     dependencies:
       '@babel/core': 7.19.0
       '@babel/plugin-proposal-async-generator-functions': 7.19.0_@babel+core@7.19.0
@@ -17737,19 +17729,17 @@ packages:
       - supports-color
     dev: false
 
-  /metro-react-native-babel-transformer/0.72.1_@babel+core@7.19.0:
+  /metro-react-native-babel-transformer/0.72.1:
     resolution:
       {
         integrity: sha512-hMnN0MOgVloAk94YuXN7sLeDaZ51Y6xIcJXxIU1s/KaygAGXk6o7VAdwf2MY/IV1SIct5lkW4Gn71u/9/EvfXA==,
       }
-    peerDependencies:
-      '@babel/core': '*'
     dependencies:
       '@babel/core': 7.19.0
       babel-preset-fbjs: 3.4.0_@babel+core@7.19.0
       hermes-parser: 0.8.0
       metro-babel-transformer: 0.72.1
-      metro-react-native-babel-preset: 0.72.1_@babel+core@7.19.0
+      metro-react-native-babel-preset: 0.72.1
       metro-source-map: 0.72.1
       nullthrows: 1.1.1
     transitivePeerDependencies:
@@ -17937,7 +17927,7 @@ packages:
       metro-hermes-compiler: 0.72.2
       metro-inspector-proxy: 0.72.2
       metro-minify-uglify: 0.72.2
-      metro-react-native-babel-preset: 0.72.2_@babel+core@7.19.0
+      metro-react-native-babel-preset: 0.72.2
       metro-resolver: 0.72.2
       metro-runtime: 0.72.2
       metro-source-map: 0.72.2
@@ -20777,7 +20767,7 @@ packages:
     peerDependencies:
       react-scripts: '>=2.1.3'
     dependencies:
-      react-scripts: 5.0.1_jbmprrgbtqpcmrofl7abfebehy
+      react-scripts: 5.0.1_sdz2nkrxubj3kh2tdieese5vie
       semver: 5.7.1
     dev: true
 
@@ -20809,7 +20799,7 @@ packages:
       daisyui: 2.25.0_ywsstkkounrjlah5ti55snp2aq
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      tailwindcss: 3.1.8_57znarxsqwmnneadci5z5fd5gu
+      tailwindcss: 3.1.8_ts-node@10.9.1
     dev: false
 
   /react-dev-utils/12.0.1_pgam3sqtrjrc7cxsoxreoddgqu:
@@ -20818,12 +20808,6 @@ packages:
         integrity: sha512-84Ivxmr17KjUupyqzFode6xKhjwuEJDROWKJy/BthkL7Wn6NJ8h4WE6k/exAv6ImS+0oZLRRW5j/aINMHyeGeQ==,
       }
     engines: { node: '>=14' }
-    peerDependencies:
-      typescript: '>=2.7'
-      webpack: '>=4'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
     dependencies:
       '@babel/code-frame': 7.18.6
       address: 1.2.0
@@ -20854,7 +20838,9 @@ packages:
     transitivePeerDependencies:
       - eslint
       - supports-color
+      - typescript
       - vue-template-compiler
+      - webpack
 
   /react-devtools-core/4.24.0:
     resolution:
@@ -20968,11 +20954,11 @@ packages:
     peerDependencies:
       react-native: '*'
     dependencies:
-      react-native: 0.70.0_7pl22fnpq6hvrex6cfemjlqehm
+      react-native: 0.70.0_rocjsg37axnyukexa35uaifwhi
       whatwg-url-without-unicode: 8.0.0-3
     dev: false
 
-  /react-native/0.70.0_7pl22fnpq6hvrex6cfemjlqehm:
+  /react-native/0.70.0_rocjsg37axnyukexa35uaifwhi:
     resolution:
       {
         integrity: sha512-QjXLbrK9f+/B2eCzn6kAvglLV/8nwPuFGaFv7ggPpAzFRyx5bVN1dwQLHL3MrP7iXR/M7Jc6Nnid7tmRSic6vA==,
@@ -20983,7 +20969,7 @@ packages:
       react: 18.1.0
     dependencies:
       '@jest/create-cache-key-function': 27.5.1
-      '@react-native-community/cli': 9.1.0_@babel+core@7.19.0
+      '@react-native-community/cli': 9.1.0
       '@react-native-community/cli-platform-android': 9.1.0
       '@react-native-community/cli-platform-ios': 9.1.0
       '@react-native/assets': 1.0.0
@@ -20996,7 +20982,7 @@ packages:
       invariant: 2.2.4
       jsc-android: 250230.2.1
       memoize-one: 5.2.1
-      metro-react-native-babel-transformer: 0.72.1_@babel+core@7.19.0
+      metro-react-native-babel-transformer: 0.72.1
       metro-runtime: 0.72.1
       metro-source-map: 0.72.1
       mkdirp: 0.5.6
@@ -21016,7 +21002,6 @@ packages:
       whatwg-fetch: 3.6.2
       ws: 6.2.2
     transitivePeerDependencies:
-      - '@babel/core'
       - '@babel/preset-env'
       - bufferutil
       - encoding
@@ -21057,7 +21042,7 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-is: 18.2.0
-      react-native: 0.70.0_7pl22fnpq6hvrex6cfemjlqehm
+      react-native: 0.70.0_rocjsg37axnyukexa35uaifwhi
       redux: 4.2.0
       use-sync-external-store: 1.2.0_react@18.2.0
     dev: false
@@ -21145,7 +21130,7 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-scripts/5.0.1_jbmprrgbtqpcmrofl7abfebehy:
+  /react-scripts/5.0.1_sdz2nkrxubj3kh2tdieese5vie:
     resolution:
       {
         integrity: sha512-8VAmEm/ZAwQzJ+GOMLbBsTdDKOpuZh7RPs0UymvBR2vRk4iZWCskjbFnxqjrzoIvlNNRZ3QJFx6/qDSi6zSnaQ==,
@@ -21153,7 +21138,6 @@ packages:
     engines: { node: '>=14.0.0' }
     hasBin: true
     peerDependencies:
-      eslint: '*'
       react: '>= 16'
       typescript: ^3.2.1 || ^4
     peerDependenciesMeta:
@@ -21202,7 +21186,7 @@ packages:
       semver: 7.3.7
       source-map-loader: 3.0.1_webpack@5.74.0
       style-loader: 3.3.1_webpack@5.74.0
-      tailwindcss: 3.1.8_57znarxsqwmnneadci5z5fd5gu
+      tailwindcss: 3.1.8_ts-node@10.9.1
       terser-webpack-plugin: 5.3.6_webpack@5.74.0
       typescript: 4.8.3
       webpack: 5.74.0
@@ -22271,7 +22255,7 @@ packages:
     dependencies:
       '@types/json-schema': 7.0.11
       ajv: 8.11.0
-      ajv-formats: 2.1.1_ajv@8.11.0
+      ajv-formats: 2.1.1
       ajv-keywords: 5.1.0_ajv@8.11.0
 
   /scope-analyzer/2.1.2:
@@ -23622,18 +23606,16 @@ packages:
     peerDependencies:
       tailwindcss: 3.x
     dependencies:
-      tailwindcss: 3.1.8_57znarxsqwmnneadci5z5fd5gu
+      tailwindcss: 3.1.8_ts-node@10.9.1
     dev: true
 
-  /tailwindcss/3.1.8_57znarxsqwmnneadci5z5fd5gu:
+  /tailwindcss/3.1.8_ts-node@10.9.1:
     resolution:
       {
         integrity: sha512-YSneUCZSFDYMwk+TGq8qYFdCA3yfBRdBlS7txSq0LUmzyeqRe3a8fBQzbz9M3WS/iFT4BNf/nmw9mEzrnSaC0g==,
       }
     engines: { node: '>=12.13.0' }
     hasBin: true
-    peerDependencies:
-      postcss: ^8.0.9
     dependencies:
       arg: 5.0.2
       chokidar: 3.5.3

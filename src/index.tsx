@@ -8,7 +8,6 @@ import { merge } from 'lodash'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { WagmiConfig, chain, chainId, configureChains, createClient } from 'wagmi'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { publicProvider } from 'wagmi/providers/public'
 
@@ -38,11 +37,10 @@ if (isProdGoerli) {
 const { chains, provider } = configureChains(configuredChains, [
   jsonRpcProvider({
     rpc: (chain) => {
-      if (chain.id !== chainId.goerli) return null
-      return { http: process.env.REACT_APP_NETWORK_URL_GOERLI }
+      if (chain.id === chainId.goerli) return { http: process.env.REACT_APP_NETWORK_URL_GOERLI }
+      if (chain.id === chainId.mainnet) return { http: process.env.REACT_APP_NETWORK_URL_MAINNET }
     },
   }),
-  alchemyProvider({ apiKey: process.env.REACT_APP_NETWORK_URL_MAINNET.slice(-32) }),
   publicProvider(),
 ])
 

@@ -106,6 +106,8 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
   const [showConfirm, setShowConfirm] = useState<boolean>(false)
   const [showWarning, setShowWarning] = useState<boolean>(false)
   const [showWarningWrongChainId, setShowWarningWrongChainId] = useState<boolean>(false)
+  const [error, setError] = useState<boolean>(false)
+  const [errorText, setErrorText] = useState<string>()
   // const { errorAmount, errorBidSize, errorPrice } = useGetOrderPlacementError(
   //   derivedAuctionInfo,
   //   derivedAuctionInfo?.auctionState,
@@ -158,12 +160,37 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
 
   useEffect(() => {
     onUserPriceInput(price)
-    if (price == '-' && derivedAuctionInfo?.clearingPrice) {
+    if (price == '-' && graphInfo?.clearingPrice) {
       onUserPriceInput(
-        derivedAuctionInfo?.clearingPrice.multiply(new Fraction('1001', '1000')).toSignificant(4),
+        new Fraction(graphInfo?.clearingPrice)
+          .multiply(new Fraction('1001', '1000'))
+          .toSignificant(4),
       )
     }
-  }, [onUserPriceInput, price, derivedAuctionInfo])
+  }, [onUserPriceInput, price, graphInfo])
+
+  const minBidSize = graphInfo?.minimumBidSize / 10 ** 6
+
+  useEffect(() => {
+    if (price !== '' && Number(sellAmount) <= minBidSize) {
+      setError(true)
+      setErrorText(
+        `The amount of USDC you pay must exceed the minimum bid size of ${minBidSize} USDC.`,
+      )
+    } else if (Number(price) > 1) {
+      setError(true)
+      setErrorText(
+        'The price you pay per bond must be smaller than the face value of the bond, $1.',
+      )
+    } else if (price !== '' && Number(price) < graphInfo?.minimumBondPrice) {
+      setError(true)
+      setErrorText(
+        `The price you pay per bond must be greater than the minimum bond price of ${graphInfo?.minimumBondPrice} USDC.`,
+      )
+    } else {
+      setError(false)
+    }
+  }, [price, sellAmount, minBidSize, graphInfo?.minimumBondPrice])
 
   const placeOrderCallback = usePlaceOrderCallback(
     auctionIdentifier,
@@ -212,6 +239,8 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
   )
   const signatureAvailable = React.useMemo(() => signature && signature.length > 10, [signature])
 
+  const numericalPrice = Number(price)
+
   const amountInfo = React.useMemo(
     () =>
       errorAmount
@@ -243,7 +272,9 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
       showConfirm ||
       showTokenConfirm ||
       sellAmount === '' ||
-      price === '') &&
+      price === '' ||
+      numericalPrice > 1 ||
+      numericalPrice <= graphInfo?.minimumBondPrice) &&
     true
 
   const auctioningTokenAddress = auctioningToken && auctioningToken?.address
@@ -282,7 +313,11 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
 
   const cancelCutoff =
     graphInfo?.orderCancellationEndDate &&
-    dayjs(graphInfo?.orderCancellationEndDate).utc().tz().format('LL HH:mm z')
+    dayjs(graphInfo?.orderCancellationEndDate * 1000)
+      .utc()
+      .tz()
+      .format('LL HH:mm z')
+
   const reviewData = getReviewData({
     amount: Number(sellAmount),
     maturityDate: graphInfo?.bond?.maturityDate,
@@ -326,7 +361,6 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
                 onUserPriceInput={onUserPriceInput}
                 value={price}
               />
-
               <InterestRateInputPanel
                 account={account}
                 amount={Number(sellAmount)}
@@ -335,7 +369,30 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
                 price={Number(price)}
                 priceTokenDisplay={biddingTokenDisplay}
               />
-
+              {error && (
+                <div className="card mb-4 mt-0">
+                  <div className="card-body">
+                    <div className="flex flex-row items-center space-x-2">
+                      <svg
+                        fill="none"
+                        height="14"
+                        viewBox="0 0 15 14"
+                        width="15"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          clipRule="evenodd"
+                          d="M7.801 14C11.7702 14 14.9879 10.866 14.9879 7C14.9879 3.13401 11.7702 0 7.801 0C3.83179 0 0.614105 3.13401 0.614105 7C0.614105 10.866 3.83179 14 7.801 14ZM6.80125 3.52497C6.78659 3.23938 7.02037 3 7.31396 3H8.28804C8.58162 3 8.81541 3.23938 8.80075 3.52497L8.59541 7.52497C8.58175 7.79107 8.35625 8 8.0827 8H7.5193C7.24575 8 7.02025 7.79107 7.00659 7.52497L6.80125 3.52497ZM6.7743 10C6.7743 9.44772 7.23397 9 7.801 9C8.36803 9 8.8277 9.44772 8.8277 10C8.8277 10.5523 8.36803 11 7.801 11C7.23397 11 6.7743 10.5523 6.7743 10Z"
+                          fill="#CC0202"
+                          fillRule="evenodd"
+                        />
+                      </svg>
+                      <span className="text-[#CC0202]">Error</span>
+                    </div>
+                    <div className="text-sm text-[#9F9F9F]">{errorText}</div>
+                  </div>
+                </div>
+              )}
               {!account ? (
                 <>
                   <ActionButton onClick={toggleWalletModal}>Connect wallet</ActionButton>
@@ -344,10 +401,8 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
               ) : (
                 <>
                   <ActionButton
-                    disabled={disablePlaceOrder}
-                    onClick={() =>
-                      disabledCountry ? setShowCountryDisabledModal(true) : handleShowConfirm()
-                    }
+                    disabled={disablePlaceOrder || error}
+                    onClick={() => handleShowConfirm()}
                   >
                     Review order
                   </ActionButton>

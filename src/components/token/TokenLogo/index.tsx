@@ -3,10 +3,10 @@ import styled from 'styled-components'
 
 import { ReactComponent as UnicornSvg } from '../../../assets/svg/simple-bond.svg'
 import { useTokenListState } from '../../../state/tokenList/hooks'
-import { isAddress } from '../../../utils'
 import { UnregisteredToken } from '../UnregisteredToken'
 
-import { DEV_bondImage } from '@/state/tokenList/reducer'
+import { getMappedToken } from '@/components/ProductCreate/SelectableTokens'
+import { DEV_bondImage, DEV_tokens } from '@/state/tokenList/reducer'
 
 const Wrapper = styled.div<{ size: string }>`
   background-color: #e0e0e0;
@@ -38,7 +38,7 @@ interface TokenLogoProps {
 const SquareHolder = ({ children, size }) => {
   const defaultSize = size === '24px'
   return (
-    <div className={`avatar placeholder w-${defaultSize ? '14' : '10'} bg-[#e0e0e0] rounded-full`}>
+    <div className={`w- placeholder avatar${defaultSize ? '14' : '10'} rounded-full bg-[#e0e0e0]`}>
       {children}
     </div>
   )
@@ -46,24 +46,32 @@ const SquareHolder = ({ children, size }) => {
 
 const TokenLogo: React.FC<TokenLogoProps> = (props) => {
   const { size = '24px', square, token, ...restProps } = props
-  const { address } = token
+  const { address: tokenAddress } = token
   const { tokens } = useTokenListState()
-  const validToken = isAddress(address) && tokens
+  const address = getMappedToken(tokenAddress)
+
+  const validToken = address && tokens
   const imageURL = validToken && tokens[address.toLowerCase()]
   const sizeToUse = square && size === '24px' ? '30px' : size
 
   // Example used in dev
+
+  const lowerTokenAddress = tokenAddress.toLowerCase()
   let forceSvg = false
-  if (DEV_bondImage.includes(address)) forceSvg = true
+  if (DEV_bondImage.includes(tokenAddress)) forceSvg = true
+
+  let chosenImage = false
+  if (lowerTokenAddress in DEV_tokens) chosenImage = true
 
   const UnTok = !imageURL && <UnregisteredToken size={sizeToUse} token={token} {...restProps} />
   const ImageToken = (
     <Wrapper className="tokenLogo" size={sizeToUse} {...restProps}>
+      {chosenImage && <Image alt="token image" src={DEV_tokens[lowerTokenAddress]?.image} />}
       {forceSvg && (
         <UnicornSvg height={sizeToUse} style={{ borderRadius: '100%' }} width={sizeToUse} />
       )}
-      {!forceSvg && UnTok}
-      {imageURL && <Image src={imageURL} />}
+      {!chosenImage && !forceSvg && UnTok}
+      {!chosenImage && imageURL && <Image alt="token image" src={imageURL} />}
     </Wrapper>
   )
 

@@ -25,11 +25,11 @@ const NavItem = styled(NavLink)`
   text-decoration: none;
 
   &:hover {
-    color: #e0e0e0;
+    color: #fafafa;
     opacity: 0.5;
 
     .fill {
-      fill: #e0e0e0;
+      fill: #fafafa;
     }
   }
 

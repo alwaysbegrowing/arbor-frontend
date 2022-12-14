@@ -1,8 +1,10 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
 import { formatUnits } from '@ethersproject/units'
+import { DoubleArrowRightIcon } from '@radix-ui/react-icons'
 import { ceil } from 'lodash'
 
 import { useAuction } from '../../../hooks/useAuction'
@@ -11,12 +13,13 @@ import { AuctionIdentifier } from '../../../state/orderPlacement/reducer'
 import { useOrderbookState } from '../../../state/orderbook/hooks'
 import { abbreviation } from '../../../utils/numeral'
 import { calculateInterestRate } from '../../form/InterestRateInputPanel'
-import TokenLink, { LinkIcon } from '../../token/TokenLink'
+import TokenLink from '../../token/TokenLink'
 import { AuctionTimer } from '../AuctionTimer'
 import { ExtraDetailsItem, Props as ExtraDetailsItemProps } from '../ExtraDetailsItem'
 import { AuctionStatusPill } from '../OrderbookTable'
 
 import { Auction } from '@/generated/graphql'
+import { BOND_INFORMATION } from '@/pages/BondDetail'
 
 const TokenValue = styled.span`
   line-height: 1.2;
@@ -55,11 +58,12 @@ export const TokenInfoWithLink = ({
 
 const AuctionDetails = (props: Props) => {
   const { auctionIdentifier } = props
+  const navigate = useNavigate()
 
   const { data: auction } = useAuction(auctionIdentifier?.auctionId)
   let { orderbookPrice: auctionCurrentPrice } = useOrderbookState()
 
-  if (auctionCurrentPrice == 0) {
+  if (auctionCurrentPrice == 0 || auctionCurrentPrice > 1) {
     // use the price from the subgraph if not found on API
     auctionCurrentPrice = Number(auction.minimumBondPrice)
   }
@@ -209,14 +213,17 @@ const AuctionDetails = (props: Props) => {
           endDate={auction?.end}
           endText="End date"
           rightOfCountdown={
-            <div className="flex flex-col justify-end">
-              <ExtraDetailsItem
-                bordered={false}
-                title="Documents"
-                titleClass="justify-end"
-                value={<LinkIcon href="/pdf/Ribbon DAO Prospectus.pdf">Prospectus</LinkIcon>}
-              />
-            </div>
+            auction?.bond.id in BOND_INFORMATION && (
+              <button
+                className="btn btn-primary btn-sm space-x-2 rounded-md bg-[#293327] !text-xxs font-normal"
+                onClick={() => navigate(`/bonds/${auction?.bond.id || ''}`)}
+              >
+                <span>Issuer Information</span>
+                <span>
+                  <DoubleArrowRightIcon />
+                </span>
+              </button>
+            )
           }
           startDate={auction?.start}
           startText="Start date"

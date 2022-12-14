@@ -193,7 +193,7 @@ export function getDisplay(token: GraphToken): string {
 // Always return a non-undefined token display
 export function getFullTokenDisplay(token: Token, chainId: ChainId): string {
   if (isTokenWETH(token.address, chainId)) return `ETH`
-  return token?.name || token?.symbol || token?.address || '-'
+  return token?.symbol || token?.name || token?.address || '-'
 }
 
 export function isTokenWETH(tokenAddress?: string, chainId?: ChainId): boolean {

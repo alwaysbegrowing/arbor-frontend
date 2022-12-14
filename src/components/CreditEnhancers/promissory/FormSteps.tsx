@@ -4,9 +4,8 @@ import { ErrorMessage } from '@hookform/error-message'
 import { CrossCircledIcon, DoubleArrowRightIcon } from '@radix-ui/react-icons'
 import { FormProvider, useForm } from 'react-hook-form'
 
-import { ActionButton } from '../auction/Claimer'
-import { IssuerAllowList } from './SelectableTokens'
-
+import { IssuerAllowList } from '@/components/ProductCreate/SelectableTokens'
+import { ActionButton } from '@/components/auction/Claimer'
 import { isGoerli } from '@/connectors'
 import { useActiveWeb3React } from '@/hooks'
 import { useWalletModalToggle } from '@/state/application/hooks'
@@ -92,7 +91,7 @@ export const FormSteps = ({
                         onClick={() => setCurrentStep(currentStep + 1)}
                         type="submit"
                       >
-                        Continue
+                        Sign
                       </ActionButton>
                     )}
                     {currentStep === steps.length - 1 && (

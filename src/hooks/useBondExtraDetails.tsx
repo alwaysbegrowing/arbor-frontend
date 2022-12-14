@@ -19,14 +19,11 @@ export const getValuePerBond = (
   value: number,
 ) => {
   return bond
-    ? round(
-        Number(
-          formatUnits(
-            value,
-            WADDecimals + bond.collateralToken.decimals - bond.paymentToken.decimals,
-          ),
+    ? Number(
+        formatUnits(
+          value,
+          WADDecimals + bond.collateralToken.decimals - bond.paymentToken.decimals,
         ),
-        3,
       )
     : 0
 }
@@ -59,6 +56,13 @@ export const useBondExtraDetails = (bondId: string): ExtraDetailsItemProps[] => 
   const strikePrice =
     convertiblePerBond > 0 ? (paymentTokenPrice / convertiblePerBond).toLocaleString() : 0
   const isConvertBond = bond?.type === 'convert'
+
+  // const decimals = bond?.decimals ? bond?.decimals : 0
+
+  const outstandingBondAmount = Math.round(
+    Number(formatUnits(bond?.amountUnpaid || '0', bond?.decimals)),
+  )
+  const totalSupply = Math.round(Number(formatUnits(bond?.maxSupply || '0', bond?.decimals)))
 
   return [
     {
@@ -121,6 +125,37 @@ export const useBondExtraDetails = (bondId: string): ExtraDetailsItemProps[] => 
       ),
 
       show: isConvertBond,
+    },
+    {
+      title: 'Outstanding Bonds',
+      tooltip: 'Number of unpaid bonds.',
+      value: (
+        <span className="flex items-center space-x-1">
+          <span>{outstandingBondAmount.toLocaleString()}</span>
+        </span>
+      ),
+    },
+    {
+      title: 'Total Supply',
+      tooltip: 'Total number of bonds issued.',
+      value: (
+        <span className="flex items-center space-x-1">
+          <span>{totalSupply.toLocaleString()}</span>
+        </span>
+      ),
+    },
+    {
+      title: 'Clearing Price',
+      tooltip: 'Price per bond at the latest auction.',
+      value: bond?.clearingPrice ? (
+        <span className="flex items-center space-x-1">
+          <span>{bond?.clearingPrice.toLocaleString()}</span>
+        </span>
+      ) : (
+        <span className="flex items-center space-x-1">
+          {bond?.auctions.length != 0 ? 'Auction Ongoing' : 'None Sold'}
+        </span>
+      ),
     },
   ]
 }

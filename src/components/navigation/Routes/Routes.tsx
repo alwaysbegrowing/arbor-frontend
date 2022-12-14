@@ -1,6 +1,8 @@
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
+import CreditEnhancers from '@/components/CreditEnhancers'
+import PromissoryNote from '@/components/CreditEnhancers/promissory/PromissoryNote'
 import SelectOffering from '@/components/OfferingCreate'
 import SetupOffering from '@/components/OfferingCreate/auction/SetupOffering'
 import SetupOrderbook from '@/components/OrderbookCreate/order/SetupOrderbook'
@@ -32,6 +34,9 @@ const AppRoutes: React.FC = () => {
       <Route element={<SetupOffering />} path="/offerings/create/otc" />
 
       <Route element={<SetupOrderbook />} path="/orderbook/create" />
+
+      <Route element={<CreditEnhancers />} path="/credit-enhancers" />
+      <Route element={<PromissoryNote />} path="/credit-enhancers/promissory-note" />
 
       <Route element={<BondDetail />} path="/bonds/:bondId" />
       <Route element={<Portfolio />} path="/portfolio" />

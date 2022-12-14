@@ -17,7 +17,13 @@ const Tooltip = ({
     ReactTooltip.rebuild()
   })
   const tipEl = tip && (
-    <button data-for="wrap_button" data-html={true} data-multiline={true} data-tip={tip}>
+    <button
+      aria-describedby="tool tip"
+      data-for="wrap_button"
+      data-html={true}
+      data-multiline={true}
+      data-tip={tip}
+    >
       <TooltipIcon />
     </button>
   )
