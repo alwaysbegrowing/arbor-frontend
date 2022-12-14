@@ -5,6 +5,7 @@ import CreditEnhancers from '@/components/CreditEnhancers'
 import PromissoryNote from '@/components/CreditEnhancers/promissory/PromissoryNote'
 import SelectOffering from '@/components/OfferingCreate'
 import SetupOffering from '@/components/OfferingCreate/auction/SetupOffering'
+import SetupOrderbook from '@/components/OrderbookCreate/order/SetupOrderbook'
 import SelectProduct from '@/components/ProductCreate'
 import SetupProduct from '@/components/ProductCreate/convert/SetupProduct'
 import SetupSimpleProduct from '@/components/ProductCreate/simple/SetupSimpleProduct'
@@ -13,6 +14,7 @@ import Auction from '@/pages/Auction'
 import BondDetail from '@/pages/BondDetail'
 import Bonds from '@/pages/Bonds'
 import Offerings from '@/pages/Offerings'
+import Orderbook from '@/pages/Orderbook'
 import Portfolio from '@/pages/Portfolio'
 
 const AppRoutes: React.FC = () => {
@@ -20,6 +22,7 @@ const AppRoutes: React.FC = () => {
     <Routes>
       <Route element={<Auction />} path="/offerings/:auctionId" />
       <Route element={<Offerings />} path="/offerings" />
+      <Route element={<Orderbook />} path="/orderbook" />
       <Route element={<Bonds />} path="/bonds" />
 
       <Route element={<SelectProduct />} path="/bonds/create" />
@@ -29,6 +32,8 @@ const AppRoutes: React.FC = () => {
       <Route element={<SelectOffering />} path="/offerings/create" />
       <Route element={<SetupOffering />} path="/offerings/create/auction" />
       <Route element={<SetupOffering />} path="/offerings/create/otc" />
+
+      <Route element={<SetupOrderbook />} path="/orderbook/create" />
 
       <Route element={<CreditEnhancers />} path="/credit-enhancers" />
       <Route element={<PromissoryNote />} path="/credit-enhancers/promissory-note" />

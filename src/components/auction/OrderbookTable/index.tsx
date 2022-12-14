@@ -232,13 +232,13 @@ export const TableDesign = ({
       </table>
       {!hidePagination && pageOptions.length > 0 && (
         <div className="absolute right-6 bottom-1 flex items-center justify-end space-x-2 !border-none text-[#696969]">
-          <button className="btn-xs btn" disabled={!canPreviousPage} onClick={previousPage}>
+          <button className="btn btn-xs" disabled={!canPreviousPage} onClick={previousPage}>
             <DoubleArrowLeftIcon />
           </button>
           <span className="text-xs text-[#696969]">
             Page {pageIndex + 1} of {pageOptions.length}
           </span>
-          <button className="btn-xs btn" disabled={!canNextPage} onClick={nextPage}>
+          <button className="btn btn-xs" disabled={!canNextPage} onClick={nextPage}>
             <DoubleArrowRightIcon />
           </button>
         </div>

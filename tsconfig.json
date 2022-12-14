@@ -19,7 +19,8 @@
     "jsx": "react",
     "downlevelIteration": true,
     "allowSyntheticDefaultImports": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "typeRoots": ["node_modules/@0x/typescript-typings/types", "node_modules/@types"]
   },
   "exclude": ["node_modules"],
   "include": ["**/*.js", "**/*.ts", "**/*.tsx"],

@@ -1,0 +1,10 @@
+export const confirmSteps = [
+  {
+    text: (bondSymbol = '') => `Approve bond for sale`,
+    tip: 'The bonds need to be approved so it can be offered for sale.',
+  },
+  {
+    text: () => 'Initiate auction',
+    tip: 'Transfer your bonds into the auction contract and initiate the auction.',
+  },
+]

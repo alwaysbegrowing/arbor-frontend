@@ -20,9 +20,9 @@ export const Summary = ({ currentStep }) => {
     const display = dayjs(auctionEndDate).fromNow()
 
     return (
-      <div className="overflow-visible w-[425px] card">
+      <div className="card w-[425px] overflow-visible">
         <div className="card-body">
-          <h1 className="pb-4 !text-xs uppercase border-b border-[#2C2C2C] card-title">
+          <h1 className="card-title border-b border-[#2C2C2C] pb-4 !text-xs uppercase">
             Length of offering
           </h1>
           <div className="space-y-4">
@@ -45,9 +45,9 @@ export const Summary = ({ currentStep }) => {
   if (currentStep < 3) return null
 
   return (
-    <div className="overflow-visible w-[425px] card">
+    <div className="card w-[425px] overflow-visible">
       <div className="card-body">
-        <h1 className="pb-4 !text-xs uppercase border-b border-[#2C2C2C] card-title">Summary</h1>
+        <h1 className="card-title border-b border-[#2C2C2C] pb-4 !text-xs uppercase">Summary</h1>
         <div className="space-y-4">
           <SummaryItem
             text={formValues?.bondToAuction?.name}

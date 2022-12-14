@@ -93,7 +93,7 @@ const PriceInputPanel = (props: Props) => {
           <div className="flex justify-between">
             {account && (
               <button
-                className="btn-xs btn !border-[#2A2B2C] px-3 text-xs font-normal normal-case !text-[#E0E0E0]"
+                className="btn btn-xs !border-[#2A2B2C] px-3 text-xs font-normal normal-case !text-[#E0E0E0]"
                 onClick={() => onUserPriceInput(`${minBondPrice}`)}
               >
                 Min price

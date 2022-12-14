@@ -57,6 +57,12 @@ export const Pay = ({
       })
     },
   })
+  const callOrderbookThing = (bond) => {
+    console.log(bond.id)
+  }
+  const order = () => {
+    callOrderbookThing(bond)
+  }
   const { data: amountUnpaid } = useContractRead({
     addressOrName: bond?.id,
     contractInterface: BOND_ABI,
@@ -166,6 +172,9 @@ export const Pay = ({
         onClick={write}
       >
         Pay
+      </ActionButton>
+      <ActionButton className={`${isLoading || isConfirmLoading ? 'loading' : ''}`} onClick={order}>
+        Add to Orderbook
       </ActionButton>
       <WarningModal content={error?.message} isOpen={isError} onDismiss={reset} />
     </div>

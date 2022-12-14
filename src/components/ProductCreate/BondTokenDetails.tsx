@@ -25,7 +25,7 @@ export const BondTokenDetails = ({ option }: { option: Bond }) => {
       <div className="flex w-full justify-between">
         <span className="flex items-center space-x-2">
           <ArborIcon />
-          <span>{option?.symbol}</span>
+          <span>{option?.name}</span>
         </span>
       </div>
       <div className="flex w-full justify-between">

@@ -2,7 +2,7 @@
   "name": "arbor-frontend",
   "description": "Arbor protocol frontend.",
   "license": "GPL-3.0-or-later",
-  "homepage": "https://arbor.vercel.app/",
+  "homepage": "https://app.arbor.finance/",
   "private": true,
   "engines": {
     "node": ">=16"
@@ -92,6 +92,9 @@
     "url": "^0.11.0"
   },
   "dependencies": {
+    "@0x/protocol-utils": "^11.17.0",
+    "@0x/subproviders": "^7.0.0",
+    "@0x/utils": "^7.0.0",
     "@amcharts/amcharts4": "^4.10.27",
     "@apollo/client": "^3.6.9",
     "@ethersproject/abi": "^5.7.0",

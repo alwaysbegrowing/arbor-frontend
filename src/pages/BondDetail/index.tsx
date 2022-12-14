@@ -23,6 +23,7 @@ import { useBond } from '../../hooks/useBond'
 import { useBondExtraDetails } from '../../hooks/useBondExtraDetails'
 import { ConvertButtonOutline, LoadingTwoGrid, SimpleButtonOutline, TwoGridPage } from '../Auction'
 import BondManagement from './BondManagement'
+import OrderbookManagement from './OrderbookManagement'
 
 import { getPayload } from '@/components/CreditEnhancers/promissory/SignatureRequest'
 import PromissoryNoteModal from '@/components/PromissoryNoteModal'
@@ -489,6 +490,7 @@ const BondDetail: React.FC = () => {
               )}
               {!isMatured && !isPaid && !isDefaulted && <RedeemError />}
               <BondManagement />
+              <OrderbookManagement />
             </>
           }
         />
