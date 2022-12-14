@@ -1,6 +1,8 @@
 import { LimitOrder, LimitOrderFields } from '@0x/protocol-utils'
 import { splitSignature } from 'ethers/lib/utils'
 
+import { ZERO_X_BASE_URL, ZERO_X_ENDPOINT } from '@/hooks/useOrderbook'
+
 export const zeroXDomain = ({
   chainId,
   verifyingContract,
@@ -33,12 +35,6 @@ export const zeroXTypes = {
   LimitOrder: ZERO_X_MESSAGE_STRUCT,
 }
 
-const config = {
-  5: {
-    order: 'https://eip712api.xyz/0x/orderbook/v1/order/',
-  },
-}
-
 export const sellLimitOrder = async (orderData: LimitOrderFields, { signer }) => {
   const order = new LimitOrder(orderData)
   const signedTypedData = await signer._signTypedData(zeroXDomain(orderData), zeroXTypes, order)
@@ -54,13 +50,16 @@ export const sellLimitOrder = async (orderData: LimitOrderFields, { signer }) =>
     },
   }
 
-  const resp = await fetch(config[orderData.chainId].order, {
-    method: 'POST',
-    body: JSON.stringify(signedOrder),
-    headers: {
-      'Content-Type': 'application/json',
+  const resp = await fetch(
+    `${ZERO_X_BASE_URL[orderData.chainId]}${ZERO_X_ENDPOINT[orderData.chainId]['order']}`,
+    {
+      method: 'POST',
+      body: JSON.stringify(signedOrder),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     },
-  })
+  )
 
   if (resp.status === 200) {
     alert('Order successfully created')

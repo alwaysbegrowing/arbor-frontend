@@ -1,4 +1,5 @@
 // import { BigNumber } from 'ethers'
+import { BigNumber } from 'ethers'
 import React, { useState } from 'react'
 
 import { LimitOrderFields } from '@0x/protocol-utils'
@@ -65,7 +66,7 @@ export const StepOne = () => {
         const tokenBalances = portfolioData[bond.id].tokenBalances
         return { ...bond, tokenBalances }
       } else {
-        return { ...bond }
+        return bond
       }
     })
 
@@ -92,61 +93,59 @@ export const StepOne = () => {
     signerOrProvider: signer,
   })
 
-  //NEED TO TEST ON MAIN - DIVA APPROVES CUMMULATIVE, NOT LARGEST
-
-  // const approveTransaction = () => {
-  //   if (showSell) {
-  //     console.log({ bondAllowance, showSell, bondToAuction })
-  //     if (bondToAuction && (bondAllowance as unknown as BigNumber).lt(makerAmount)) {
-  //       return contractBond
-  //         .approve(
-  //           ExchangeProxy[chainId],
-  //           parseUnits(`${makerAmount || 0}`, bondToAuction?.decimals),
-  //         )
-  //         .then((result) => {
-  //           console.log({ result })
-  //           addRecentTransaction({
-  //             hash: result?.hash,
-  //             description: `Approve ${
-  //               bondToAuction?.symbol || bondToAuction?.name
-  //             } for ${makerAmount}`,
-  //           })
-  //           return result.wait()
-  //         })
-  //         .then(() => {
-  //           setApproval(true)
-  //           console.log('setCurrentApproveStep(1)')
-  //         })
-  //         .catch((e) => {
-  //           console.log(e?.message || e)
-  //         })
-  //     }
-  //   } else {
-  //     console.log({ bondAllowance })
-  //     if (borrowToken?.address && (borrowToken as unknown as BigNumber).lt(makerAmount)) {
-  //       contractToken
-  //         .approve(
-  //           ExchangeProxy[chainId],
-  //           parseUnits(`${makerAmount || 0}`, bondToAuction?.decimals),
-  //         )
-  //         .then((result) => {
-  //           console.log({ result })
-  //           addRecentTransaction({
-  //             hash: result?.hash,
-  //             description: `Approve ${borrowToken?.symbol || borrowToken?.name} for ${makerAmount}`,
-  //           })
-  //           return result.wait()
-  //         })
-  //         .then(() => {
-  //           setApproval(true)
-  //           console.log('setCurrentApproveStep(1)')
-  //         })
-  //         .catch((e) => {
-  //           console.log(e?.message || e)
-  //         })
-  //     }
-  //   }
-  // }
+  const approveTransaction = () => {
+    if (showSell) {
+      console.log({ bondAllowance, showSell, bondToAuction })
+      if (bondToAuction && (bondAllowance as unknown as BigNumber).lt(makerAmount)) {
+        return contractBond
+          .approve(
+            ExchangeProxy[chainId],
+            parseUnits(`${makerAmount || 0}`, bondToAuction?.decimals),
+          )
+          .then((result) => {
+            console.log({ result })
+            addRecentTransaction({
+              hash: result?.hash,
+              description: `Approve ${
+                bondToAuction?.symbol || bondToAuction?.name
+              } for ${makerAmount}`,
+            })
+            return result.wait()
+          })
+          .then(() => {
+            setIsApproved(true)
+            console.log('setCurrentApproveStep(1)')
+          })
+          .catch((e) => {
+            console.log(e?.message || e)
+          })
+      }
+    } else {
+      console.log({ bondAllowance })
+      if (borrowToken?.address && (borrowToken as unknown as BigNumber).lt(makerAmount)) {
+        contractToken
+          .approve(
+            ExchangeProxy[chainId],
+            parseUnits(`${makerAmount || 0}`, bondToAuction?.decimals),
+          )
+          .then((result) => {
+            console.log({ result })
+            addRecentTransaction({
+              hash: result?.hash,
+              description: `Approve ${borrowToken?.symbol || borrowToken?.name} for ${makerAmount}`,
+            })
+            return result.wait()
+          })
+          .then(() => {
+            setIsApproved(true)
+            console.log('setCurrentApproveStep(1)')
+          })
+          .catch((e) => {
+            console.log(e?.message || e)
+          })
+      }
+    }
+  }
 
   const limitOrder = () => {
     if (!signer || !chainId) {
@@ -174,8 +173,10 @@ export const StepOne = () => {
       verifyingContract: ExchangeProxy[chainId],
     }
     const postLimitOrder = async () => {
+      await approveTransaction()
       await sellLimitOrder(orderData, { signer })
     }
+
     postLimitOrder()
   }
 

@@ -83,7 +83,7 @@ export const CollateralTokens = {
 }
 
 export const ExchangeProxy = {
-  [chain.mainnet.id]: '',
+  [chain.mainnet.id]: '0xdef1c0ded9bec7f1a1670819833240f027b25eff',
   [chain.goerli.id]: '0xf91bb752490473b8342a3e964e855b9f9a2a668e',
 }
 

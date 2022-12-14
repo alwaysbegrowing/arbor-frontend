@@ -1,21 +1,36 @@
 import useSWR from 'swr'
 
+import { useActiveWeb3React } from '.'
 import { getLogger } from '../utils/logger'
 
 const logger = getLogger('useOrderbook')
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json())
+export const ZERO_X_BASE_URL: { [key: number]: string } = {
+  1: 'https://api.0x.org',
+  5: 'https://eip712api.xyz/0x',
+}
 
-const orderbookPairURL = 'https://eip712api.xyz/0x/orderbook/v1/pair'
-const orderbookPairsURL = 'https://eip712api.xyz/0x/orderbook/v1/pairs'
-const graphUrl = 'https://api.thegraph.com/subgraphs/name/divaprotocol/diva-goerli'
+export const ZERO_X_ENDPOINT: { [key: number]: { [key: string]: string } } = {
+  1: {
+    pair: '/orderbook/v1',
+    pairs: '/orderbook/v1/orders',
+    order: '/orderbook/v1/order',
+  },
+  5: {
+    pair: '/orderbook/v1/pair',
+    pairs: '/orderbook/v1/pairs',
+    order: '/orderbook/v1/order',
+  },
+}
 
 export const useOrderbookPair = (
   baseToken?: string,
   quoteToken?: string,
 ): { bids: { records: any[] }; asks: { records: any[] }; loading: boolean } => {
+  const { chainId } = useActiveWeb3React()
   const { data, error } = useSWR(
-    `${orderbookPairURL}?baseToken=${baseToken}&quoteToken=${quoteToken}`,
+    `${ZERO_X_BASE_URL[chainId]}${ZERO_X_ENDPOINT[chainId]['pair']}?baseToken=${baseToken}&quoteToken=${quoteToken}`,
     fetcher,
     { refreshInterval: 60 * 1000 },
   )
@@ -32,8 +47,11 @@ export const useOrderbookPair = (
 }
 
 export const useOrderbookPairs = (): { bids: {}; asks: {}; loading: boolean } => {
+  const { chainId } = useActiveWeb3React()
   const { data, error } = useSWR(
-    `${orderbookPairsURL}?page=${2}&perPage=${1000}&graphUrl=${graphUrl}&feeRecipient=0xafded11c6fc769aaae90630fd205a2713e544ce3`,
+    `${ZERO_X_BASE_URL[chainId]}${
+      ZERO_X_ENDPOINT[chainId]['pairs']
+    }?page=${2}&perPage=${1000}&feeRecipient=0xafded11c6fc769aaae90630fd205a2713e544ce3`,
     fetcher,
     { refreshInterval: 60 * 1000 },
   )
