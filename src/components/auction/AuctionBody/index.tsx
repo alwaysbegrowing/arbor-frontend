@@ -14,7 +14,7 @@ import TokenLink from '../../token/TokenLink'
 import TokenLogo from '../../token/TokenLogo'
 import AuctionDetails from '../AuctionDetails'
 import AuctionSettle from '../AuctionSettle'
-import Claimer from '../Claimer'
+import Claimer, { ActionButton } from '../Claimer'
 import { ExtraDetailsItem } from '../ExtraDetailsItem'
 import OrderPlacement from '../OrderPlacement'
 import { OrderBookContainer } from '../OrderbookContainer'
@@ -135,6 +135,7 @@ const BondCard = ({ graphInfo }: { graphInfo: Auction }) => {
 }
 
 const AuctionBody = (props: AuctionBodyProps) => {
+  const [auctionInterestVisible, setAuctionInterestVisible] = useState(false)
   const { auctionIdentifier, derivedAuctionInfo, graphInfo } = props
   const settling = derivedAuctionInfo?.auctionState === AuctionState.NEEDS_SETTLED
 
@@ -181,6 +182,32 @@ const AuctionBody = (props: AuctionBodyProps) => {
                 derivedAuctionInfo={derivedAuctionInfo}
               />
             )}
+            <ActionButton
+              className="mt-4"
+              onClick={() => {
+                setAuctionInterestVisible(!auctionInterestVisible)
+              }}
+            >
+              Follow Auction
+            </ActionButton>
+            <div style={{ visibility: auctionInterestVisible ? 'visible' : 'hidden' }}>
+              <h1 className="text-base mt-4">
+                You and 238 other users are interested in this auction.
+              </h1>
+              <div className="card-bordered card">
+                <div className="card-body">
+                  <div className="flex justify-between">
+                    <span>
+                      <a href="https://discord.arbor.finance/" rel="noreferrer" target="_blank">
+                        Follow our
+                        <em> auction-alerts channel </em>in the Arbor Discord server for
+                        notifications about this auction
+                      </a>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </>
         }
       />
