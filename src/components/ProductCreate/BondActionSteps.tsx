@@ -57,11 +57,13 @@ export const BondActionSteps = ({ convertible = true, disabled }) => {
 
   const confirmSteps = [
     {
-      text: `Approve ${collateralTokenData.symbol || collateralToken?.name} as collateral`,
+      text: `Approve ${
+        collateralTokenData?.symbol || collateralToken?.name || 'token'
+      } as collateral`,
       tip: 'The collateral token needs to be approved so it can be transferred into the bond contract and used as collateral.',
     },
     {
-      text: `Mint ${collateralTokenData.symbol || collateralToken?.name} Convertible Bonds`,
+      text: `Mint ${collateralTokenData?.symbol || collateralToken?.name} Convertible Bonds`,
       tip: 'Mint the bonds to the connected wallet.',
     },
   ]

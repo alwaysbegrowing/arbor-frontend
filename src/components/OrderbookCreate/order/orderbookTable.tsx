@@ -10,10 +10,12 @@ import { PageTitle } from '../../pureStyledComponents/PageTitle'
 import { ReactComponent as ConvertIcon } from '@/assets/svg/convert.svg'
 import { ReactComponent as SimpleIcon } from '@/assets/svg/simple.svg'
 import { BondTokenDetails } from '@/components/ProductCreate/BondTokenDetails'
+import { BorrowTokens } from '@/components/ProductCreate/SelectableTokens'
 import { Selector } from '@/components/ProductCreate/selectors/BorrowTokenSelector'
 import { NoBondFound } from '@/components/ProductCreate/selectors/CollateralTokenSelector'
 import { ActiveStatusPill } from '@/components/auction/OrderbookTable'
 import Tooltip from '@/components/common/Tooltip'
+import { useActiveWeb3React } from '@/hooks'
 import { useBonds } from '@/hooks/useBond'
 import { useBondsPortfolio } from '@/hooks/useBondsPortfolio'
 import { useOrderbookPair } from '@/hooks/useOrderbook'
@@ -81,7 +83,7 @@ const columns = [
 
 const OrderbookTable = () => {
   const { watch } = useFormContext()
-
+  const { chainId } = useActiveWeb3React()
   const sectionHead = useRef(null)
 
   const [bondToAuction] = watch([
@@ -122,7 +124,8 @@ const OrderbookTable = () => {
     asks,
     bids,
     loading: loadingOrderbook,
-  } = useOrderbookPair('0x5a2d26d95b07c28d735ff76406bd82fe64222dc1', bondToAuction?.id)
+  } = useOrderbookPair(BorrowTokens[chainId][0].address, bondToAuction?.id)
+  console.log(bondToAuction?.id)
   console.log({ asks, bids })
 
   const data = []

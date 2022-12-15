@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const UniIcon = () => (
+export const UNIIcon = () => (
   <svg fill="#fff" height="32" viewBox="0 0 60 60" width="32" xmlns="http://www.w3.org/2000/svg">
     <rect height="60" rx="12" width="60" />
     <g clipPath="url(#clip0_9390_3379)">

@@ -65,7 +65,7 @@ export const getAuctionStates = (
 
 const GlobalStyle = createGlobalStyle`
   .siteHeader {
-    background: #1C701C !important;
+    background: #186317 !important;
   }
 `
 

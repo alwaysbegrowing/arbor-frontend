@@ -118,7 +118,10 @@ export const TableDesign = ({
   )
 
   return (
-    <div className="min-h-[385px]" {...restProps}>
+    <div
+      className="min-h-[385px] overflow-auto scrollbar-thin scrollbar-track-zinc-800 scrollbar-thumb-zinc-700"
+      {...restProps}
+    >
       <table className="table h-full w-full" {...getTableProps()}>
         <thead className="sticky top-0 z-[1]">
           {headerGroups.map((headerGroup, i) => (
@@ -228,7 +231,7 @@ export const TableDesign = ({
         </tbody>
       </table>
       {!hidePagination && pageOptions.length > 0 && (
-        <div className="absolute right-6 bottom-7 flex items-center justify-end space-x-2 !border-none text-[#696969]">
+        <div className="absolute right-6 bottom-1 flex items-center justify-end space-x-2 !border-none text-[#696969]">
           <button className="btn btn-xs" disabled={!canPreviousPage} onClick={previousPage}>
             <DoubleArrowLeftIcon />
           </button>

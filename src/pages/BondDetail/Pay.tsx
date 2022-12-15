@@ -126,7 +126,7 @@ export const Pay = ({
       <SummaryItem
         border={false}
         text={`${Number(amountOwed).toLocaleString()} USDC`}
-        tip="Outstanding number of payment tokens required to fully pay the Bond."
+        tip="Outstanding number of payment tokens required to fully repay the Bond."
         title="Amount owed"
       />
       <SummaryItem

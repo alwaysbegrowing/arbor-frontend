@@ -108,7 +108,7 @@
     "@ethersproject/solidity": "^5.7.0",
     "@ethersproject/strings": "^5.7.0",
     "@ethersproject/units": "^5.7.0",
-    "@gnosis.pm/safe-apps-wagmi": "^1.0.3",
+    "@gnosis.pm/safe-apps-wagmi": "^1.2.0",
     "@headlessui/react": "^1.7.0",
     "@hookform/error-message": "^2.0.0",
     "@josojo/honeyswap-sdk": "^1.0.0",

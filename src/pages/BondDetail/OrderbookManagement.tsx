@@ -1,14 +1,17 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 
+import { BorrowTokens } from '@/components/ProductCreate/SelectableTokens'
 import { ActionButton } from '@/components/auction/Claimer'
 import Tooltip from '@/components/common/Tooltip'
+import { useActiveWeb3React } from '@/hooks'
 import { useBond } from '@/hooks/useBond'
 import { useOrderbookPair } from '@/hooks/useOrderbook'
 
 const OrderbookManagement = () => {
   const [orderbookVisible, setOrderbookVisible] = useState(false)
   const { bondId } = useParams()
+  const { chainId } = useActiveWeb3React()
 
   const { data: bond, loading: loadingBond } = useBond(bondId)
 
@@ -17,7 +20,7 @@ const OrderbookManagement = () => {
       asks,
       bids,
       loading: loadingOrderbook,
-    } = useOrderbookPair('0x5a2d26d95b07c28d735ff76406bd82fe64222dc1', bondId)
+    } = useOrderbookPair(BorrowTokens[chainId][0].address, bondId)
     if (!bids?.records && !asks?.records) return
     return (
       <>

@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .table th:first-child {
+    position: relative;
+  }
+}
+
 @layer utilities {
   .text-gradient {
     background-clip: text;
