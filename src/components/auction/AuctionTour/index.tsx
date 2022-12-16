@@ -3,14 +3,24 @@ import React, { RefObject, useState } from 'react'
 import { Button, Tour, TourStepProps } from 'antd'
 import type { TourProps } from 'antd'
 
+import { TooltipIcon } from '../../icons/TooltipIcon'
+
 interface Props {
-  auctionInformationRef: RefObject<HTMLDivElement>
+  auctionInformationRef: RefObject<HTMLHeadingElement>
   bondTitleRef: RefObject<HTMLDivElement>
   issuerInformationRef: RefObject<HTMLButtonElement>
+  orderbookChartRef: RefObject<HTMLHeadingElement>
+  orderbookSelectorRef: RefObject<HTMLDivElement>
 }
 
 const AuctionTour = (props: Props) => {
-  const { auctionInformationRef } = props
+  const {
+    auctionInformationRef,
+    bondTitleRef,
+    issuerInformationRef,
+    orderbookChartRef,
+    orderbookSelectorRef,
+  } = props
 
   const [open, setOpen] = useState<boolean>(false)
 
@@ -72,7 +82,7 @@ const AuctionTour = (props: Props) => {
           >
             discord
           </a>{' '}
-          with questions
+          with questions.
         </p>
       </>
     ),
@@ -80,22 +90,42 @@ const AuctionTour = (props: Props) => {
   }
   const auctionInformationStep: TourStepProps = {
     title: 'Information About the Ongoing Auction',
-    placement: 'top',
-    description: 'This panel shows the auction configuration and current closing price.',
+    placement: 'bottom',
+    description: (
+      <div>
+        <span>
+          This panel shows the auction configuration and current closing price. Hover over the
+        </span>
+        <TooltipIcon className="m-2 inline" />
+        <span>to learn what each metric means.</span>
+      </div>
+    ),
     target: () => auctionInformationRef.current,
   }
   const issuerInformationStep: TourStepProps = {
     title: 'To Get More Information about the Issuer',
     placement: 'bottom',
-    description: 'Click here to see who is auctioning their tokens.',
-    target: () => props.issuerInformationRef.current,
+    description: 'Click here to learn more about who is auctioning this bond.',
+    target: () => issuerInformationRef.current,
   }
   const bondInformationStep: TourStepProps = {
     title: 'Auctioning Token Information',
     placement: 'bottom',
     description:
-      'This is the token being auctioned. There is additional information about the token itself.',
-    target: () => props.bondTitleRef.current,
+      'This is the token being auctioned. There is additional information about the token itself below.',
+    target: () => bondTitleRef.current,
+  }
+  const orderbookTableStep: TourStepProps = {
+    title: 'Orderbook Information',
+    placement: 'bottom',
+    description: 'This panel shows the current orders for the auction.',
+    target: () => orderbookChartRef.current,
+  }
+  const orderbookSelectorStep: TourStepProps = {
+    title: 'Orderbook Selector',
+    placement: 'bottom',
+    description: 'Click this to show either the chart or table of bids.',
+    target: () => orderbookSelectorRef.current,
   }
   const conclusionStep: TourStepProps = {
     title: 'That is All for Now',
@@ -121,11 +151,11 @@ const AuctionTour = (props: Props) => {
     target: null,
   }
 
-  steps.push(...[overviewStep])
-  if (props.issuerInformationRef.current) {
+  steps.push(...[overviewStep, auctionInformationStep])
+  if (issuerInformationRef.current) {
     steps.push(issuerInformationStep)
   }
-  steps.push(...[bondInformationStep, conclusionStep])
+  steps.push(...[bondInformationStep, orderbookTableStep, orderbookSelectorStep, conclusionStep])
   return (
     <div className="card">
       <div className="card-body">

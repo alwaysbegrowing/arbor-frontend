@@ -33,7 +33,7 @@ const TokenValue = styled.span`
 interface Props {
   auctionIdentifier: AuctionIdentifier
   derivedAuctionInfo: DerivedAuctionInfo
-  auctionInformationRef?: RefObject<HTMLDivElement>
+  auctionInformationRef?: RefObject<HTMLHeadingElement>
   issuerInformationRef: RefObject<HTMLButtonElement>
 }
 
@@ -209,8 +209,8 @@ const AuctionDetails = (props: Props) => {
 
   return (
     <div className="card">
-      <div className="card-body" ref={props.auctionInformationRef}>
-        <h2 className="card-title flex justify-between">
+      <div className="card-body">
+        <h2 className="card-title flex justify-between" ref={props.auctionInformationRef}>
           <span>Auction information</span>
           <AuctionStatusPill auction={auction} />
         </h2>
@@ -221,7 +221,7 @@ const AuctionDetails = (props: Props) => {
           rightOfCountdown={
             auction?.bond.id in BOND_INFORMATION && (
               <button
-                className="btn btn-primary btn-sm space-x-2 rounded-md bg-[#293327] !text-xxs font-normal"
+                className="btn-primary btn-sm btn space-x-2 rounded-md bg-[#293327] !text-xxs font-normal"
                 onClick={() => navigate(`/bonds/${auction?.bond.id || ''}`)}
                 ref={props.issuerInformationRef}
               >
