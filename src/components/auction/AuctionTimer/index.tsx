@@ -96,7 +96,7 @@ export const AuctionTimer = ({
 
   return (
     <div className="" {...restProps}>
-      <div className="flex justify-between mb-7 space-y-1">
+      <div className="mb-7 flex justify-between space-y-1">
         <div>
           <div className="flex flex-row items-center space-x-1 text-xs text-white">
             <Time>
@@ -113,7 +113,7 @@ export const AuctionTimer = ({
 
         {rightOfCountdown}
       </div>
-      <div className="flex justify-between mb-3">
+      <div className="mb-3 flex justify-between">
         <DateValue>
           {startDate &&
             dayjs(startDate * 1000)
@@ -129,7 +129,7 @@ export const AuctionTimer = ({
               .format('LL HH:mm z')}
         </DateValue>
       </div>
-      <div className="flex justify-between mb-3">
+      <div className="mb-3 flex justify-between">
         <DateTitle>
           <Tooltip left={startText} tip={startTip} />
         </DateTitle>
@@ -137,9 +137,9 @@ export const AuctionTimer = ({
           <Tooltip left={endText} tip={endTip} />
         </DateTitle>
       </div>
-      <div className="flex flex-col space-y-3 w-full">
+      <div className="flex w-full flex-col space-y-3">
         <progress
-          className={`progress progress-primary progress-${color}`}
+          className={`progress-${color} progress progress-primary `}
           max="100"
           value={progress}
         />
