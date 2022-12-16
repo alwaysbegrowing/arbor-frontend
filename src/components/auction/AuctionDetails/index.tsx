@@ -82,9 +82,11 @@ const AuctionDetails = (props: Props) => {
   if (auction) {
     offeringSize = {
       fullNumberHint: Number(formatUnits(auction.offeringSize, auction.bond.decimals)).toString(),
-      value: `${Number(
-        formatUnits(auction.offeringSize, auction.bond.decimals),
-      ).toLocaleString()} bonds`,
+      value: `${
+        Number(formatUnits(auction.offeringSize, auction.bond.decimals)) < 1000000
+          ? Number(formatUnits(auction.offeringSize, auction.bond.decimals)).toLocaleString()
+          : abbreviation(formatUnits(auction.offeringSize, auction.bond.decimals))
+      } bonds`,
     }
     totalBidVolume = {
       fullNumberHint: Number(
