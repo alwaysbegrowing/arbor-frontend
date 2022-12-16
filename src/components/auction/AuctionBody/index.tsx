@@ -143,9 +143,12 @@ const BondCard = ({
 
 const AuctionBody = (props: AuctionBodyProps) => {
   const { auctionIdentifier, derivedAuctionInfo, graphInfo } = props
-  const auctionInformationRef = createRef<HTMLDivElement>()
+  const auctionInformationRef = createRef<HTMLHeadingElement>()
   const bondTitleRef = createRef<HTMLDivElement>()
   const issuerInformationRef = createRef<HTMLButtonElement>()
+  const orderbookChartRef = createRef<HTMLHeadingElement>()
+  const orderbookSelectorRef = createRef<HTMLDivElement>()
+
   const settling = derivedAuctionInfo?.auctionState === AuctionState.NEEDS_SETTLED
 
   const placeAndCancel =
@@ -172,6 +175,8 @@ const AuctionBody = (props: AuctionBodyProps) => {
               auctionIdentifier={auctionIdentifier}
               auctionState={derivedAuctionInfo?.auctionState}
               derivedAuctionInfo={derivedAuctionInfo}
+              orderbookChartRef={orderbookChartRef}
+              orderbookSelectorRef={orderbookSelectorRef}
             />
           </>
         }
@@ -181,6 +186,8 @@ const AuctionBody = (props: AuctionBodyProps) => {
               auctionInformationRef={auctionInformationRef}
               bondTitleRef={bondTitleRef}
               issuerInformationRef={issuerInformationRef}
+              orderbookChartRef={orderbookChartRef}
+              orderbookSelectorRef={orderbookSelectorRef}
             />
             {settling && <AuctionSettle />}
             {placeAndCancel && (

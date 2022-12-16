@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { RefObject, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { TokenAmount } from '@josojo/honeyswap-sdk'
@@ -16,10 +16,12 @@ import { useAuction } from '@/hooks/useAuction'
 
 interface OrderbookGraphProps {
   derivedAuctionInfo: DerivedAuctionInfo
+  orderbookChartRef: RefObject<HTMLHeadingElement>
+  orderbookSelectorRef: RefObject<HTMLDivElement>
 }
 
 export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
-  const { derivedAuctionInfo } = props
+  const { derivedAuctionInfo, orderbookChartRef, orderbookSelectorRef } = props
   const {
     asks,
     auctionId: orderbookAuctionId,
@@ -64,9 +66,11 @@ export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
     <div className="card">
       <div className="card-body">
         <div className="mb-5 flex flex-wrap justify-between">
-          <h2 className="card-title">Orderbook</h2>
+          <h2 className="card-title" ref={orderbookChartRef}>
+            Orderbook
+          </h2>
           <div className="flex items-center">
-            <div className="btn-group">
+            <div className="btn-group" ref={orderbookSelectorRef}>
               <button
                 className={`btn ${!showOrderList && 'btn-active'} w-[85px]`}
                 disabled={isGoerli}

@@ -58,7 +58,7 @@ export const Wrap = styled.div<Partial<CSS.Properties & WrapProps>>`
 `
 
 export const OrderBookContainer = (props) => {
-  const { auctionIdentifier, derivedAuctionInfo } = props
+  const { auctionIdentifier, derivedAuctionInfo, orderbookChartRef, orderbookSelectorRef } = props
 
   // Always call this when they first load the page to see past prices when placing a new order
   // Can't allow them to place an order at a past price
@@ -68,11 +68,15 @@ export const OrderBookContainer = (props) => {
 
   return (
     <>
-      <OrderBook derivedAuctionInfo={derivedAuctionInfo} />
+      <OrderBook
+        derivedAuctionInfo={derivedAuctionInfo}
+        orderbookChartRef={orderbookChartRef}
+        orderbookSelectorRef={orderbookSelectorRef}
+      />
 
       <div className="card">
         <div className="card-body">
-          <div className="flex flex-wrap justify-between mb-5">
+          <div className="mb-5 flex flex-wrap justify-between">
             <h2 className="card-title">Your orders</h2>
           </div>
           <OrdersTable

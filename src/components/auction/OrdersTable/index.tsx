@@ -100,7 +100,7 @@ const OrdersTable: React.FC<OrdersTableProps> = (props) => {
         <div className="flex flex-row items-center space-x-5">
           <BidTransactionLink order={row} />
           <button
-            className="px-3 font-normal text-[#D25453] hover:text-white normal-case !bg-transparent btn btn-outline btn-xs"
+            className="btn-outline btn-xs btn !bg-transparent px-3 font-normal normal-case text-[#D25453] hover:text-white"
             disabled={!!row.canceltx || isOrderCancellationExpired || hideCancelButton}
             onClick={() => {
               setOrderId(row.bytes)
