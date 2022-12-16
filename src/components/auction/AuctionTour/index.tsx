@@ -109,10 +109,10 @@ const AuctionTour = (props: Props) => {
     target: () => issuerInformationRef.current,
   }
   const bondInformationStep: TourStepProps = {
-    title: 'Auctioning Token Information',
+    title: 'Auctioning Bond Information',
     placement: 'bottom',
     description:
-      'This is the token being auctioned. There is additional information about the token itself below.',
+      'This is the bond being auctioned. There is additional information about the bond itself below.',
     target: () => bondTitleRef.current,
   }
   const orderbookTableStep: TourStepProps = {
