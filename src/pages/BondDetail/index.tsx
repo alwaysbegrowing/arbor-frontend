@@ -71,6 +71,8 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     contractAddress: '0xc770eefad204b5180df6a14ee197d99d808ee52d',
     description:
       'Shapeshift DAO is a borderless, cross-chain crypto trading platform and portfolio manager enabling user sovereignty.',
+    use: `The primary use of the borrowed funds will be used to refinance the existing Rari Fuse loan the DAO currently has.`,
+    useLink: 'https://app.rari.capital/fuse/pool/7',
   },
   '0x2e2a42fbe7c7e2ffc031baf7442dbe1f8957770a': {
     // auctionId: '20',
@@ -85,6 +87,8 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     contractAddress: '0xc770eefad204b5180df6a14ee197d99d808ee52d',
     description:
       'Shapeshift DAO is a borderless, cross-chain crypto trading platform and portfolio manager enabling user sovereignty.',
+    use: `The primary use of the borrowed funds will be used to refinance the existing Rari Fuse loan the DAO currently has.`,
+    useLink: 'https://app.rari.capital/fuse/pool/7',
   },
 }
 
@@ -110,13 +114,10 @@ export const BondDetails = ({ id }) => {
     prime,
     promissoryLink,
     promissoryMessageHash,
-    use,
-    useLink,
     website,
   } = currentBond || {}
   const promissoryContent = getPayload({ address: bond?.id, chainId })
   const [isPromissoryModalOpen, setIsPromissoryModalOpen] = useState(false)
-  const [isUseCaseModalOpen, setIsUseCaseModalOpen] = useState(false)
   return (
     <>
       {creditAnalysisArbor && (
@@ -403,20 +404,19 @@ const BondDetail: React.FC = () => {
                     {BOND_INFORMATION[bond?.id].use && (
                       <>
                         <span className="card-title flex flex-row items-center justify-between">
-                          Bond Use
+                          Use of Funds
                         </span>
                         <span>{BOND_INFORMATION[bond?.id].use}</span>
                         <div className="flex flex-row items-center space-x-2 border-b">
                           Read more about it{' '}
-                          <em>
-                            <a
-                              href={BOND_INFORMATION[bond?.id].useLink}
-                              rel="noreferrer"
-                              target="_blank"
-                            >
-                              &nbsp;here.
-                            </a>
-                          </em>
+                          <a
+                            className="text-[#6CADFB]"
+                            href={BOND_INFORMATION[bond?.id].useLink}
+                            rel="noreferrer"
+                            target="_blank"
+                          >
+                            &nbsp;here.
+                          </a>
                         </div>
                       </>
                     )}
