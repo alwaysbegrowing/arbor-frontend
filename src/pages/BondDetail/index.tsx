@@ -26,7 +26,6 @@ import BondManagement from './BondManagement'
 
 import { getPayload } from '@/components/CreditEnhancers/promissory/SignatureRequest'
 import PromissoryNoteModal from '@/components/PromissoryNoteModal'
-import UseCaseModal from '@/components/useCaseModal'
 import { Bond } from '@/generated/graphql'
 import { useActiveWeb3React } from '@/hooks'
 
@@ -188,24 +187,6 @@ export const BondDetails = ({ id }) => {
                 title="Signature"
                 value={<span className="text-[#6CADFB]">Promissory Note</span>}
               />
-            </div>
-          </div>
-        </>
-      )}
-      {use && (
-        <>
-          <UseCaseModal
-            close={() => setIsUseCaseModalOpen(false)}
-            content={JSON.stringify(promissoryContent, null, 2)}
-            isOpen={isUseCaseModalOpen}
-            issuer={bond?.owner}
-            name={name}
-            useCaseInfo={use}
-            useLink={useLink}
-          />
-          <div className="col-span-1 border-b border-[#222222]">
-            <div className="cursor-pointer" onClick={() => setIsUseCaseModalOpen(true)}>
-              <BondDetailItem title="Description" value={<span>Bonds Use</span>} />
             </div>
           </div>
         </>
@@ -414,9 +395,31 @@ const BondDetail: React.FC = () => {
                 <div className="card">
                   <div className="card-body">
                     <h2 className="card-title flex flex-row items-center justify-between">
-                      <span>{BOND_INFORMATION[bond?.id].name} information</span>
+                      <span className="text-3xl">
+                        {BOND_INFORMATION[bond?.id].name} information
+                      </span>
                     </h2>
-                    <span>{BOND_INFORMATION[bond?.id].description}</span>
+                    <span className="mb-3 border-b">{BOND_INFORMATION[bond?.id].description}</span>
+                    {BOND_INFORMATION[bond?.id].use && (
+                      <>
+                        <span className="card-title flex flex-row items-center justify-between">
+                          Bond Use
+                        </span>
+                        <span>{BOND_INFORMATION[bond?.id].use}</span>
+                        <div className="flex flex-row items-center space-x-2 border-b">
+                          Read more about it{' '}
+                          <em>
+                            <a
+                              href={BOND_INFORMATION[bond?.id].useLink}
+                              rel="noreferrer"
+                              target="_blank"
+                            >
+                              &nbsp;here.
+                            </a>
+                          </em>
+                        </div>
+                      </>
+                    )}
                     <div
                       className={`grid grid-cols-1 gap-x-12 gap-y-8 pt-8 ${
                         isConvertBond ? 'md:grid-cols-3' : 'md:grid-cols-4'
