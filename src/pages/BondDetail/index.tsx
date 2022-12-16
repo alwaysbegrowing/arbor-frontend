@@ -26,6 +26,7 @@ import BondManagement from './BondManagement'
 
 import { getPayload } from '@/components/CreditEnhancers/promissory/SignatureRequest'
 import PromissoryNoteModal from '@/components/PromissoryNoteModal'
+import UseCaseModal from '@/components/useCaseModal'
 import { Bond } from '@/generated/graphql'
 import { useActiveWeb3React } from '@/hooks'
 
@@ -47,6 +48,8 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     contractAddress: '0xc770eefad204b5180df6a14ee197d99d808ee52d',
     description:
       'Shapeshift DAO is a borderless, cross-chain crypto trading platform and portfolio manager enabling user sovereignty.',
+    use: `The primary use of the borrowed funds will be used to refinance the existing Rari Fuse loan the DAO currently has.`,
+    useLink: 'https://app.rari.capital/fuse/pool/7',
   },
   '0xe34c023c0ea9899a8f8e9381437a604908e8b719': {
     auctionId: '270',
@@ -108,10 +111,13 @@ export const BondDetails = ({ id }) => {
     prime,
     promissoryLink,
     promissoryMessageHash,
+    use,
+    useLink,
     website,
   } = currentBond || {}
   const promissoryContent = getPayload({ address: bond?.id, chainId })
   const [isPromissoryModalOpen, setIsPromissoryModalOpen] = useState(false)
+  const [isUseCaseModalOpen, setIsUseCaseModalOpen] = useState(false)
   return (
     <>
       {creditAnalysisArbor && (
@@ -182,6 +188,24 @@ export const BondDetails = ({ id }) => {
                 title="Signature"
                 value={<span className="text-[#6CADFB]">Promissory Note</span>}
               />
+            </div>
+          </div>
+        </>
+      )}
+      {use && (
+        <>
+          <UseCaseModal
+            close={() => setIsUseCaseModalOpen(false)}
+            content={JSON.stringify(promissoryContent, null, 2)}
+            isOpen={isUseCaseModalOpen}
+            issuer={bond?.owner}
+            name={name}
+            useCaseInfo={use}
+            useLink={useLink}
+          />
+          <div className="col-span-1 border-b border-[#222222]">
+            <div className="cursor-pointer" onClick={() => setIsUseCaseModalOpen(true)}>
+              <BondDetailItem title="Description" value={<span>Bonds Use</span>} />
             </div>
           </div>
         </>
@@ -427,7 +451,7 @@ const BondDetail: React.FC = () => {
                           rel="noreferrer"
                           target="_blank"
                         >
-                          <button className="btn btn-primary btn-sm space-x-2 rounded-md bg-[#293327] !text-xxs font-normal">
+                          <button className="btn-primary btn-sm btn space-x-2 rounded-md bg-[#293327] !text-xxs font-normal">
                             <span>Issuer Information</span>
                             <span>
                               <DoubleArrowRightIcon />
