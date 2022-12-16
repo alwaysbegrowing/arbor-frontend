@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef } from 'react'
+import React, { ReactElement, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -10,6 +10,8 @@ import { Magnifier } from '../../icons/Magnifier'
 import { PageTitle } from '../../pureStyledComponents/PageTitle'
 
 import Tooltip from '@/components/common/Tooltip'
+import { ButtonMenuStyled } from '@/components/layout/Header'
+import { OfferingMenu } from '@/components/navigation/OfferingMenu'
 
 const Wrapper = styled.div`
   margin-top: -30px;
@@ -113,6 +115,7 @@ const Table = ({
   ...restProps
 }: Props) => {
   const navigate = useNavigate()
+  const [menuVisible, setMenuVisible] = useState(false)
 
   const globalFilter = React.useMemo(
     () => (rows, columns, filterValue) =>
@@ -139,16 +142,22 @@ const Table = ({
 
   const sectionHead = useRef(null)
 
+  const menuToggle = () => {
+    setMenuVisible(!menuVisible)
+  }
+
   return (
     <Wrapper ref={sectionHead} {...restProps}>
-      <div className="mb-10 flex flex-wrap content-center items-end justify-center py-2 md:justify-between">
+      <div className="mb-10 flex flex-wrap content-center items-end py-2 md:justify-between">
         <div className="flex flex-col space-y-4">
           <SectionTitle>{title}</SectionTitle>
-
-          <div className="flex flex-row items-center space-x-4">{legendIcons}</div>
+          <ButtonMenuStyled className={menuVisible && 'active'} onClick={menuToggle} />
+          {menuVisible && (
+            <OfferingMenu legendIcons={legendIcons} onClose={() => setMenuVisible(false)} />
+          )}
+          <div className="hidden flex-row items-center space-x-4 sm:flex">{legendIcons}</div>
         </div>
-
-        <div>
+        <div className="mt-5 sm:mt-0">
           <TableControls>
             <SearchWrapper>
               <Magnifier />

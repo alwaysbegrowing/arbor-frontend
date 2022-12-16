@@ -32,7 +32,7 @@ export const Inner = styled(InnerContainer)`
   justify-content: space-between;
 `
 
-const ButtonMenuStyled = styled(ButtonMenu)`
+export const ButtonMenuStyled = styled(ButtonMenu)`
   display: block;
   position: relative;
   z-index: 5;
@@ -42,7 +42,7 @@ const ButtonMenuStyled = styled(ButtonMenu)`
   }
 `
 
-const Menu = styled(Mainmenu)`
+export const Menu = styled(Mainmenu)`
   display: none;
 
   @media (min-width: ${({ theme }) => theme.themeBreakPoints.md}) {
