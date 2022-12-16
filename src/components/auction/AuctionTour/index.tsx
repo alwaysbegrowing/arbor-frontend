@@ -22,7 +22,7 @@ const AuctionTour = (props: Props) => {
       <>
         <p className="py-4">
           <span>
-            We will walk you through the big and little parts of this thing. If a video is more your
+            We will walk you through the important parts of the auction. If a video is more your
             speed, watch the{' '}
             <a
               className="text-[#6CADFB]"
@@ -46,19 +46,9 @@ const AuctionTour = (props: Props) => {
             .
           </span>
         </p>
-        <p className="pb-8">
+        <p className="pb-4">
           <span>
             As always, we have documentation on our{' '}
-            <a
-              className="text-[#6CADFB]"
-              href="https://docs.arbor.finance"
-              referrerPolicy="no-referrer"
-              rel="noreferrer"
-              target={'_blank'}
-            >
-              🌳 Arbor docs
-            </a>
-            , with a{' '}
             <a
               className="text-[#6CADFB]"
               href="https://docs.arbor.finance/protocol/offerings/auctions"
@@ -66,10 +56,23 @@ const AuctionTour = (props: Props) => {
               rel="noreferrer"
               target={'_blank'}
             >
-              walkthrough
-            </a>{' '}
-            of the auction process.
+              🌳 Arbor docs
+            </a>
+            , with a walkthrough of the auction process.
           </span>
+        </p>
+        <p className="pb-8">
+          You can also join our{' '}
+          <a
+            className="text-[#6CADFB]"
+            href="https://discord.arbor.finance"
+            referrerPolicy="no-referrer"
+            rel="noreferrer"
+            target={'_blank'}
+          >
+            discord
+          </a>{' '}
+          with questions
         </p>
       </>
     ),
@@ -103,24 +106,14 @@ const AuctionTour = (props: Props) => {
             As always, we have documentation on our{' '}
             <a
               className="text-[#6CADFB]"
-              href="https://docs.arbor.finance"
+              href="https://docs.arbor.finance/protocol/offerings/auctions"
               referrerPolicy="no-referrer"
               rel="noreferrer"
               target={'_blank'}
             >
               🌳 Arbor docs
             </a>
-            , with a{' '}
-            <a
-              className="text-[#6CADFB]"
-              href="https://docs.arbor.finance/protocol/offerings/auctions"
-              referrerPolicy="no-referrer"
-              rel="noreferrer"
-              target={'_blank'}
-            >
-              walkthrough
-            </a>{' '}
-            of the auction process.
+            , with a walkthrough of the auction process.
           </span>
         </p>
       </>
