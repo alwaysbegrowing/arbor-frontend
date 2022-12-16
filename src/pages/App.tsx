@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import * as Sentry from '@sentry/react'
 import { BrowserTracing } from '@sentry/tracing'
+import { ConfigProvider } from 'antd'
 import ReactTooltip from 'react-tooltip'
 
 import ScrollToTop from '../components/ScrollToTop'
@@ -31,29 +32,41 @@ Sentry.init({
 
 const App: React.FC = () => (
   <Suspense fallback={null}>
-    <MainWrapper>
-      <ReactTooltip
-        arrowColor={'#2a2b2c'}
-        backgroundColor={'#181a1c'}
-        border
-        borderColor={'#2a2b2c'}
-        clickable
-        delayHide={500}
-        delayShow={50}
-        effect="solid"
-        id={'wrap_button'}
-        textColor="#d6d6d6"
-      />
-      <ScrollToTop />
-      <TermsModal />
-      <Header />
-      <ErrorBoundaryWithFallback>
-        <InnerApp className="fullPage">
-          <Routes />
-        </InnerApp>
-      </ErrorBoundaryWithFallback>
-      <Footer />
-    </MainWrapper>
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: '#1c701c',
+          colorBgBase: 'black',
+          colorBgContainer: '#181a1c',
+          colorText: '#eeefeb',
+          colorIcon: 'white',
+        },
+      }}
+    >
+      <MainWrapper>
+        <ReactTooltip
+          arrowColor={'#2a2b2c'}
+          backgroundColor={'#181a1c'}
+          border
+          borderColor={'#2a2b2c'}
+          clickable
+          delayHide={500}
+          delayShow={50}
+          effect="solid"
+          id={'wrap_button'}
+          textColor="#d6d6d6"
+        />
+        <ScrollToTop />
+        <TermsModal />
+        <Header />
+        <ErrorBoundaryWithFallback>
+          <InnerApp className="fullPage">
+            <Routes />
+          </InnerApp>
+        </ErrorBoundaryWithFallback>
+        <Footer />
+      </MainWrapper>
+    </ConfigProvider>
   </Suspense>
 )
 

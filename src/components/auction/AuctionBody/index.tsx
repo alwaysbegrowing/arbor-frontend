@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { RefObject, createRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Transition } from '@headlessui/react'
@@ -14,6 +14,7 @@ import TokenLink from '../../token/TokenLink'
 import TokenLogo from '../../token/TokenLogo'
 import AuctionDetails from '../AuctionDetails'
 import AuctionSettle from '../AuctionSettle'
+import AuctionTour from '../AuctionTour'
 import Claimer from '../Claimer'
 import { ExtraDetailsItem } from '../ExtraDetailsItem'
 import OrderPlacement from '../OrderPlacement'
@@ -77,7 +78,13 @@ const WarningCard = () => {
   )
 }
 
-const BondCard = ({ graphInfo }: { graphInfo: Auction }) => {
+const BondCard = ({
+  bondTitleRef,
+  graphInfo,
+}: {
+  graphInfo: Auction
+  bondTitleRef: RefObject<HTMLDivElement>
+}) => {
   const extraDetails = useBondExtraDetails(graphInfo?.bond.id)
   const navigate = useNavigate()
   const { isConvertBond } = getBondStates(graphInfo?.bond)
@@ -88,7 +95,7 @@ const BondCard = ({ graphInfo }: { graphInfo: Auction }) => {
         <div className="flex items-center justify-between">
           <h2 className="card-title">Bond information</h2>
           <button
-            className="btn btn-primary btn-sm space-x-2 rounded-md bg-[#293327] !text-xxs font-normal"
+            className="btn-primary btn-sm btn space-x-2 rounded-md bg-[#293327] !text-xxs font-normal"
             onClick={() => navigate(`/bonds/${graphInfo?.bond.id || ''}`)}
           >
             <span>Learn more</span>
@@ -98,7 +105,7 @@ const BondCard = ({ graphInfo }: { graphInfo: Auction }) => {
           </button>
         </div>
 
-        <div className="flex items-end justify-between text-sm text-[#9F9F9F]">
+        <div className="flex items-end justify-between text-sm text-[#9F9F9F]" ref={bondTitleRef}>
           <div className="flex cursor-pointer items-center space-x-4">
             <TokenLogo
               size={'49px'}
@@ -136,6 +143,9 @@ const BondCard = ({ graphInfo }: { graphInfo: Auction }) => {
 
 const AuctionBody = (props: AuctionBodyProps) => {
   const { auctionIdentifier, derivedAuctionInfo, graphInfo } = props
+  const auctionInformationRef = createRef<HTMLDivElement>()
+  const bondTitleRef = createRef<HTMLDivElement>()
+  const issuerInformationRef = createRef<HTMLButtonElement>()
   const settling = derivedAuctionInfo?.auctionState === AuctionState.NEEDS_SETTLED
 
   const placeAndCancel =
@@ -151,10 +161,12 @@ const AuctionBody = (props: AuctionBodyProps) => {
           <>
             <AuctionDetails
               auctionIdentifier={auctionIdentifier}
+              auctionInformationRef={auctionInformationRef}
               derivedAuctionInfo={derivedAuctionInfo}
+              issuerInformationRef={issuerInformationRef}
             />
 
-            {graphInfo && <BondCard graphInfo={graphInfo} />}
+            {graphInfo && <BondCard bondTitleRef={bondTitleRef} graphInfo={graphInfo} />}
 
             <OrderBookContainer
               auctionIdentifier={auctionIdentifier}
@@ -165,6 +177,11 @@ const AuctionBody = (props: AuctionBodyProps) => {
         }
         rightChildren={
           <>
+            <AuctionTour
+              auctionInformationRef={auctionInformationRef}
+              bondTitleRef={bondTitleRef}
+              issuerInformationRef={issuerInformationRef}
+            />
             {settling && <AuctionSettle />}
             {placeAndCancel && (
               <>

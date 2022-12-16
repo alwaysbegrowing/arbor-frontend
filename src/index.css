@@ -241,3 +241,14 @@ input[type='date'],
 input[type='datetime-local'] {
   text-transform: uppercase;
 }
+
+/* antd and tailwind get messy because tailwind tries to reset on preflight */
+.ant-btn {
+  background: #1c701c !important;
+  height: 41px !important;
+  box-shadow: none !important;
+}
+
+.ant-btn:hover {
+  background: #1b5f1c !important;
+}

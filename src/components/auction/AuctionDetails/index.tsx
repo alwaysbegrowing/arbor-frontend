@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { RefObject } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -33,6 +33,8 @@ const TokenValue = styled.span`
 interface Props {
   auctionIdentifier: AuctionIdentifier
   derivedAuctionInfo: DerivedAuctionInfo
+  auctionInformationRef?: RefObject<HTMLDivElement>
+  issuerInformationRef: RefObject<HTMLButtonElement>
 }
 
 export const TokenInfoWithLink = ({
@@ -146,7 +148,11 @@ const AuctionDetails = (props: Props) => {
     ),
   }
 
-  const extraDetails: Array<ExtraDetailsItemProps> = [
+  type IssuerInformationRef = {
+    issuerInformationRef: RefObject<HTMLButtonElement>
+  }
+
+  const extraDetails: Array<ExtraDetailsItemProps & IssuerInformationRef> = [
     {
       title: 'Offering amount',
       value: '-',
@@ -203,7 +209,7 @@ const AuctionDetails = (props: Props) => {
 
   return (
     <div className="card">
-      <div className="card-body">
+      <div className="card-body" ref={props.auctionInformationRef}>
         <h2 className="card-title flex justify-between">
           <span>Auction information</span>
           <AuctionStatusPill auction={auction} />
@@ -217,6 +223,7 @@ const AuctionDetails = (props: Props) => {
               <button
                 className="btn btn-primary btn-sm space-x-2 rounded-md bg-[#293327] !text-xxs font-normal"
                 onClick={() => navigate(`/bonds/${auction?.bond.id || ''}`)}
+                ref={props.issuerInformationRef}
               >
                 <span>Issuer Information</span>
                 <span>
