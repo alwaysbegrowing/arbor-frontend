@@ -49,7 +49,7 @@ export const TokenInfoWithLink = ({
   <TokenValue className="space-x-1">
     <span>
       {isBigNumberish(value)
-        ? abbreviation(formatUnits(value, auction?.bidding?.decimals))
+        ? Number(formatUnits(value, auction?.bidding?.decimals)).toLocaleString()
         : Number(value).toLocaleString(undefined, {
             maximumFractionDigits: auction?.bidding?.decimals,
           })}
@@ -81,7 +81,9 @@ const AuctionDetails = (props: Props) => {
 
   if (auction) {
     offeringSize = {
-      fullNumberHint: Number(formatUnits(auction.offeringSize, auction.bond.decimals)).toString(),
+      fullNumberHint: Number(
+        formatUnits(auction.offeringSize, auction.bond.decimals),
+      ).toLocaleString(),
       value: `${
         Number(formatUnits(auction.offeringSize, auction.bond.decimals)) < 1000000
           ? Number(formatUnits(auction.offeringSize, auction.bond.decimals)).toLocaleString()
@@ -208,6 +210,8 @@ const AuctionDetails = (props: Props) => {
         'Maximum yield to maturity the issuer is willing to pay. This is calculated using the minimum bond price.',
     },
   ]
+
+  console.log({ auction })
 
   return (
     <div className="card">
