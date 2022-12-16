@@ -408,7 +408,7 @@ const BondDetail: React.FC = () => {
                         </span>
                         <span>{BOND_INFORMATION[bond?.id].use}</span>
                         <div className="flex flex-row items-center space-x-2 border-b">
-                          Read more about it{' '}
+                          Read more about it
                           <a
                             className="text-[#6CADFB]"
                             href={BOND_INFORMATION[bond?.id].useLink}
