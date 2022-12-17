@@ -1,4 +1,4 @@
-import React, { RefObject, createRef, useState } from 'react'
+import React, { RefObject, createRef, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Transition } from '@headlessui/react'
@@ -143,6 +143,7 @@ const BondCard = ({
 
 const AuctionBody = (props: AuctionBodyProps) => {
   const { auctionIdentifier, derivedAuctionInfo, graphInfo } = props
+  const [isMobile, setIsMobile] = useState(false)
   const auctionInformationRef = createRef<HTMLHeadingElement>()
   const bondTitleRef = createRef<HTMLDivElement>()
   const issuerInformationRef = createRef<HTMLButtonElement>()
@@ -156,6 +157,12 @@ const AuctionBody = (props: AuctionBodyProps) => {
     [AuctionState.ORDER_PLACING, AuctionState.ORDER_PLACING_AND_CANCELING].includes(
       derivedAuctionInfo?.auctionState,
     )
+
+  useEffect(() => {
+    if (window.innerWidth <= 800 && window.innerHeight <= 800) {
+      setIsMobile(true)
+    }
+  }, [])
 
   return (
     <>
@@ -182,13 +189,15 @@ const AuctionBody = (props: AuctionBodyProps) => {
         }
         rightChildren={
           <>
-            <AuctionTour
-              auctionInformationRef={auctionInformationRef}
-              bondTitleRef={bondTitleRef}
-              issuerInformationRef={issuerInformationRef}
-              orderbookChartRef={orderbookChartRef}
-              orderbookSelectorRef={orderbookSelectorRef}
-            />
+            <div className={isMobile ? 'hidden' : ''}>
+              <AuctionTour
+                auctionInformationRef={auctionInformationRef}
+                bondTitleRef={bondTitleRef}
+                issuerInformationRef={issuerInformationRef}
+                orderbookChartRef={orderbookChartRef}
+                orderbookSelectorRef={orderbookSelectorRef}
+              />
+            </div>
             {settling && <AuctionSettle />}
             {placeAndCancel && (
               <>
