@@ -32,9 +32,16 @@ export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
   } = useOrderbookState()
 
   const [showOrderList, setShowOrderList] = useState(isGoerli)
+  const [isMobile, setIsMobile] = useState(false)
   const auctionIdentifier = parseURL(useParams())
   const { data: graphData } = useAuction(auctionIdentifier.auctionId)
   const { auctionId } = auctionIdentifier
+
+  // useEffect(() => {
+  //   if (window.innerWidth <= 800 && window.innerHeight <= 600) {
+  //     setIsMobile(true)
+  //   }
+  // }, [])
 
   const { auctioningToken: baseToken, biddingToken: quoteToken } = derivedAuctionInfo || {}
 

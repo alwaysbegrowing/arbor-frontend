@@ -88,7 +88,7 @@ export const LoadingBox = ({ className = '', height }) => (
 )
 
 export const TwoGridPage = ({ leftChildren, rightChildren }) => (
-  <main className="mt-[15px] px-0 pb-8">
+  <main className="px-0 pb-8 sm:mt-[15px]">
     {/* Main 3 column grid */}
     <div className="grid grid-cols-1 items-start gap-4 pb-32 lg:grid-cols-3 lg:gap-8">
       {/* Left column */}
@@ -178,7 +178,9 @@ const AuctionPage = ({ data: { auctionIdentifier, derivedAuctionInfo, graphInfo 
                   <p className="text-2sm text-[#E0E0E0]">{graphInfo?.bond.symbol}</p>
                 </div>
               </div>
-              <AuctionButtonOutline />
+              <div className="hidden lg:flex">
+                <AuctionButtonOutline />
+              </div>
             </div>
 
             <AuctionBody

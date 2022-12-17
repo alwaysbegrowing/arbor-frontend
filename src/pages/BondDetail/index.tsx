@@ -427,7 +427,7 @@ const BondDetail: React.FC = () => {
                           rel="noreferrer"
                           target="_blank"
                         >
-                          <button className="btn btn-primary btn-sm space-x-2 rounded-md bg-[#293327] !text-xxs font-normal">
+                          <button className="btn-primary btn-sm btn space-x-2 rounded-md bg-[#293327] !text-xxs font-normal">
                             <span>Issuer Information</span>
                             <span>
                               <DoubleArrowRightIcon />
@@ -453,9 +453,9 @@ const BondDetail: React.FC = () => {
                   </div>
                 </div>
               </div>
-
-              <BondGraphCard bond={bond as Bond} />
-
+              <div className="hidden sm:flex">
+                <BondGraphCard bond={bond as Bond} />
+              </div>
               <div className="card">
                 <div className="card-body">
                   <h2 className="card-title">Your position</h2>
