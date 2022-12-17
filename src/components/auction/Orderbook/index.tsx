@@ -1,4 +1,4 @@
-import React, { RefObject, useState } from 'react'
+import React, { RefObject, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { TokenAmount } from '@josojo/honeyswap-sdk'
@@ -37,11 +37,11 @@ export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
   const { data: graphData } = useAuction(auctionIdentifier.auctionId)
   const { auctionId } = auctionIdentifier
 
-  // useEffect(() => {
-  //   if (window.innerWidth <= 800 && window.innerHeight <= 600) {
-  //     setIsMobile(true)
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (window.innerWidth <= 800 && window.innerHeight <= 800) {
+      setIsMobile(true)
+    }
+  }, [])
 
   const { auctioningToken: baseToken, biddingToken: quoteToken } = derivedAuctionInfo || {}
 
@@ -76,11 +76,11 @@ export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
           <h2 className="card-title" ref={orderbookChartRef}>
             Orderbook
           </h2>
-          <div className="flex items-center">
-            <div className="btn-group" ref={orderbookSelectorRef}>
+          <div className="flex items-center" title="Graph is disabled on mobile and Goerli.">
+            <div className="btn-group pointer-events-none	" ref={orderbookSelectorRef}>
               <button
-                className={`btn ${!showOrderList && 'btn-active'} w-[85px]`}
-                disabled={isGoerli}
+                className={`btn ${!showOrderList && 'btn-active'} pointer-events-auto w-[85px]`}
+                disabled={isGoerli || isMobile}
                 onClick={() => showOrderList && setShowOrderList(false)}
               >
                 Graph
