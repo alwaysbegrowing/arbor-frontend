@@ -361,7 +361,7 @@ const BondDetail: React.FC = () => {
     <>
       <GlobalStyle />
       <ErrorBoundaryWithFallback>
-        <div className="flex flex-wrap content-center items-end justify-center py-2 md:justify-between">
+        <div className="-mt-10 flex flex-wrap content-center items-end justify-center py-2 md:mt-0 md:justify-between">
           <div className="flex flex-wrap items-center space-x-6">
             <div className="hidden md:flex">
               <TokenLogo
@@ -380,7 +380,9 @@ const BondDetail: React.FC = () => {
               </p>
             </div>
           </div>
-          <div>{isConvertBond ? <ConvertButtonOutline /> : <SimpleButtonOutline />}</div>
+          <div className="hidden lg:flex">
+            {isConvertBond ? <ConvertButtonOutline /> : <SimpleButtonOutline />}
+          </div>
         </div>
 
         <TwoGridPage
@@ -467,7 +469,7 @@ const BondDetail: React.FC = () => {
                   ) : null}
                   {account && positionData?.length ? (
                     <TableDesign
-                      className="min-h-full"
+                      className="min-h-full overflow-auto"
                       columns={positionColumns}
                       data={positionData}
                       hidePagination

@@ -161,7 +161,7 @@ const AuctionPage = ({ data: { auctionIdentifier, derivedAuctionInfo, graphInfo 
         {loading && <LoadingTwoGrid />}
         {!loading && (
           <>
-            <div className="flex flex-wrap content-center items-end justify-center py-2 md:justify-between">
+            <div className="-mt-10 flex flex-wrap content-center items-end justify-center py-2 md:justify-between">
               <div className="flex flex-wrap items-center space-x-6">
                 <div className="hidden md:flex">
                   <TokenLogo
