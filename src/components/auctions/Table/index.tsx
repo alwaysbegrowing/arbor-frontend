@@ -5,13 +5,11 @@ import styled from 'styled-components'
 import { useGlobalFilter, useTable } from 'react-table'
 
 import { ActionButton } from '../../auction/Claimer'
-import { Delete } from '../../icons/Delete'
-import { Magnifier } from '../../icons/Magnifier'
+// import { Delete } from '../../icons/Delete'
+// import { Magnifier } from '../../icons/Magnifier'
 import { PageTitle } from '../../pureStyledComponents/PageTitle'
 
 import Tooltip from '@/components/common/Tooltip'
-import { ButtonMenuStyled } from '@/components/layout/Header'
-import { OfferingMenu } from '@/components/navigation/OfferingMenu'
 
 const Wrapper = styled.div`
   margin-top: -30px;
@@ -151,14 +149,10 @@ const Table = ({
       <div className="mb-10 flex flex-wrap content-center items-end py-2 md:justify-between">
         <div className="flex flex-col space-y-4">
           <SectionTitle>{title}</SectionTitle>
-          <ButtonMenuStyled className={menuVisible && 'active'} onClick={menuToggle} />
-          {menuVisible && (
-            <OfferingMenu legendIcons={legendIcons} onClose={() => setMenuVisible(false)} />
-          )}
           <div className="hidden flex-row items-center space-x-4 sm:flex">{legendIcons}</div>
         </div>
-        <div className="mt-5 sm:mt-0">
-          <TableControls>
+        <div className="my-12 sm:mt-5">
+          {/* <TableControls>
             <SearchWrapper>
               <Magnifier />
               <SearchInput
@@ -178,7 +172,7 @@ const Table = ({
                 <Delete />
               </DeleteSearchTerm>
             </SearchWrapper>
-          </TableControls>
+          </TableControls> */}
         </div>
       </div>
 
