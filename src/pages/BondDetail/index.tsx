@@ -35,6 +35,8 @@ export enum BondActions {
   Mint,
 }
 
+//Keep all links consistent when file content changes so external links to the materials will still work.
+
 export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
   '0x11f1f978f7944579bb3791b765176de3e68bffc6': {
     auctionId: '20',
@@ -47,6 +49,9 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     contractAddress: '0xc770eefad204b5180df6a14ee197d99d808ee52d',
     description:
       'Shapeshift DAO is a borderless, cross-chain crypto trading platform and portfolio manager enabling user sovereignty.',
+    use: `The primary use of the borrowed funds will be used to refinance the existing Rari Fuse loan the DAO currently has. A secondary use of the borrowed funds is to extend the DAOs runway by adding more
+    stablecoins (USDC) to the DAO’s treasury.`,
+    useLink: 'https://app.rari.capital/fuse/pool/7',
   },
   '0xe34c023c0ea9899a8f8e9381437a604908e8b719': {
     auctionId: '270',
@@ -69,6 +74,9 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     contractAddress: '0xc770eefad204b5180df6a14ee197d99d808ee52d',
     description:
       'Shapeshift DAO is a borderless, cross-chain crypto trading platform and portfolio manager enabling user sovereignty.',
+    use: `The primary use of the borrowed funds will be used to refinance the existing Rari Fuse loan the DAO currently has. A secondary use of the borrowed funds is to extend the DAOs runway by adding more
+    stablecoins (USDC) to the DAO’s treasury.`,
+    useLink: 'https://app.rari.capital/fuse/pool/7',
   },
   '0x2e2a42fbe7c7e2ffc031baf7442dbe1f8957770a': {
     // auctionId: '20',
@@ -83,6 +91,9 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     contractAddress: '0xc770eefad204b5180df6a14ee197d99d808ee52d',
     description:
       'Shapeshift DAO is a borderless, cross-chain crypto trading platform and portfolio manager enabling user sovereignty.',
+    use: `The primary use of the borrowed funds will be used to refinance the existing Rari Fuse loan the DAO currently has. A secondary use of the borrowed funds is to extend the DAOs runway by adding more
+    stablecoins (USDC) to the DAO’s treasury.`,
+    useLink: 'https://app.rari.capital/fuse/pool/7',
   },
 }
 
@@ -389,10 +400,23 @@ const BondDetail: React.FC = () => {
               {bond?.id in BOND_INFORMATION && (
                 <div className="card">
                   <div className="card-body">
-                    <h2 className="card-title flex flex-row items-center justify-between">
-                      <span>{BOND_INFORMATION[bond?.id].name} information</span>
+                    <h2 className="card-title flex flex-row items-center" style={{ margin: 0 }}>
+                      <span className="text-3xl">
+                        {BOND_INFORMATION[bond?.id].name} information
+                      </span>
                     </h2>
-                    <span>{BOND_INFORMATION[bond?.id].description}</span>
+                    <span className="mb-3">{BOND_INFORMATION[bond?.id].description}</span>
+                    {BOND_INFORMATION[bond?.id].use && (
+                      <>
+                        <span
+                          className="card-title flex flex-row items-center justify-between "
+                          style={{ margin: 0 }}
+                        >
+                          Use of Funds
+                        </span>
+                        <span>{BOND_INFORMATION[bond?.id].use}</span>
+                      </>
+                    )}
                     <div
                       className={`grid grid-cols-1 gap-x-12 gap-y-8 pt-8 ${
                         isConvertBond ? 'md:grid-cols-3' : 'md:grid-cols-4'
@@ -427,7 +451,7 @@ const BondDetail: React.FC = () => {
                           rel="noreferrer"
                           target="_blank"
                         >
-                          <button className="btn btn-primary btn-sm space-x-2 rounded-md bg-[#293327] !text-xxs font-normal">
+                          <button className="btn-primary btn-sm btn space-x-2 rounded-md bg-[#293327] !text-xxs font-normal">
                             <span>Issuer Information</span>
                             <span>
                               <DoubleArrowRightIcon />
