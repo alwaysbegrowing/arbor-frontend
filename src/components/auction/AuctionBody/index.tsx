@@ -1,4 +1,4 @@
-import React, { RefObject, createRef, useEffect, useState } from 'react'
+import React, { RefObject, createRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Transition } from '@headlessui/react'
@@ -143,7 +143,6 @@ const BondCard = ({
 
 const AuctionBody = (props: AuctionBodyProps) => {
   const { auctionIdentifier, derivedAuctionInfo, graphInfo } = props
-  const [isMobile, setIsMobile] = useState(false)
   const auctionInformationRef = createRef<HTMLHeadingElement>()
   const bondTitleRef = createRef<HTMLDivElement>()
   const issuerInformationRef = createRef<HTMLButtonElement>()
@@ -158,18 +157,12 @@ const AuctionBody = (props: AuctionBodyProps) => {
       derivedAuctionInfo?.auctionState,
     )
 
-  useEffect(() => {
-    if (window.innerWidth <= 800 && window.innerHeight <= 800) {
-      setIsMobile(true)
-    }
-  }, [])
-
   return (
     <>
       <TwoGridPage
         leftChildren={
           <>
-            <div className={isMobile ? 'hidden' : ''}>
+            <div className="hidden sm:inline">
               <AuctionTour
                 auctionInformationRef={auctionInformationRef}
                 bondTitleRef={bondTitleRef}
