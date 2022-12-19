@@ -5,8 +5,6 @@ import styled from 'styled-components'
 import { useGlobalFilter, useTable } from 'react-table'
 
 import { ActionButton } from '../../auction/Claimer'
-// import { Delete } from '../../icons/Delete'
-// import { Magnifier } from '../../icons/Magnifier'
 import { PageTitle } from '../../pureStyledComponents/PageTitle'
 
 import Tooltip from '@/components/common/Tooltip'
@@ -140,10 +138,6 @@ const Table = ({
 
   const sectionHead = useRef(null)
 
-  const menuToggle = () => {
-    setMenuVisible(!menuVisible)
-  }
-
   return (
     <Wrapper ref={sectionHead} {...restProps}>
       <div className="mb-10 flex flex-wrap content-center items-end py-2 md:justify-between">
@@ -151,29 +145,7 @@ const Table = ({
           <SectionTitle>{title}</SectionTitle>
           <div className="hidden flex-row items-center space-x-4 sm:flex">{legendIcons}</div>
         </div>
-        <div className="my-12 sm:mt-5">
-          {/* <TableControls>
-            <SearchWrapper>
-              <Magnifier />
-              <SearchInput
-                onChange={(e) => {
-                  setGlobalFilter(e.target.value)
-                }}
-                placeholder="Search"
-                value={state.globalFilter || ''}
-              />
-              <DeleteSearchTerm
-                aria-label="Delete Search Term"
-                disabled={!state.globalFilter}
-                onClick={() => {
-                  setGlobalFilter(undefined)
-                }}
-              >
-                <Delete />
-              </DeleteSearchTerm>
-            </SearchWrapper>
-          </TableControls> */}
-        </div>
+        <div className="my-12 sm:mt-5"></div>
       </div>
 
       <div

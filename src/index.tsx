@@ -11,7 +11,6 @@ import { WagmiConfig, chain, chainId, configureChains, createClient } from 'wagm
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { publicProvider } from 'wagmi/providers/public'
 
-// import { MobileBlocker } from './components/MobileBlocker'
 import { isGoerli, isProdGoerli } from './connectors'
 import App from './pages/App'
 import store from './state'
@@ -98,10 +97,7 @@ root.render(
             <ThemeProvider>
               <GlobalStyle />
               <BrowserRouter>
-                {/* <div className="hidden sm:block"> */}
                 <App />
-                {/* </div> */}
-                {/* <MobileBlocker /> */}
               </BrowserRouter>
             </ThemeProvider>
           </ApolloProvider>

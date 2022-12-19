@@ -169,6 +169,15 @@ const AuctionBody = (props: AuctionBodyProps) => {
       <TwoGridPage
         leftChildren={
           <>
+            <div className={isMobile ? 'hidden' : ''}>
+              <AuctionTour
+                auctionInformationRef={auctionInformationRef}
+                bondTitleRef={bondTitleRef}
+                issuerInformationRef={issuerInformationRef}
+                orderbookChartRef={orderbookChartRef}
+                orderbookSelectorRef={orderbookSelectorRef}
+              />
+            </div>
             <AuctionDetails
               auctionIdentifier={auctionIdentifier}
               auctionInformationRef={auctionInformationRef}
@@ -189,15 +198,6 @@ const AuctionBody = (props: AuctionBodyProps) => {
         }
         rightChildren={
           <>
-            <div className={isMobile ? 'hidden' : ''}>
-              <AuctionTour
-                auctionInformationRef={auctionInformationRef}
-                bondTitleRef={bondTitleRef}
-                issuerInformationRef={issuerInformationRef}
-                orderbookChartRef={orderbookChartRef}
-                orderbookSelectorRef={orderbookSelectorRef}
-              />
-            </div>
             {settling && <AuctionSettle />}
             {placeAndCancel && (
               <>
