@@ -95,7 +95,13 @@ const AuctionDetails = (props: Props) => {
         formatUnits(auction.totalBidVolume, auction.bidding.decimals),
       ).toLocaleString(),
       value: (
-        <TokenInfoWithLink auction={auction} value={auction.totalBidVolume} withLink={false} />
+        <TokenValue className="space-x-1">
+          <span>
+            {Math.round(
+              Number(formatUnits(auction.totalBidVolume, auction.bidding.decimals)),
+            ).toLocaleString()}
+          </span>
+        </TokenValue>
       ),
     }
     minimumFundingThreshold = {
