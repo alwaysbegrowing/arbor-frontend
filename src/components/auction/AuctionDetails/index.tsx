@@ -217,8 +217,6 @@ const AuctionDetails = (props: Props) => {
     },
   ]
 
-  console.log({ auction })
-
   return (
     <div className="card">
       <div className="card-body">
