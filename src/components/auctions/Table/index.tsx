@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef, useState } from 'react'
+import React, { ReactElement, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -18,68 +18,6 @@ const SectionTitle = styled(PageTitle)`
   font-size: 42px;
   color: #e0e0e0;
   margin: 0;
-`
-
-const TableControls = styled.div`
-  @media (min-width: ${({ theme }) => theme.themeBreakPoints.md}) {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-  }
-`
-
-const SearchWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  max-width: 100%;
-  padding-left: 9px;
-  padding-right: 0;
-  width: 237px;
-  border-radius: 100px;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-`
-
-const SearchInput = styled.input`
-  border: none;
-  background: none;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  color: #fafafa;
-  ::placeholder {
-    text-transform: uppercase;
-    color: #fafafa;
-    opacity: 0.8;
-  }
-  flex-grow: 1;
-  height: 32px;
-  margin: 0 0 0 10px;
-  outline: none;
-  overflow: hidden;
-  padding: 0;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-`
-
-const DeleteSearchTerm = styled.button`
-  align-items: center;
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  flex-shrink: none;
-  height: 100%;
-  justify-content: center;
-  margin: 0;
-  outline: none;
-  padding: 0;
-  width: 38px;
-
-  &[disabled] {
-    opacity: 0.5;
-  }
 `
 
 interface Props {
@@ -111,7 +49,6 @@ const Table = ({
   ...restProps
 }: Props) => {
   const navigate = useNavigate()
-  const [menuVisible, setMenuVisible] = useState(false)
 
   const globalFilter = React.useMemo(
     () => (rows, columns, filterValue) =>

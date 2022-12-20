@@ -1,4 +1,4 @@
-import React, { RefObject, useEffect, useState } from 'react'
+import React, { RefObject, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { TokenAmount } from '@josojo/honeyswap-sdk'
@@ -32,16 +32,9 @@ export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
   } = useOrderbookState()
 
   const [showOrderList, setShowOrderList] = useState(isGoerli)
-  const [isMobile, setIsMobile] = useState(false)
   const auctionIdentifier = parseURL(useParams())
   const { data: graphData } = useAuction(auctionIdentifier.auctionId)
   const { auctionId } = auctionIdentifier
-
-  useEffect(() => {
-    if (window.innerWidth <= 800 && window.innerHeight <= 800) {
-      setIsMobile(true)
-    }
-  }, [])
 
   const { auctioningToken: baseToken, biddingToken: quoteToken } = derivedAuctionInfo || {}
 
@@ -76,17 +69,19 @@ export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
           <h2 className="card-title" ref={orderbookChartRef}>
             Orderbook
           </h2>
-          <div className="flex items-center" title="Graph is disabled on mobile and Goerli.">
-            <div className="btn-group pointer-events-none	" ref={orderbookSelectorRef}>
+          <div className="flex items-center">
+            <div className="btn-group" ref={orderbookSelectorRef}>
               <button
-                className={`btn ${!showOrderList && 'btn-active'} pointer-events-auto w-[85px]`}
-                disabled={isGoerli || isMobile}
+                className={`hidden sm:btn ${
+                  !showOrderList && 'btn-active'
+                } pointer-events-auto w-[85px]`}
+                disabled={isGoerli}
                 onClick={() => showOrderList && setShowOrderList(false)}
               >
                 Graph
               </button>
               <button
-                className={`btn ${showOrderList && 'btn-active'} w-[85px]`}
+                className={`hidden sm:btn ${showOrderList && 'btn-active'} w-[85px]`}
                 onClick={() => !showOrderList && setShowOrderList(true)}
               >
                 List
