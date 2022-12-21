@@ -73,8 +73,8 @@ export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
             <div className="btn-group" ref={orderbookSelectorRef}>
               <button
                 className={`hidden sm:btn ${
-                  !showOrderList && 'btn-active'
-                } pointer-events-auto w-[85px]`}
+                  !showOrderList && 'btn-disabled sm:btn-active'
+                } w-[85px]`}
                 disabled={isGoerli}
                 onClick={() => showOrderList && setShowOrderList(false)}
               >
