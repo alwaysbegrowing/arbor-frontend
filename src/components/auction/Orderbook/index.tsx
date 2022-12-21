@@ -1,4 +1,4 @@
-import React, { RefObject, useState } from 'react'
+import React, { RefObject, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { TokenAmount } from '@josojo/honeyswap-sdk'
@@ -32,11 +32,18 @@ export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
   } = useOrderbookState()
 
   const [showOrderList, setShowOrderList] = useState(isGoerli)
+  const [isMobile, setIsMobile] = useState(false)
   const auctionIdentifier = parseURL(useParams())
   const { data: graphData } = useAuction(auctionIdentifier.auctionId)
   const { auctionId } = auctionIdentifier
 
   const { auctioningToken: baseToken, biddingToken: quoteToken } = derivedAuctionInfo || {}
+
+  useEffect(() => {
+    if (window.innerWidth <= 800 && window.innerHeight <= 800) {
+      setIsMobile(true)
+    }
+  }, [])
 
   const processedOrderbook = React.useMemo(() => {
     const data = { bids, asks }
@@ -72,9 +79,7 @@ export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
           <div className="flex items-center">
             <div className="btn-group" ref={orderbookSelectorRef}>
               <button
-                className={`hidden sm:btn ${
-                  !showOrderList && 'btn-disabled sm:btn-active'
-                } w-[85px]`}
+                className={`hidden sm:btn ${!showOrderList && 'btn-active'} w-[85px]`}
                 disabled={isGoerli}
                 onClick={() => showOrderList && setShowOrderList(false)}
               >
@@ -91,7 +96,7 @@ export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
         </div>
 
         {hasError && !showOrderList && <OrderBookError error={error} />}
-        {!hasError && !showOrderList && (
+        {!hasError && !showOrderList && !isMobile && (
           <OrderBookChart baseToken={baseToken} data={processedOrderbook} quoteToken={quoteToken} />
         )}
 
