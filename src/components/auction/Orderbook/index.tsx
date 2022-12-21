@@ -117,7 +117,7 @@ export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
         </div>
 
         {hasError && !showOrderList && <OrderBookError error={error} />}
-        {!hasError && !showOrderList && !isMobile && (
+        {!hasError && !showOrderList && (
           <OrderBookChart baseToken={baseToken} data={processedOrderbook} quoteToken={quoteToken} />
         )}
 
