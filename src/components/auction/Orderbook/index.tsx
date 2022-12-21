@@ -31,7 +31,7 @@ export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
     userOrderVolume,
   } = useOrderbookState()
 
-  const [showOrderList, setShowOrderList] = useState(isGoerli)
+  const [showOrderList, setShowOrderList] = useState(true)
   const auctionIdentifier = parseURL(useParams())
   const { data: graphData } = useAuction(auctionIdentifier.auctionId)
   const { auctionId } = auctionIdentifier
@@ -72,14 +72,16 @@ export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
           <div className="flex items-center">
             <div className="btn-group" ref={orderbookSelectorRef}>
               <button
-                className={`hidden w-[85px] sm:btn`}
+                className={`hidden sm:btn ${
+                  !showOrderList && 'btn-active'
+                } pointer-events-auto w-[85px]`}
                 disabled={isGoerli}
                 onClick={() => showOrderList && setShowOrderList(false)}
               >
                 Graph
               </button>
               <button
-                className={`hidden w-[85px] sm:btn`}
+                className={`hidden sm:btn ${showOrderList && 'btn-active'} w-[85px]`}
                 onClick={() => !showOrderList && setShowOrderList(true)}
               >
                 List
