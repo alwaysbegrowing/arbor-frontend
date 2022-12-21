@@ -88,16 +88,16 @@ export const LoadingBox = ({ className = '', height }) => (
 )
 
 export const TwoGridPage = ({ leftChildren, rightChildren }) => (
-  <main className="mt-[15px] px-0 pb-8">
+  <main className="px-0 pb-8 sm:mt-[15px]">
     {/* Main 3 column grid */}
-    <div className="grid grid-cols-1 items-start gap-4 pb-32 lg:grid-cols-3 lg:gap-8">
+    <div className="grid grid-cols-1 items-start gap-4 pb-2 lg:grid-cols-3 lg:gap-8">
       {/* Left column */}
       <div className="grid grid-cols-1 gap-4 lg:col-span-2">
         <section aria-labelledby="section-1-title">{leftChildren}</section>
       </div>
 
       {/* Right column */}
-      <div className="order-first grid grid-cols-1 gap-4 lg:order-last">
+      <div className="grid grid-cols-1 gap-4 lg:order-last">
         <section aria-labelledby="section-2-title">{rightChildren}</section>
       </div>
     </div>
@@ -161,7 +161,7 @@ const AuctionPage = ({ data: { auctionIdentifier, derivedAuctionInfo, graphInfo 
         {loading && <LoadingTwoGrid />}
         {!loading && (
           <>
-            <div className="flex flex-wrap content-center items-end justify-center py-2 md:justify-between">
+            <div className="-mt-10 flex flex-wrap content-center items-end justify-center py-2 sm:mt-0 md:justify-between">
               <div className="flex flex-wrap items-center space-x-6">
                 <div className="hidden md:flex">
                   <TokenLogo
@@ -178,7 +178,9 @@ const AuctionPage = ({ data: { auctionIdentifier, derivedAuctionInfo, graphInfo 
                   <p className="text-2sm text-[#E0E0E0]">{graphInfo?.bond.symbol}</p>
                 </div>
               </div>
-              <AuctionButtonOutline />
+              <div className="hidden lg:flex">
+                <AuctionButtonOutline />
+              </div>
             </div>
 
             <AuctionBody
