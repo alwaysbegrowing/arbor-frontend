@@ -78,7 +78,7 @@ export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
           </h2>
           <div className="flex items-center">
             <div className="btn-group" ref={orderbookSelectorRef}>
-              {isMobile && (
+              {/* {isMobile && (
                 <>
                   <button
                     className={`hidden w-[85px] sm:btn`}
@@ -96,32 +96,32 @@ export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
                 </>
               )}
               {!isMobile && (
-                <>
-                  <button
-                    className={`hidden sm:btn ${!showOrderList && 'btn-active'} w-[85px]`}
-                    disabled={isGoerli}
-                    onClick={() => showOrderList && setShowOrderList(false)}
-                  >
-                    Graph
-                  </button>
-                  <button
-                    className={`hidden sm:btn ${showOrderList && 'btn-active'} w-[85px]`}
-                    onClick={() => !showOrderList && setShowOrderList(true)}
-                  >
-                    List
-                  </button>
-                </>
-              )}
+                <> */}
+              <button
+                className={`hidden sm:btn ${!showOrderList && 'btn-active'} w-[85px]`}
+                disabled={isGoerli}
+                onClick={() => showOrderList && setShowOrderList(false)}
+              >
+                Graph
+              </button>
+              <button
+                className={`hidden sm:btn ${showOrderList && 'btn-active'} w-[85px]`}
+                onClick={() => !showOrderList && setShowOrderList(true)}
+              >
+                List
+              </button>
+              {/* </>
+              )} */}
             </div>
           </div>
         </div>
 
         {hasError && !showOrderList && <OrderBookError error={error} />}
-        {!hasError && !showOrderList && (
+        {!hasError && !showOrderList && !isMobile && (
           <OrderBookChart baseToken={baseToken} data={processedOrderbook} quoteToken={quoteToken} />
         )}
 
-        {showOrderList && <OrderBookTable derivedAuctionInfo={derivedAuctionInfo} />}
+        {showOrderList && isMobile && <OrderBookTable derivedAuctionInfo={derivedAuctionInfo} />}
       </div>
     </div>
   )
