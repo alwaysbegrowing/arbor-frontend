@@ -78,19 +78,40 @@ export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
           </h2>
           <div className="flex items-center">
             <div className="btn-group" ref={orderbookSelectorRef}>
-              <button
-                className={`hidden sm:btn ${!showOrderList && 'btn-active'} w-[85px]`}
-                disabled={isGoerli}
-                onClick={() => showOrderList && setShowOrderList(false)}
-              >
-                Graph
-              </button>
-              <button
-                className={`hidden sm:btn ${showOrderList && 'btn-active'} w-[85px]`}
-                onClick={() => !showOrderList && setShowOrderList(true)}
-              >
-                List
-              </button>
+              {isMobile && (
+                <>
+                  <button
+                    className={`hidden w-[85px] sm:btn`}
+                    disabled={isGoerli}
+                    onClick={() => showOrderList && setShowOrderList(false)}
+                  >
+                    Graph
+                  </button>
+                  <button
+                    className={`hidden w-[85px] sm:btn`}
+                    onClick={() => !showOrderList && setShowOrderList(true)}
+                  >
+                    List
+                  </button>
+                </>
+              )}
+              {!isMobile && (
+                <>
+                  <button
+                    className={`hidden sm:btn ${!showOrderList && 'btn-active'} w-[85px]`}
+                    disabled={isGoerli}
+                    onClick={() => showOrderList && setShowOrderList(false)}
+                  >
+                    Graph
+                  </button>
+                  <button
+                    className={`hidden sm:btn ${showOrderList && 'btn-active'} w-[85px]`}
+                    onClick={() => !showOrderList && setShowOrderList(true)}
+                  >
+                    List
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
