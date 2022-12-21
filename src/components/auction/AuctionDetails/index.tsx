@@ -101,6 +101,7 @@ const AuctionDetails = (props: Props) => {
               Number(formatUnits(auction.totalBidVolume, auction.bidding.decimals)),
             ).toLocaleString()}
           </span>
+          <TokenLink token={auction?.bidding} withLink={false} />
         </TokenValue>
       ),
     }
