@@ -95,6 +95,18 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     stablecoins (USDC) to the DAO’s treasury.`,
     useLink: 'https://app.rari.capital/fuse/pool/7',
   },
+  futureIchiBond: {
+    // auctionId: '20',
+    name: 'ICHI',
+    website: 'https://ichi.org/',
+    //promissoryMessageHash: '',
+    //promissoryLink: 'https://etherscan.io/tx/',
+    // creditAnalysisArbor: '/pdf/Ichi_Prospectus.pdf',
+    // creditAnalysisCredora: '/pdf/Ichi_Credora_Arbor.pdf',
+    prime: 'https://www.prime.xyz/ratings/ichi',
+    contractAddress: '0x111111517e4929D3dcbdfa7CCe55d30d4B6BC4d6',
+    description: 'ICHI .',
+  },
 }
 
 const BondDetailItem = ({ title, value }: { value: ReactElement; title: string }) => {
