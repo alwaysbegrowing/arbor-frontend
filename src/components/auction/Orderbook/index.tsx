@@ -1,4 +1,4 @@
-import React, { RefObject, useEffect, useState } from 'react'
+import React, { RefObject, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { TokenAmount } from '@josojo/honeyswap-sdk'
@@ -32,18 +32,11 @@ export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
   } = useOrderbookState()
 
   const [showOrderList, setShowOrderList] = useState(isGoerli)
-  const [isMobile, setIsMobile] = useState(false)
   const auctionIdentifier = parseURL(useParams())
   const { data: graphData } = useAuction(auctionIdentifier.auctionId)
   const { auctionId } = auctionIdentifier
 
   const { auctioningToken: baseToken, biddingToken: quoteToken } = derivedAuctionInfo || {}
-
-  useEffect(() => {
-    if (window.innerWidth <= 800 && window.innerHeight <= 800) {
-      setIsMobile(true)
-    }
-  }, [])
 
   const processedOrderbook = React.useMemo(() => {
     const data = { bids, asks }
@@ -78,50 +71,29 @@ export const OrderBook: React.FC<OrderbookGraphProps> = (props) => {
           </h2>
           <div className="flex items-center">
             <div className="btn-group" ref={orderbookSelectorRef}>
-              {/* {isMobile && (
-                <>
-                  <button
-                    className={`hidden w-[85px] sm:btn`}
-                    disabled={isGoerli}
-                    onClick={() => showOrderList && setShowOrderList(false)}
-                  >
-                    Graph
-                  </button>
-                  <button
-                    className={`hidden w-[85px] sm:btn`}
-                    onClick={() => !showOrderList && setShowOrderList(true)}
-                  >
-                    List
-                  </button>
-                </>
-              )}
-              {!isMobile && (
-                <> */}
               <button
-                className={`hidden sm:btn ${!showOrderList && 'btn-active'} w-[85px]`}
+                className={`hidden w-[85px] sm:btn`}
                 disabled={isGoerli}
                 onClick={() => showOrderList && setShowOrderList(false)}
               >
                 Graph
               </button>
               <button
-                className={`hidden sm:btn ${showOrderList && 'btn-active'} w-[85px]`}
+                className={`hidden w-[85px] sm:btn`}
                 onClick={() => !showOrderList && setShowOrderList(true)}
               >
                 List
               </button>
-              {/* </>
-              )} */}
             </div>
           </div>
         </div>
 
         {hasError && !showOrderList && <OrderBookError error={error} />}
-        {!hasError && !showOrderList && !isMobile && (
+        {!hasError && !showOrderList && (
           <OrderBookChart baseToken={baseToken} data={processedOrderbook} quoteToken={quoteToken} />
         )}
 
-        {showOrderList && isMobile && <OrderBookTable derivedAuctionInfo={derivedAuctionInfo} />}
+        {showOrderList && <OrderBookTable derivedAuctionInfo={derivedAuctionInfo} />}
       </div>
     </div>
   )
