@@ -28,7 +28,7 @@ export const ReviewConvert = ({ amount, amountToken, assetsToReceive, type = 'co
     </div>
     <div className="pb-4 space-y-2 text-xs text-[#696969] border-b border-b-[#D5D5D519]">
       {assetsToReceive.map(({ extra, token, value }, index) => (
-        <TokenInfo extra={extra} key={index} plus token={token} value={value} />
+        <TokenInfo extra={extra} key={index} plus token={token} value='-' />
       ))}
       <div className="flex flex-row items-center space-x-2 text-xs text-[#696969]">
         <Tooltip
