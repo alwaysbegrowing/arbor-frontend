@@ -1,10 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import useLocalStorage from '../hooks/useLocalStorage'
 import MyModal from './modals/common/Modal'
 
-const TermsModal = () => {
-  const [showTerms, setShowTerms] = useLocalStorage('showTerms', true)
+const TermsModal = ({ close, isOpen }: { close: () => void; isOpen: boolean }) => {
+  const [showTerms, setShowTerms] = useState(true)
 
   const acceptTerms = () => {
     setShowTerms(false)
@@ -15,7 +14,7 @@ const TermsModal = () => {
   }
 
   return (
-    <MyModal blockBackdropDismiss hideCloseIcon isOpen={showTerms} onDismiss={abortModal}>
+    <MyModal blockBackdropDismiss hideCloseIcon isOpen={isOpen} onDismiss={close}>
       <div className="mt-2 space-y-6 text-center">
         <h1 className="text-xl font-medium text-[#E0E0E0]">Terms of Service</h1>
         <div className="space-y-4 text-left text-[#D6D6D6]">
@@ -49,13 +48,13 @@ const TermsModal = () => {
 
         <div className="space-x-4">
           <button
-            className="btn btn-sm h-[41px] w-[170px] bg-[#1C701C] font-normal normal-case text-white hover:bg-[#1C701C]/80"
-            onClick={acceptTerms}
+            className="btn-sm btn h-[41px] w-[170px] bg-[#1C701C] font-normal normal-case text-white hover:bg-[#1C701C]/80"
+            onClick={close}
           >
             Accept
           </button>
           <button
-            className="btn btn-sm h-[41px] w-[170px] bg-[#696969] font-normal normal-case text-white hover:bg-gray-500"
+            className="btn-sm btn h-[41px] w-[170px] bg-[#696969] font-normal normal-case text-white hover:bg-gray-500"
             onClick={abortModal}
           >
             Decline

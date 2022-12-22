@@ -7,7 +7,6 @@ import { ConfigProvider } from 'antd'
 import ReactTooltip from 'react-tooltip'
 
 import ScrollToTop from '../components/ScrollToTop'
-import TermsModal from '../components/TermsModal'
 import { ErrorBoundaryWithFallback } from '../components/common/ErrorAndReload'
 import { Footer } from '../components/layout/Footer'
 import { Header } from '../components/layout/Header'
@@ -57,7 +56,6 @@ const App: React.FC = () => (
           textColor="#d6d6d6"
         />
         <ScrollToTop />
-        <TermsModal />
         <Header />
         <ErrorBoundaryWithFallback>
           <InnerApp className="fullPage">

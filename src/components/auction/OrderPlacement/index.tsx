@@ -46,6 +46,7 @@ import { BaseCard } from '../../pureStyledComponents/BaseCard'
 import { EmptyContentText } from '../../pureStyledComponents/EmptyContent'
 import { InfoType } from '../../pureStyledComponents/FieldRow'
 
+import TermsModal from '@/components/TermsModal'
 import Tooltip from '@/components/common/Tooltip'
 
 const LinkCSS = css`
@@ -92,6 +93,7 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
   const location = useGeoLocation()
   const disabledCountry = !isGoerli && location?.country === 'US'
   const [showCountry, setShowCountryDisabledModal] = useState(false)
+  const [showTerms, setShowTerms] = useState(true)
   const { chainId } = auctionIdentifier
   const { account, chainId: chainIdFromWeb3 } = useActiveWeb3React()
   const orders: OrderState | undefined = useOrderState()
@@ -450,13 +452,16 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
                     actionText={`Approve ${biddingTokenDisplay}`}
                     actionTextDone="Review order"
                     beforeDisplay={
-                      <ReviewOrder
-                        amountToken={graphInfo?.bond}
-                        cancelCutoff={cancelCutoff}
-                        data={reviewData}
-                        orderPlacingOnly={orderPlacingOnly}
-                        priceToken={graphInfo?.bond?.paymentToken}
-                      />
+                      <>
+                        <TermsModal close={() => setShowTerms(false)} isOpen={showTerms} />
+                        <ReviewOrder
+                          amountToken={graphInfo?.bond}
+                          cancelCutoff={cancelCutoff}
+                          data={reviewData}
+                          orderPlacingOnly={orderPlacingOnly}
+                          priceToken={graphInfo?.bond?.paymentToken}
+                        />
+                      </>
                     }
                     finishedText={`${biddingTokenDisplay} Approved`}
                     loadingText={`Approving ${biddingTokenDisplay}`}
