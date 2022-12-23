@@ -26,8 +26,13 @@ export const Footer: React.FC = ({ ...restProps }) => {
     <Wrapper {...restProps} className="flex py-10">
       <Inner className="fullPage">
         <div className="footer text-neutral-content">
-          <FooterLogo className="grid-flow-col items-center">
+          <FooterLogo className="flex-col items-center justify-items-end">
             <Wordmark style={{ height: 60 }} />
+            <FooterLinks>
+              <a href="/pdf/Arbor_Terms_and_Conditions_.pdf" target="_blank">
+                Terms of Service
+              </a>
+            </FooterLinks>
           </FooterLogo>
           <FooterLinks className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
             <a href="https://docs.arbor.finance/faq">Faq</a>
