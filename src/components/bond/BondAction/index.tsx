@@ -93,8 +93,8 @@ const BondAction = ({
 
   const bondId = overwriteBondId || params?.bondId
   const { data: bond } = useBond(bondId)
-  const { convertibleValue } = useUSDPerBond(bond || undefined)
   const bondTokenBalance = bond?.tokenBalances?.[0]?.amount || 0
+  const { convertibleValue: convertibleValuePerBond } = useUSDPerBond(bond || undefined)
 
   const [bondsToRedeem, setBondsToRedeem] = useState(null)
   const [openReviewModal, setOpenReviewModal] = useState<boolean>(false)
@@ -252,7 +252,7 @@ const BondAction = ({
   if (isActive) {
     const collateralTokensAmount = previewConvertVal
     assetsToReceive.push({
-      extra: ``,
+      extra: `($${(convertibleValuePerBond * Number(bondsToRedeem)).toLocaleString()})`,
       token: collateralToken,
       value: Number(collateralTokensAmount).toLocaleString(undefined, {
         maximumFractionDigits: 5,
@@ -276,7 +276,7 @@ const BondAction = ({
       value: Number(collateralTokensAmount).toLocaleString(undefined, {
         maximumFractionDigits: 5,
       }),
-      extra: `($${(convertibleValue * Number(collateralTokensAmount)).toLocaleString()})`,
+      extra: `($${(convertibleValuePerBond * Number(collateralTokensAmount)).toLocaleString()})`,
     })
   } else if (isPartiallyPaid) {
     const [paymentTokensAmount, collateralTokensAmount] = previewRedeemVal
@@ -287,7 +287,8 @@ const BondAction = ({
         value: Number(paymentTokensAmount).toLocaleString(undefined, {
           maximumFractionDigits: 5,
         }),
-        extra: `($${(convertibleValue * Number(paymentTokensAmount)).toLocaleString()})`,
+        // TODO: this assumes payment in a stablecoin
+        extra: `($${Number(paymentTokensAmount).toLocaleString()})`,
       })
     }
 
@@ -296,7 +297,7 @@ const BondAction = ({
       value: Number(collateralTokensAmount).toLocaleString(undefined, {
         maximumFractionDigits: 5,
       }),
-      extra: `($${(convertibleValue * Number(collateralTokensAmount)).toLocaleString()})`,
+      extra: `($${(convertibleValuePerBond * Number(collateralTokensAmount)).toLocaleString()})`,
     })
   }
 
