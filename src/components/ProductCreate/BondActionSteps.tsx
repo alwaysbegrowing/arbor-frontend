@@ -108,7 +108,7 @@ export const BondActionSteps = ({ convertible = true, disabled }) => {
               })
           }}
         >
-          {!waitingWalletApprove && `Approve bond for sale`}
+          {!waitingWalletApprove && `Approve token for sale`}
           {waitingWalletApprove === 1 && 'Confirm approval in wallet'}
           {waitingWalletApprove === 2 &&
             `Approving ${collateralToken?.symbol || collateralToken?.name}...`}

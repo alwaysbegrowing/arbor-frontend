@@ -1,6 +1,7 @@
 import { chain } from 'wagmi'
 
 import { FOXIcon } from './icons/FOXIcon'
+import { ICHIIcon } from './icons/ICHIIcon'
 import { RBNIcon } from './icons/RBNIcon'
 import { UNIIcon } from './icons/UNIIcon'
 import { USDCIcon } from './icons/USDCIcon'
@@ -41,6 +42,8 @@ export const TESTNET_TOKEN_MAP: { [key: string]: string } = {
   // USDC goerli
   ['0x5a2D26D95b07C28d735ff76406bd82fE64222Dc1'.toLowerCase()]:
     '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+  ['0x443bD404f87c19aC39aC67960DDdaE0A7788fce4'.toLowerCase()]:
+    '0x111111517e4929D3dcbdfa7CCe55d30d4B6BC4d6',
 }
 export const RIBBON_TOKEN = '0x6123b0049f904d730db3c36a31167d9d4121fa6b'
 
@@ -77,6 +80,12 @@ export const CollateralTokens = {
       name: 'FOX',
       icon: FOXIcon,
       address: '0xB514a1237860308db88758D26Bc9B065BC310748',
+      decimals: 18,
+    },
+    {
+      name: 'ICHI',
+      icon: ICHIIcon,
+      address: '0x443bD404f87c19aC39aC67960DDdaE0A7788fce4',
       decimals: 18,
     },
   ],
