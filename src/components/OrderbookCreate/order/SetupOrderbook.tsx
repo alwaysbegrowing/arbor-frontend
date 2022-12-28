@@ -5,8 +5,9 @@ import { ErrorMessage } from '@hookform/error-message'
 import { CrossCircledIcon, DoubleArrowRightIcon } from '@radix-ui/react-icons'
 import { FormProvider, useForm } from 'react-hook-form'
 
-import { StepOne } from './StepOne'
-import { StepTwo } from './StepTwo'
+import { ApproveToken } from './ApproveToken'
+import { ConfigureLimitOrder } from './ConfigureLimitOrder'
+import { SignOrder } from './SignOrder'
 
 import { ActionButton } from '@/components/auction/Claimer'
 import { Token } from '@/generated/graphql'
@@ -49,8 +50,8 @@ export const FormSteps = ({ color = 'blue', midComponents, steps, title }) => {
                   <li
                     className={`step ${
                       i <= currentStep
-                        ? `step-${
-                            color === 'purple' ? 'primary' : 'secondary'
+                        ? `${
+                            color === 'purple' ? 'step-primary' : 'step-secondary'
                           } hover:cursor-pointer hover:underline`
                         : ''
                     }`}
@@ -88,7 +89,7 @@ export const FormSteps = ({ color = 'blue', midComponents, steps, title }) => {
                         onClick={() => setCurrentStep(currentStep + 1)}
                         type="submit"
                       >
-                        Finish
+                        Continue
                       </ActionButton>
                     )}
 
@@ -147,9 +148,13 @@ export type Inputs = {
 }
 
 const SetupOrderbook = () => {
-  const midComponents = [<StepOne key={0} />, <StepTwo key={1} />]
+  const midComponents = [
+    <ConfigureLimitOrder key={0} />,
+    <ApproveToken key={1} />,
+    <SignOrder key={2} />,
+  ]
 
-  const steps = [`Configure Limit Order`, 'Blast Off']
+  const steps = [`Configure Limit Order`, 'Approve Token', 'Sign Order']
 
   return (
     <>
@@ -159,6 +164,3 @@ const SetupOrderbook = () => {
 }
 
 export default SetupOrderbook
-function setOrderText(arg0: string) {
-  throw new Error('Function not implemented.')
-}

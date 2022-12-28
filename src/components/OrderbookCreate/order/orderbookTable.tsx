@@ -20,6 +20,32 @@ import { useBonds } from '@/hooks/useBond'
 import { useBondsPortfolio } from '@/hooks/useBondsPortfolio'
 import { useOrderbookPair } from '@/hooks/useOrderbook'
 
+export const AllBondsList = () => {
+  const { data: dataPortfolio } = useBondsPortfolio()
+
+  const portfolioData = {}
+
+  dataPortfolio?.forEach((bond) => {
+    portfolioData[bond?.id] = bond
+  })
+
+  const { data: bondData, loading } = useBonds()
+
+  const fullData = bondData?.map((bond) => {
+    if (bond.id in portfolioData) {
+      const tokenBalances = portfolioData[bond.id].tokenBalances
+      return { ...bond, tokenBalances }
+    } else {
+      return { ...bond }
+    }
+  })
+
+  if (!bondData?.length && !loading) {
+    return <Selector OptionEl={NoBondFound} disabled name="bondToAuction" options={fullData} />
+  }
+  return <Selector OptionEl={BondTokenDetails} name="bondToAuction" options={fullData} />
+}
+
 const Wrapper = styled.div`
   margin-top: -30px;
 `
@@ -90,35 +116,7 @@ const OrderbookTable = () => {
     'bondToAuction', // makerToken
   ])
 
-  const { data: dataPortfolio } = useBondsPortfolio()
-
-  const portfolioData = {}
-
-  dataPortfolio?.forEach((bond) => {
-    portfolioData[bond?.id] = bond
-  })
-
-  const { data: bondData, loading } = useBonds()
-
-  console.log({ bondData })
-
-  console.log({ portfolioData })
-
-  const AllBondsList = () => {
-    const fullData = bondData?.map((bond) => {
-      if (bond.id in portfolioData) {
-        const tokenBalances = portfolioData[bond.id].tokenBalances
-        return { ...bond, tokenBalances }
-      } else {
-        return { ...bond }
-      }
-    })
-
-    if (!bondData?.length && !loading) {
-      return <Selector OptionEl={NoBondFound} disabled name="bondToAuction" options={fullData} />
-    }
-    return <Selector OptionEl={BondTokenDetails} name="bondToAuction" options={fullData} />
-  }
+  const { loading } = useBonds()
 
   const {
     asks,

@@ -85,5 +85,5 @@ const getFillLimitOrder = async (orderData: LimitOrderFields, { signer }) => {
     },
   }
 
-  const resp = await fetch()
+  const resp = await fetch('')
 }

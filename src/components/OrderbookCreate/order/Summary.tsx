@@ -3,16 +3,17 @@ import React from 'react'
 import { useFormContext } from 'react-hook-form'
 
 import { Inputs } from './SetupOrderbook'
-import { SummaryItem } from './SummaryItem'
+
+import { SummaryItem } from '@/components/ProductCreate/SummaryItem'
 
 export const Summary = (showSell: boolean) => {
   const { getValues } = useFormContext()
   const formValues = getValues() as Inputs
   if (showSell) {
     return (
-      <div className="overflow-visible w-[425px] card">
+      <div className="card w-[425px] overflow-visible">
         <div className="card-body">
-          <h1 className="pb-4 !text-xs uppercase border-b border-[#2C2C2C] card-title">Summary</h1>
+          <h1 className="card-title border-b border-[#2C2C2C] pb-4 !text-xs uppercase">Summary</h1>
           <div className="space-y-4">
             <SummaryItem
               text={formValues?.bondToAuction?.name}
@@ -45,9 +46,9 @@ export const Summary = (showSell: boolean) => {
     )
   } else if (!showSell) {
     return (
-      <div className="overflow-visible w-[425px] card">
+      <div className="card w-[425px] overflow-visible">
         <div className="card-body">
-          <h1 className="pb-4 !text-xs uppercase border-b border-[#2C2C2C] card-title">Summary</h1>
+          <h1 className="card-title border-b border-[#2C2C2C] pb-4 !text-xs uppercase">Summary</h1>
           <div className="space-y-4">
             <SummaryItem
               text={formValues?.bondToAuction?.name}
