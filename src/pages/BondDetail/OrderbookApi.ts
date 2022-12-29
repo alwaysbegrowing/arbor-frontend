@@ -62,12 +62,12 @@ export const sellLimitOrder = async (orderData: LimitOrderFields, { signer }) =>
   )
 
   if (resp.status === 200) {
-    alert('Order successfully created')
+    return true
   } else {
     const body = await resp.json()
-    alert(`ERROR(status code ${resp.status}): ${JSON.stringify(body, undefined, 2)}`)
+    console.error(`ERROR(status code ${resp.status}): ${JSON.stringify(body, undefined, 2)}`)
   }
-  return resp
+  return false
 }
 
 const getFillLimitOrder = async (orderData: LimitOrderFields, { signer }) => {

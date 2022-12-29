@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState } from 'react'
 
 import { MaxUint256 } from '@ethersproject/constants'
 import { TransactionResponse } from '@ethersproject/providers'
+import { parseUnits } from '@ethersproject/units'
 import { TokenAmount } from '@josojo/honeyswap-sdk'
 import { useWaitForTransaction } from 'wagmi'
 
@@ -94,6 +95,7 @@ export function useApproveCallback(
       .approve(addressToApprove, useExact ? amountToApprove.raw.toString() : MaxUint256, {
         gasPrice,
         gasLimit: calculateGasMargin(estimatedGas),
+        maxPriorityFeePerGas: parseUnits('1.5', 'gwei'),
       })
       .then((response: TransactionResponse) => {
         addTransaction(response?.hash, {

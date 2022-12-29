@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { LimitOrderFields } from '@0x/protocol-utils'
 import { AddressZero } from '@ethersproject/constants'
@@ -18,6 +19,9 @@ export function addDays(date, days) {
 }
 
 export const SignOrder = () => {
+  const [signed, setSigned] = useState(false)
+  const navigate = useNavigate()
+
   const { watch } = useFormContext()
   const { account, chainId, signer } = useActiveWeb3React()
   const [bondToAuction, borrowToken, makerAmount, takerAmount, expiry, isSell] = watch([
@@ -29,7 +33,7 @@ export const SignOrder = () => {
     'isSell',
   ])
 
-  const limitOrder = () => {
+  const limitOrder = async () => {
     if (!signer || !chainId) {
       return
     }
@@ -54,23 +58,41 @@ export const SignOrder = () => {
       chainId,
       verifyingContract: ExchangeProxy[chainId],
     }
-    const postLimitOrder = async () => {
-      await sellLimitOrder(orderData, { signer })
-    }
 
-    postLimitOrder()
+    return await sellLimitOrder(orderData, { signer })
   }
   return (
     <>
       <div className="form-control w-full">
-        <ActionButton
-          className="btn my-10"
-          onClick={() => {
-            limitOrder()
-          }}
-        >
-          SIGN ORDER
-        </ActionButton>
+        <span>
+          Interact with 0x protocol by transmitting a signature with the order details. This is sent
+          to the 0x server and will show up on the{' '}
+          <a className="text-[#6CADFB] hover:underline" href="/orderbook">
+            orderbook list
+          </a>
+          .
+        </span>
+        {signed ? (
+          <ActionButton
+            onClick={() => {
+              navigate('/orderbook')
+            }}
+          >
+            View orderbook page
+          </ActionButton>
+        ) : (
+          <ActionButton
+            className="btn"
+            onClick={async () => {
+              const isSigned = await limitOrder()
+              if (isSigned) {
+                setSigned(true)
+              }
+            }}
+          >
+            SIGN ORDER
+          </ActionButton>
+        )}
       </div>
     </>
   )
