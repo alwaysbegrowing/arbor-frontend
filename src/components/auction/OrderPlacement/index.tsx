@@ -93,7 +93,7 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
   const location = useGeoLocation()
   const disabledCountry = !isGoerli && location?.country === 'US'
   const [showCountry, setShowCountryDisabledModal] = useState(false)
-  const [showTerms, setShowTerms] = useState(true)
+  const [showTerms, setShowTerms] = useState(false)
   const { chainId } = auctionIdentifier
   const { account, chainId: chainIdFromWeb3 } = useActiveWeb3React()
   const orders: OrderState | undefined = useOrderState()
@@ -404,7 +404,10 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
                 <>
                   <ActionButton
                     disabled={disablePlaceOrder || error}
-                    onClick={() => handleShowConfirm()}
+                    onClick={() => {
+                      setShowTerms(true)
+                      handleShowConfirm()
+                    }}
                   >
                     Review order
                   </ActionButton>
@@ -480,13 +483,16 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
                   <ConfirmationDialog
                     actionText="Place order"
                     beforeDisplay={
-                      <ReviewOrder
-                        amountToken={graphInfo?.bond}
-                        cancelCutoff={cancelCutoff}
-                        data={reviewData}
-                        orderPlacingOnly={orderPlacingOnly}
-                        priceToken={graphInfo?.bond?.paymentToken}
-                      />
+                      <>
+                        <TermsModal close={() => setShowTerms(false)} isOpen={showTerms} />
+                        <ReviewOrder
+                          amountToken={graphInfo?.bond}
+                          cancelCutoff={cancelCutoff}
+                          data={reviewData}
+                          orderPlacingOnly={orderPlacingOnly}
+                          priceToken={graphInfo?.bond?.paymentToken}
+                        />
+                      </>
                     }
                     finishedText="Order placed"
                     loadingText="Placing order"

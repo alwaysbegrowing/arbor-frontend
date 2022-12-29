@@ -1,14 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import MyModal from './modals/common/Modal'
 
 const TermsModal = ({ close, isOpen }: { close: () => void; isOpen: boolean }) => {
-  const [showTerms, setShowTerms] = useState(true)
-
-  const acceptTerms = () => {
-    setShowTerms(false)
-  }
-
   const abortModal = () => {
     window.location.href = 'https://arbor.finance'
   }
@@ -22,7 +16,7 @@ const TermsModal = ({ close, isOpen }: { close: () => void; isOpen: boolean }) =
             Please read our{' '}
             <a
               className="text-[#6CADFB] hover:underline"
-              href="https://arbor.finance/terms-of-service"
+              href="/pdf/Arbor_Terms_and_Conditions_.pdf"
               rel="noreferrer"
               target="_blank"
             >
@@ -36,7 +30,7 @@ const TermsModal = ({ close, isOpen }: { close: () => void; isOpen: boolean }) =
             By clicking “Accept” you agree to our{' '}
             <a
               className="text-[#6CADFB] hover:underline"
-              href="https://arbor.finance/terms-of-service"
+              href="/pdf/Arbor_Terms_and_Conditions_.pd"
               rel="noreferrer"
               target="_blank"
             >
