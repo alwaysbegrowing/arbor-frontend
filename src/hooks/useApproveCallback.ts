@@ -92,8 +92,8 @@ export function useApproveCallback(
 
     return tokenContract
       .approve(addressToApprove, useExact ? amountToApprove.raw.toString() : MaxUint256, {
-        gasPrice,
         gasLimit: calculateGasMargin(estimatedGas),
+        maxPriorityFeePerGas: 150000000,
       })
       .then((response: TransactionResponse) => {
         addTransaction(response?.hash, {
@@ -108,7 +108,7 @@ export function useApproveCallback(
         logger.debug('Failed to approve token', error)
         throw error
       })
-  }, [approval, gasPrice, tokenContract, addressToApprove, amountToApprove, addTransaction])
+  }, [approval, tokenContract, addressToApprove, amountToApprove, addTransaction])
 
   return [approval, approve]
 }
@@ -176,8 +176,8 @@ export function useUnapproveCallback(
 
     return tokenContract
       .approve(addressToApprove, 0, {
-        gasPrice,
         gasLimit: calculateGasMargin(estimatedGas),
+        maxPriorityFeePerGas: 150000000,
       })
       .then((response: TransactionResponse) => {
         addTransaction(response?.hash, {
@@ -191,7 +191,7 @@ export function useUnapproveCallback(
         logger.debug('Failed to unapprove token', error)
         throw error
       })
-  }, [approval, gasPrice, tokenContract, addressToApprove, amountToApprove, addTransaction])
+  }, [approval, tokenContract, addressToApprove, amountToApprove, addTransaction])
 
   return [approval, unapprove]
 }

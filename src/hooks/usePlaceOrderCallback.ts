@@ -130,8 +130,8 @@ export function usePlaceOrderCallback(
         .then((estimatedGasLimit) =>
           method(...args, {
             ...(value ? { value } : {}),
-            gasPrice,
             gasLimit: calculateGasMargin(estimatedGasLimit),
+            maxPriorityFeePerGas: 1500000000,
           }),
         )
         .then((response) => {
@@ -179,7 +179,6 @@ export function usePlaceOrderCallback(
     auctioningToken,
     biddingToken,
     chainId,
-    gasPrice,
     signer,
     price,
     sellAmount,
