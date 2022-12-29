@@ -30,7 +30,7 @@ const TermsModal = ({ close, isOpen }: { close: () => void; isOpen: boolean }) =
             By clicking “Accept” you agree to our{' '}
             <a
               className="text-[#6CADFB] hover:underline"
-              href="/pdf/Arbor_Terms_and_Conditions_.pd"
+              href="/pdf/Arbor_Terms_and_Conditions_.pdf"
               rel="noreferrer"
               target="_blank"
             >
