@@ -2,11 +2,18 @@ import React from 'react'
 
 import MyModal from './modals/common/Modal'
 
-const TermsModal = ({ close, isOpen }: { close: () => void; isOpen: boolean }) => {
-  const abortModal = () => {
-    window.location.href = 'https://arbor.finance'
-  }
-
+const TermsModal = ({
+  abortModal,
+  acceptTerms,
+  close,
+  isOpen,
+}: {
+  close: () => void
+  isOpen: string
+  abortModal: () => void
+  acceptTerms: () => void
+}) => {
+  console.log({ isOpen })
   return (
     <MyModal blockBackdropDismiss hideCloseIcon isOpen={isOpen} onDismiss={close}>
       <div className="mt-2 space-y-6 text-center">
@@ -43,7 +50,7 @@ const TermsModal = ({ close, isOpen }: { close: () => void; isOpen: boolean }) =
         <div className="space-x-4">
           <button
             className="btn-sm btn h-[41px] w-[170px] bg-[#1C701C] font-normal normal-case text-white hover:bg-[#1C701C]/80"
-            onClick={close}
+            onClick={acceptTerms}
           >
             Accept
           </button>

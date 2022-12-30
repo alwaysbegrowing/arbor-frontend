@@ -48,6 +48,7 @@ import { InfoType } from '../../pureStyledComponents/FieldRow'
 
 import TermsModal from '@/components/TermsModal'
 import Tooltip from '@/components/common/Tooltip'
+import useLocalStorage from '@/hooks/useLocalStorage'
 
 const LinkCSS = css`
   color: ${({ theme }) => theme.text1};
@@ -93,7 +94,7 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
   const location = useGeoLocation()
   const disabledCountry = !isGoerli && location?.country === 'US'
   const [showCountry, setShowCountryDisabledModal] = useState(false)
-  const [showTerms, setShowTerms] = useState(false)
+  const [showTerms, setShowTerms] = useLocalStorage('showTerms', false)
   const { chainId } = auctionIdentifier
   const { account, chainId: chainIdFromWeb3 } = useActiveWeb3React()
   const orders: OrderState | undefined = useOrderState()
@@ -456,7 +457,12 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
                     actionTextDone="Review order"
                     beforeDisplay={
                       <>
-                        <TermsModal close={() => setShowTerms(false)} isOpen={showTerms} />
+                        <TermsModal
+                          abortModal={() => setShowTerms(false)}
+                          acceptTerms={() => setShowTerms(false)}
+                          close={() => setShowTerms(false)}
+                          isOpen={showTerms}
+                        />
                         <ReviewOrder
                           amountToken={graphInfo?.bond}
                           cancelCutoff={cancelCutoff}
@@ -484,7 +490,12 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
                     actionText="Place order"
                     beforeDisplay={
                       <>
-                        <TermsModal close={() => setShowTerms(false)} isOpen={showTerms} />
+                        <TermsModal
+                          abortModal={() => setShowTerms(false)}
+                          acceptTerms={() => setShowTerms(false)}
+                          close={() => setShowTerms(false)}
+                          isOpen={showTerms}
+                        />
                         <ReviewOrder
                           amountToken={graphInfo?.bond}
                           cancelCutoff={cancelCutoff}
