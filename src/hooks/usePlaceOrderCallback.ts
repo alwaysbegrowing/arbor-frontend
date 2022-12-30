@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract, ContractFunction } from '@ethersproject/contracts'
+import { parseUnits } from '@ethersproject/units'
 import { Token } from '@josojo/honeyswap-sdk'
 
 import { additionalServiceApi } from '../api'
@@ -131,7 +132,7 @@ export function usePlaceOrderCallback(
           method(...args, {
             ...(value ? { value } : {}),
             gasLimit: calculateGasMargin(estimatedGasLimit),
-            maxPriorityFeePerGas: 1500000000,
+            maxPriorityFeePerGas: parseUnits('1.5', 'gwei'),
           }),
         )
         .then((response) => {
