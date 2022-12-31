@@ -37,7 +37,7 @@ export const TokenPill = ({ token }) => {
 
   return token ? (
     <a
-      className="flex flex-row items-center p-1 px-2 pl-1 space-x-2 bg-[#2C2C2C] rounded-full cursor-pointer"
+      className="flex cursor-pointer flex-row items-center space-x-2 rounded-full bg-[#2C2C2C] p-1 px-2"
       href={getExplorerLink(token.address || token.id, 'address')}
       onClick={noPropagation}
       rel="noreferrer"
@@ -93,8 +93,8 @@ const BondAction = ({
 
   const bondId = overwriteBondId || params?.bondId
   const { data: bond } = useBond(bondId)
-  const { convertibleValue } = useUSDPerBond(bond || undefined)
   const bondTokenBalance = bond?.tokenBalances?.[0]?.amount || 0
+  const { convertibleValue: convertibleValuePerBond } = useUSDPerBond(bond || undefined)
 
   const [bondsToRedeem, setBondsToRedeem] = useState(null)
   const [openReviewModal, setOpenReviewModal] = useState<boolean>(false)
@@ -232,7 +232,7 @@ const BondAction = ({
 
     if (isDefaulted) {
       return (
-        <ActiveStatusPill className="!text-white !bg-[#DB3635]" dot={false} title="Defaulted" />
+        <ActiveStatusPill className="!bg-[#DB3635] !text-white" dot={false} title="Defaulted" />
       )
     }
     if (isPaid) {
@@ -252,7 +252,7 @@ const BondAction = ({
   if (isActive) {
     const collateralTokensAmount = previewConvertVal
     assetsToReceive.push({
-      extra: `($${(convertibleValue * Number(collateralTokensAmount)).toLocaleString()})`,
+      extra: `($${(convertibleValuePerBond * Number(bondsToRedeem)).toLocaleString()})`,
       token: collateralToken,
       value: Number(collateralTokensAmount).toLocaleString(undefined, {
         maximumFractionDigits: 5,
@@ -276,7 +276,7 @@ const BondAction = ({
       value: Number(collateralTokensAmount).toLocaleString(undefined, {
         maximumFractionDigits: 5,
       }),
-      extra: `($${(convertibleValue * Number(collateralTokensAmount)).toLocaleString()})`,
+      extra: `($${(convertibleValuePerBond * Number(collateralTokensAmount)).toLocaleString()})`,
     })
   } else if (isPartiallyPaid) {
     const [paymentTokensAmount, collateralTokensAmount] = previewRedeemVal
@@ -287,7 +287,8 @@ const BondAction = ({
         value: Number(paymentTokensAmount).toLocaleString(undefined, {
           maximumFractionDigits: 5,
         }),
-        extra: `($${(convertibleValue * Number(paymentTokensAmount)).toLocaleString()})`,
+        // TODO: this assumes payment in a stablecoin
+        extra: `($${Number(paymentTokensAmount).toLocaleString()})`,
       })
     }
 
@@ -296,14 +297,14 @@ const BondAction = ({
       value: Number(collateralTokensAmount).toLocaleString(undefined, {
         maximumFractionDigits: 5,
       }),
-      extra: `($${(convertibleValue * Number(collateralTokensAmount)).toLocaleString()})`,
+      extra: `($${(convertibleValuePerBond * Number(collateralTokensAmount)).toLocaleString()})`,
     })
   }
 
   return (
-    <div className="card redeem-card-color">
+    <div className="redeem-card-color card">
       <div className="card-body">
-        <div className="flex flex-row justify-between items-start">
+        <div className="flex flex-row items-start justify-between">
           <h2 className="card-title">{getActionText(componentType)}</h2>
           <BondStatus />
         </div>
@@ -326,7 +327,7 @@ const BondAction = ({
         <div>
           <div className="space-y-6">
             {account && !Number(bondTokenBalance) ? (
-              <div className="flex justify-center p-12 text-sm text-[#696969] rounded-lg border border-[#2C2C2C]">
+              <div className="flex justify-center rounded-lg border border-[#2C2C2C] p-12 text-sm text-[#696969]">
                 <span>No bonds to {getActionText(componentType).toLowerCase()}</span>
               </div>
             ) : (
