@@ -9,7 +9,7 @@ const TermsModal = ({
   isOpen,
 }: {
   close: () => void
-  isOpen: string
+  isOpen: boolean
   abortModal: () => void
   acceptTerms: () => void
 }) => {

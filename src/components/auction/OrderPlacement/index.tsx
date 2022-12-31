@@ -94,7 +94,8 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
   const location = useGeoLocation()
   const disabledCountry = !isGoerli && location?.country === 'US'
   const [showCountry, setShowCountryDisabledModal] = useState(false)
-  const [showTerms, setShowTerms] = useLocalStorage('showTerms', false)
+  const [showTerms, setShowTerms] = useState(false)
+  const [termsAccepted, setTermsAccepted] = useLocalStorage('acceptedTerms', false)
   const { chainId } = auctionIdentifier
   const { account, chainId: chainIdFromWeb3 } = useActiveWeb3React()
   const orders: OrderState | undefined = useOrderState()
@@ -406,7 +407,12 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
                   <ActionButton
                     disabled={disablePlaceOrder || error}
                     onClick={() => {
-                      setShowTerms(true)
+                      if (termsAccepted === true) {
+                        setShowTerms(false)
+                      }
+                      if (!termsAccepted) {
+                        setShowTerms(true)
+                      }
                       handleShowConfirm()
                     }}
                   >
@@ -459,7 +465,10 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
                       <>
                         <TermsModal
                           abortModal={() => setShowTerms(false)}
-                          acceptTerms={() => setShowTerms(false)}
+                          acceptTerms={() => {
+                            setShowTerms(false)
+                            setTermsAccepted(true)
+                          }}
                           close={() => setShowTerms(false)}
                           isOpen={showTerms}
                         />
@@ -492,7 +501,10 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
                       <>
                         <TermsModal
                           abortModal={() => setShowTerms(false)}
-                          acceptTerms={() => setShowTerms(false)}
+                          acceptTerms={() => {
+                            setShowTerms(false)
+                            setTermsAccepted(true)
+                          }}
                           close={() => setShowTerms(false)}
                           isOpen={showTerms}
                         />
