@@ -3,7 +3,15 @@ import { BrowserRouter } from 'react-router-dom'
 
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import { SafeConnector } from '@gnosis.pm/safe-apps-wagmi'
-import { RainbowKitProvider, Theme, darkTheme, getDefaultWallets } from '@rainbow-me/rainbowkit'
+import { RainbowKitProvider, Theme, connectorsForWallets, darkTheme } from '@rainbow-me/rainbowkit'
+import {
+  argentWallet,
+  coinbaseWallet,
+  injectedWallet,
+  metaMaskWallet,
+  rainbowWallet,
+  walletConnectWallet,
+} from '@rainbow-me/rainbowkit/wallets'
 import { merge } from 'lodash'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
@@ -43,10 +51,19 @@ const { chains, provider } = configureChains(configuredChains, [
   publicProvider(),
 ])
 
-const { connectors } = getDefaultWallets({
-  appName: 'Arbor',
-  chains,
-})
+const connectors = connectorsForWallets([
+  {
+    groupName: 'Recommended',
+    wallets: [
+      injectedWallet({ chains }),
+      rainbowWallet({ chains }),
+      metaMaskWallet({ chains }),
+      coinbaseWallet({ chains, appName: 'Arbor Finance' }),
+      walletConnectWallet({ chains }),
+      argentWallet({ chains }),
+    ],
+  },
+])
 
 // Initialize the wagmi client with the GnosisConnector along with the default
 // connectors. This is to support the Gnosis Safe website. It does not show up
