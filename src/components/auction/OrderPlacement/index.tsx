@@ -46,7 +46,9 @@ import { BaseCard } from '../../pureStyledComponents/BaseCard'
 import { EmptyContentText } from '../../pureStyledComponents/EmptyContent'
 import { InfoType } from '../../pureStyledComponents/FieldRow'
 
+import TermsModal from '@/components/TermsModal'
 import Tooltip from '@/components/common/Tooltip'
+import useLocalStorage from '@/hooks/useLocalStorage'
 
 const LinkCSS = css`
   color: ${({ theme }) => theme.text1};
@@ -92,6 +94,8 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
   const location = useGeoLocation()
   const disabledCountry = !isGoerli && location?.country === 'US'
   const [showCountry, setShowCountryDisabledModal] = useState(false)
+  const [showTerms, setShowTerms] = useState(false)
+  const [termsAccepted, setTermsAccepted] = useLocalStorage('acceptedTerms', false)
   const { chainId } = auctionIdentifier
   const { account, chainId: chainIdFromWeb3 } = useActiveWeb3React()
   const orders: OrderState | undefined = useOrderState()
@@ -402,7 +406,15 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
                 <>
                   <ActionButton
                     disabled={disablePlaceOrder || error}
-                    onClick={() => handleShowConfirm()}
+                    onClick={() => {
+                      if (termsAccepted === true) {
+                        setShowTerms(false)
+                      }
+                      if (!termsAccepted) {
+                        setShowTerms(true)
+                      }
+                      handleShowConfirm()
+                    }}
                   >
                     Review order
                   </ActionButton>
@@ -450,13 +462,24 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
                     actionText={`Approve ${biddingTokenDisplay}`}
                     actionTextDone="Review order"
                     beforeDisplay={
-                      <ReviewOrder
-                        amountToken={graphInfo?.bond}
-                        cancelCutoff={cancelCutoff}
-                        data={reviewData}
-                        orderPlacingOnly={orderPlacingOnly}
-                        priceToken={graphInfo?.bond?.paymentToken}
-                      />
+                      <>
+                        <TermsModal
+                          abortModal={() => setShowTerms(false)}
+                          acceptTerms={() => {
+                            setShowTerms(false)
+                            setTermsAccepted(true)
+                          }}
+                          close={() => setShowTerms(false)}
+                          isOpen={showTerms}
+                        />
+                        <ReviewOrder
+                          amountToken={graphInfo?.bond}
+                          cancelCutoff={cancelCutoff}
+                          data={reviewData}
+                          orderPlacingOnly={orderPlacingOnly}
+                          priceToken={graphInfo?.bond?.paymentToken}
+                        />
+                      </>
                     }
                     finishedText={`${biddingTokenDisplay} Approved`}
                     loadingText={`Approving ${biddingTokenDisplay}`}
@@ -475,13 +498,24 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
                   <ConfirmationDialog
                     actionText="Place order"
                     beforeDisplay={
-                      <ReviewOrder
-                        amountToken={graphInfo?.bond}
-                        cancelCutoff={cancelCutoff}
-                        data={reviewData}
-                        orderPlacingOnly={orderPlacingOnly}
-                        priceToken={graphInfo?.bond?.paymentToken}
-                      />
+                      <>
+                        <TermsModal
+                          abortModal={() => setShowTerms(false)}
+                          acceptTerms={() => {
+                            setShowTerms(false)
+                            setTermsAccepted(true)
+                          }}
+                          close={() => setShowTerms(false)}
+                          isOpen={showTerms}
+                        />
+                        <ReviewOrder
+                          amountToken={graphInfo?.bond}
+                          cancelCutoff={cancelCutoff}
+                          data={reviewData}
+                          orderPlacingOnly={orderPlacingOnly}
+                          priceToken={graphInfo?.bond?.paymentToken}
+                        />
+                      </>
                     }
                     finishedText="Order placed"
                     loadingText="Placing order"

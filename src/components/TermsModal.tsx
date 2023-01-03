@@ -1,21 +1,21 @@
 import React from 'react'
 
-import useLocalStorage from '../hooks/useLocalStorage'
 import MyModal from './modals/common/Modal'
 
-const TermsModal = () => {
-  const [showTerms, setShowTerms] = useLocalStorage('showTerms', true)
-
-  const acceptTerms = () => {
-    setShowTerms(false)
-  }
-
-  const abortModal = () => {
-    window.location.href = 'https://arbor.finance'
-  }
-
+const TermsModal = ({
+  abortModal,
+  acceptTerms,
+  close,
+  isOpen,
+}: {
+  close: () => void
+  isOpen: boolean
+  abortModal: () => void
+  acceptTerms: () => void
+}) => {
+  console.log({ isOpen })
   return (
-    <MyModal blockBackdropDismiss hideCloseIcon isOpen={showTerms} onDismiss={abortModal}>
+    <MyModal blockBackdropDismiss hideCloseIcon isOpen={isOpen} onDismiss={close}>
       <div className="mt-2 space-y-6 text-center">
         <h1 className="text-xl font-medium text-[#E0E0E0]">Terms of Service</h1>
         <div className="space-y-4 text-left text-[#D6D6D6]">
@@ -23,7 +23,7 @@ const TermsModal = () => {
             Please read our{' '}
             <a
               className="text-[#6CADFB] hover:underline"
-              href="https://arbor.finance/terms-of-service"
+              href="/pdf/Arbor_Terms_and_Conditions_.pdf"
               rel="noreferrer"
               target="_blank"
             >
@@ -37,7 +37,7 @@ const TermsModal = () => {
             By clicking “Accept” you agree to our{' '}
             <a
               className="text-[#6CADFB] hover:underline"
-              href="https://arbor.finance/terms-of-service"
+              href="/pdf/Arbor_Terms_and_Conditions_.pdf"
               rel="noreferrer"
               target="_blank"
             >
@@ -49,13 +49,13 @@ const TermsModal = () => {
 
         <div className="space-x-4">
           <button
-            className="btn btn-sm h-[41px] w-[170px] bg-[#1C701C] font-normal normal-case text-white hover:bg-[#1C701C]/80"
+            className="btn-sm btn h-[41px] w-[170px] bg-[#1C701C] font-normal normal-case text-white hover:bg-[#1C701C]/80"
             onClick={acceptTerms}
           >
             Accept
           </button>
           <button
-            className="btn btn-sm h-[41px] w-[170px] bg-[#696969] font-normal normal-case text-white hover:bg-gray-500"
+            className="btn-sm btn h-[41px] w-[170px] bg-[#696969] font-normal normal-case text-white hover:bg-gray-500"
             onClick={abortModal}
           >
             Decline
