@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState } from 'react'
 
 import { MaxUint256 } from '@ethersproject/constants'
 import { TransactionResponse } from '@ethersproject/providers'
+import { parseUnits } from '@ethersproject/units'
 import { TokenAmount } from '@josojo/honeyswap-sdk'
 import { useWaitForTransaction } from 'wagmi'
 
@@ -92,8 +93,8 @@ export function useApproveCallback(
 
     return tokenContract
       .approve(addressToApprove, useExact ? amountToApprove.raw.toString() : MaxUint256, {
-        gasPrice,
         gasLimit: calculateGasMargin(estimatedGas),
+        maxPriorityFeePerGas: parseUnits('1.5', 'gwei'),
       })
       .then((response: TransactionResponse) => {
         addTransaction(response?.hash, {
@@ -108,7 +109,7 @@ export function useApproveCallback(
         logger.debug('Failed to approve token', error)
         throw error
       })
-  }, [approval, gasPrice, tokenContract, addressToApprove, amountToApprove, addTransaction])
+  }, [approval, tokenContract, addressToApprove, amountToApprove, addTransaction])
 
   return [approval, approve]
 }
@@ -176,8 +177,8 @@ export function useUnapproveCallback(
 
     return tokenContract
       .approve(addressToApprove, 0, {
-        gasPrice,
         gasLimit: calculateGasMargin(estimatedGas),
+        maxPriorityFeePerGas: parseUnits('1.5', 'gwei'),
       })
       .then((response: TransactionResponse) => {
         addTransaction(response?.hash, {
@@ -191,7 +192,7 @@ export function useUnapproveCallback(
         logger.debug('Failed to unapprove token', error)
         throw error
       })
-  }, [approval, gasPrice, tokenContract, addressToApprove, amountToApprove, addTransaction])
+  }, [approval, tokenContract, addressToApprove, amountToApprove, addTransaction])
 
   return [approval, unapprove]
 }

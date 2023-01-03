@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract, ContractFunction } from '@ethersproject/contracts'
+import { parseUnits } from '@ethersproject/units'
 import { Token } from '@josojo/honeyswap-sdk'
 
 import { additionalServiceApi } from '../api'
@@ -130,8 +131,8 @@ export function usePlaceOrderCallback(
         .then((estimatedGasLimit) =>
           method(...args, {
             ...(value ? { value } : {}),
-            gasPrice,
             gasLimit: calculateGasMargin(estimatedGasLimit),
+            maxPriorityFeePerGas: parseUnits('1.5', 'gwei'),
           }),
         )
         .then((response) => {
@@ -179,7 +180,6 @@ export function usePlaceOrderCallback(
     auctioningToken,
     biddingToken,
     chainId,
-    gasPrice,
     signer,
     price,
     sellAmount,
