@@ -203,7 +203,7 @@ export const BondDetails = ({ id }) => {
             <div className="cursor-pointer" onClick={() => setIsPromissoryModalOpen(true)}>
               <BondDetailItem
                 title="Signature"
-                value={<span className="text-[#6CADFB]">Promissory Note</span>}
+                value={<span className="text-[#09f50b]">Promissory Note</span>}
               />
             </div>
           </div>
