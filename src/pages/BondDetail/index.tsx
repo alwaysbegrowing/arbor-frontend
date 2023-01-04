@@ -491,7 +491,7 @@ const BondDetail: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <div className="hidden sm:flex">
+              <div className="hidden sm:inline">
                 <BondGraphCard bond={bond as Bond} />
               </div>
               <div className="card">
