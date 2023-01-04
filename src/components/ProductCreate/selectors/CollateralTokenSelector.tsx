@@ -55,7 +55,7 @@ const NoBondFound = () => {
       <div className="flex w-full justify-between">
         <ArborIcon />
         <div className="flex flex-col">
-          <span>No Bonds available to auction.</span> {!address && 'Connect wallet'}
+          <span>No Bonds available to auction.</span> {!address && 'Connect Wallet'}
         </div>
       </div>
     </div>

@@ -307,7 +307,7 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
           )}
           {!account && (
             <ActionButton className="mt-4" onClick={toggleWalletModal}>
-              Connect wallet
+              Connect Wallet
             </ActionButton>
           )}
         </div>
@@ -399,7 +399,7 @@ const OrderPlacement: React.FC<OrderPlacementProps> = (props) => {
               )}
               {!account ? (
                 <>
-                  <ActionButton onClick={toggleWalletModal}>Connect wallet</ActionButton>
+                  <ActionButton onClick={toggleWalletModal}>Connect Wallet</ActionButton>
                   <div className="mt-4 text-xs text-[#9F9F9F]">Wallet not connected</div>
                 </>
               ) : (

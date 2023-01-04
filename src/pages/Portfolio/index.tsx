@@ -111,7 +111,7 @@ const Portfolio = () => {
     })) || []
   ).filter(({ type }) => (!tableFilter ? true : type === tableFilter))
 
-  const emptyActionText = account ? 'Go to offerings' : 'Connect wallet'
+  const emptyActionText = account ? 'Go to offerings' : 'Connect Wallet'
   const emptyActionClick = account ? () => navigate('/offerings') : toggleWalletModal
   const emptyDescription = account
     ? 'Your portfolio is empty'

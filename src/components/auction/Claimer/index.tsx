@@ -34,7 +34,7 @@ const Wrapper = styled(BaseCard)`
 export const ActionButton = ({ children, color = 'blue', ...props }) => (
   <button
     {...props}
-    className={`btn btn-block btn-sm w-full normal-case hover:bg-[#1C701C]/80 ${
+    className={`btn-block btn-sm btn w-full normal-case hover:bg-[#1C701C]/80 ${
       props.disabled ? '!bg-[#2C2C2C] !text-[#696969]' : 'bg-[#1C701C] text-white'
     } h-[41px] font-normal ${color !== 'blue' && 'bg-[#293327] hover:bg-[#293327]/80'} ${
       props.className
@@ -47,7 +47,7 @@ export const ActionButton = ({ children, color = 'blue', ...props }) => (
 export const GhostActionLink = ({ children, ...props }) => (
   <a
     {...props}
-    className={`btn btn-link btn-block btn-sm w-full normal-case hover:bg-white hover:fill-black hover:text-black ${
+    className={`btn-link btn-block btn-sm btn w-full normal-case hover:bg-white hover:fill-black hover:text-black ${
       props.disabled ? '!bg-[#2C2C2C] !text-[#696969]' : 'bg-transparent text-white'
     } bordered h-[41px] border-[#2C2C2C] font-normal ${props.className}`}
   >
@@ -81,7 +81,7 @@ const ClaimDisabled = () => {
               : 'There are no funds to claim as you did not participate in the auction.'}
           </div>
 
-          {!account && <ActionButton onClick={toggleWalletModal}>Connect wallet</ActionButton>}
+          {!account && <ActionButton onClick={toggleWalletModal}>Connect Wallet</ActionButton>}
         </div>
       </div>
     </div>
@@ -190,7 +190,7 @@ const Claimer: React.FC<Props> = (props) => {
             </FieldRowLabelStyled>
           </div>
           {!account ? (
-            <ActionButton onClick={toggleWalletModal}>Connect wallet</ActionButton>
+            <ActionButton onClick={toggleWalletModal}>Connect Wallet</ActionButton>
           ) : (
             <ActionButton
               disabled={isClaimButtonDisabled}

@@ -77,7 +77,7 @@ export const FormSteps = ({
               <div className="space-y-4">
                 {!account && (
                   <ActionButton className="mt-4" color={color} onClick={toggleWalletModal}>
-                    Connect wallet
+                    Connect Wallet
                   </ActionButton>
                 )}
 
