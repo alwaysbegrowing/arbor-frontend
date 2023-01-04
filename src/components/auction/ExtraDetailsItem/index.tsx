@@ -93,6 +93,7 @@ export interface Props {
   hint?: string | number | ReactElement
   fullNumberHint?: string
   value: string | number | ReactElement
+  valueText?: string
 }
 
 export const ExtraDetailsItem: React.FC<Props> = ({
@@ -106,12 +107,13 @@ export const ExtraDetailsItem: React.FC<Props> = ({
   tooltip,
   url,
   value,
+  valueText,
   ...restProps
 }) =>
   show && (
     <div className="col-span-1" {...restProps}>
       <div className="space-y-2">
-        <Value className={`${disabled ? 'text-[#696969]' : 'text-white'}`}>
+        <Value className={`${disabled ? 'text-[#696969]' : valueText ? valueText : 'text-white'}`}>
           <ValueText className="overflow-hidden text-ellipsis">{value || '-'}</ValueText>
           {url && <Link href={url} />}
           {hint && <span className="text-[#979797]">{hint}</span>}

@@ -165,36 +165,12 @@ const AuctionDetails = (props: Props) => {
 
   const extraDetails: Array<ExtraDetailsItemProps & IssuerInformationRef> = [
     {
-      title: 'Offering amount',
-      value: '-',
-      ...offeringSize,
-      tooltip: 'Number of bonds being sold.',
-    },
-    {
-      title: 'Total order volume',
-      value: '-',
-      ...totalBidVolume,
-      tooltip: 'Sum of all order volume.',
-    },
-    {
-      title: 'Min funding threshold',
-      tooltip:
-        'Minimum order volume required for auction to close. If this value is not reached, all funds will be returned and no bonds will be sold.',
-      value: '-',
-      ...minimumFundingThreshold,
-    },
-    {
-      title: 'Minimum order amount',
-      value: '-',
-      ...minimumBidSize,
-      tooltip: 'Minimum amount for a single order. Orders below this amount cannot be placed.',
-    },
-    {
       title: 'Current bond price',
       tooltip: `Current auction clearing price for a single auction. If the auction ended now, this would be the price set.`,
       value: '-',
       ...currentBondPrice,
       bordered: 'blue',
+      valueText: 'text-[#75ed02]',
     },
     {
       title: 'Current bond YTM',
@@ -202,6 +178,21 @@ const AuctionDetails = (props: Props) => {
       tooltip:
         'Current bond yield to maturity calculated from the current bond price. If the auction ended now, this is the return bond purchasers would receive assuming no default.',
       bordered: 'blue',
+      valueText: 'text-[#75ed02]',
+    },
+    {
+      title: 'Total order volume',
+      value: '-',
+      ...totalBidVolume,
+      tooltip: 'Sum of all order volume.',
+      bordered: 'blue',
+      valueText: 'text-[#75ed02]',
+    },
+    {
+      title: 'Offering amount',
+      value: '-',
+      ...offeringSize,
+      tooltip: 'Number of bonds being sold.',
     },
     {
       title: 'Minimum bond price',
@@ -215,6 +206,19 @@ const AuctionDetails = (props: Props) => {
       value: maxBondYTM,
       tooltip:
         'Maximum yield to maturity the issuer is willing to pay. This is calculated using the minimum bond price.',
+    },
+    {
+      title: 'Min funding threshold',
+      tooltip:
+        'Minimum order volume required for auction to close. If this value is not reached, all funds will be returned and no bonds will be sold.',
+      value: '-',
+      ...minimumFundingThreshold,
+    },
+    {
+      title: 'Minimum order amount',
+      value: '-',
+      ...minimumBidSize,
+      tooltip: 'Minimum amount for a single order. Orders below this amount cannot be placed.',
     },
   ]
 
