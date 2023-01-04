@@ -142,7 +142,7 @@ export const BondDetails = ({ id }) => {
           <BondDetailItem
             title="Documents"
             value={
-              <LinkIcon color={'#75ed02'} href={creditAnalysisArbor}>
+              <LinkIcon color={'#09f50b'} href={creditAnalysisArbor}>
                 Arbor Credit Analysis
               </LinkIcon>
             }

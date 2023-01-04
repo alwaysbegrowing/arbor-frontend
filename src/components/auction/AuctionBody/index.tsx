@@ -95,7 +95,7 @@ const BondCard = ({
         <div className="flex items-center justify-between">
           <h2 className="card-title">Bond information</h2>
           <button
-            className="btn-primary btn-sm btn space-x-2 rounded-md bg-[#293327] !text-xxs font-normal"
+            className="btn-primary btn-sm btn space-x-2 rounded-md bg-[#1C701C] !text-xxs font-normal"
             onClick={() => navigate(`/bonds/${graphInfo?.bond.id || ''}`)}
           >
             <span>Learn more</span>

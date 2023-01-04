@@ -377,7 +377,7 @@ const BondAction = ({
 
               {!account ? (
                 <>
-                  <ActionButton color="purple" onClick={toggleWalletModal}>
+                  <ActionButton color="blue" onClick={toggleWalletModal}>
                     Connect wallet
                   </ActionButton>
                   <div className="mt-4 text-xs text-[#9F9F9F]">Wallet not connected</div>
