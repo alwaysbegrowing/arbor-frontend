@@ -15,7 +15,7 @@ const AuctionSettle = () => {
   const { settleAuctionCallback } = useSettleAuction(auctionId)
 
   return (
-    <div className="card place-order-color">
+    <div className="place-order-color card">
       <div className="card-body">
         <h2 className="card-title">Auction Settling</h2>
 
@@ -30,7 +30,7 @@ const AuctionSettle = () => {
         )}
         {!account && (
           <ActionButton className="mt-4" onClick={toggleWalletModal}>
-            Connect wallet
+            Connect Wallet
           </ActionButton>
         )}
       </div>
@@ -39,7 +39,7 @@ const AuctionSettle = () => {
         actionText="Settle auction"
         beforeDisplay={
           <div className="mt-10 space-y-6">
-            <h1 className="text-xl font-medium text-center text-[#E0E0E0]">Are you sure?</h1>
+            <h1 className="text-center text-xl font-medium text-[#E0E0E0]">Are you sure?</h1>
             <p className="overflow-hidden text-[#D6D6D6]">
               It is the responsibility of the auctioneer to settle the auction. Therefore, we
               recommend you wait for them to handle it. However, you have the option to settle the

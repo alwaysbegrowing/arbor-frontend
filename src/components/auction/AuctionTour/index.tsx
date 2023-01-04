@@ -1,9 +1,10 @@
 import React, { RefObject, useState } from 'react'
 
-import { Button, Tour, TourStepProps } from 'antd'
+import { Tour, TourStepProps } from 'antd'
 import type { TourProps } from 'antd'
 
 import { TooltipIcon } from '../../icons/TooltipIcon'
+import { ActionButton } from '../Claimer'
 
 interface Props {
   auctionInformationRef: RefObject<HTMLHeadingElement>
@@ -163,9 +164,9 @@ const AuctionTour = (props: Props) => {
           <span>Need Help?</span>
         </h2>
         <>
-          <Button onClick={() => setOpen(true)} type="primary">
+          <ActionButton onClick={() => setOpen(true)} type="primary">
             Yes, Start the Walkthrough!
-          </Button>
+          </ActionButton>
           <Tour mask={true} onClose={() => setOpen(false)} open={open} steps={steps} />
         </>
       </div>

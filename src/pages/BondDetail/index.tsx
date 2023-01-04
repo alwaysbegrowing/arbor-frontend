@@ -142,7 +142,7 @@ export const BondDetails = ({ id }) => {
           <BondDetailItem
             title="Documents"
             value={
-              <LinkIcon color={'#75ed02'} href={creditAnalysisArbor}>
+              <LinkIcon color={'#09f50b'} href={creditAnalysisArbor}>
                 Arbor Credit Analysis
               </LinkIcon>
             }
@@ -203,7 +203,7 @@ export const BondDetails = ({ id }) => {
             <div className="cursor-pointer" onClick={() => setIsPromissoryModalOpen(true)}>
               <BondDetailItem
                 title="Signature"
-                value={<span className="text-[#6CADFB]">Promissory Note</span>}
+                value={<span className="text-[#09f50b]">Promissory Note</span>}
               />
             </div>
           </div>

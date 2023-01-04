@@ -170,7 +170,7 @@ const AuctionDetails = (props: Props) => {
       value: '-',
       ...currentBondPrice,
       bordered: 'blue',
-      valueText: 'text-[#75ed02]',
+      valueText: 'text-[#09f50b]',
     },
     {
       title: 'Current bond YTM',
@@ -178,7 +178,7 @@ const AuctionDetails = (props: Props) => {
       tooltip:
         'Current bond yield to maturity calculated from the current bond price. If the auction ended now, this is the return bond purchasers would receive assuming no default.',
       bordered: 'blue',
-      valueText: 'text-[#75ed02]',
+      valueText: 'text-[#09f50b]',
     },
     {
       title: 'Total order volume',
@@ -186,7 +186,7 @@ const AuctionDetails = (props: Props) => {
       ...totalBidVolume,
       tooltip: 'Sum of all order volume.',
       bordered: 'blue',
-      valueText: 'text-[#75ed02]',
+      valueText: 'text-[#09f50b]',
     },
     {
       title: 'Offering amount',
@@ -236,7 +236,7 @@ const AuctionDetails = (props: Props) => {
           rightOfCountdown={
             auction?.bond.id in BOND_INFORMATION && (
               <button
-                className="btn-primary btn-sm btn space-x-2 rounded-md bg-[#293327] !text-xxs font-normal"
+                className="btn-primary btn-sm btn space-x-2 rounded-md bg-[#1C701C] !text-xxs font-normal"
                 onClick={() => navigate(`/bonds/${auction?.bond.id || ''}`)}
                 ref={props.issuerInformationRef}
               >
