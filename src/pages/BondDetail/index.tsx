@@ -79,7 +79,6 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     useLink: 'https://app.rari.capital/fuse/pool/7',
   },
   '0x2e2a42fbe7c7e2ffc031baf7442dbe1f8957770a': {
-    // auctionId: '20',
     name: 'Shapeshift DAO',
     website: 'https://shapeshift.com/',
     promissoryMessageHash: '0x3736a8b0abf8fb1f17f9f3f0e88c637a36696a222378c21b9c76d0d33c0cd20a',
@@ -96,7 +95,6 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     useLink: 'https://app.rari.capital/fuse/pool/7',
   },
   futureIchiBond: {
-    // auctionId: '20',
     name: 'ICHI',
     website: 'https://ichi.org/',
     //promissoryMessageHash: '',
@@ -105,7 +103,8 @@ export const BOND_INFORMATION: { [key: string]: { [key: string]: string } } = {
     // creditAnalysisCredora: '/pdf/Ichi_Credora_Arbor.pdf',
     prime: 'https://www.prime.xyz/ratings/ichi',
     contractAddress: '0x111111517e4929D3dcbdfa7CCe55d30d4B6BC4d6',
-    description: 'ICHI .',
+    description:
+      'ICHI is a liquidity management DAO which uses greedy liquidity principles to mitigate losses and enhance portfolio performance.',
   },
 }
 

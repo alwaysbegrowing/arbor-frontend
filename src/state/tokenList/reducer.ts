@@ -51,20 +51,32 @@ export const DEV_tokens: { [key: string]: { [key: string]: string } } = {
   '0x1ee2926BDd6c0A34207BAEb7B8fAa12cdE0BC315': {
     image: 'https://etherscan.io/token/images/centre-usdc_28.png',
   },
-  //FOX
+  //FOX Goerli Convertible Bond
   '0x11f1f978f7944579bb3791b765176de3e68bffc6': {
     image:
       'https://assets.website-files.com/5cec55545d0f47cfe2a39a8e/61895a7ef8500fada381641f_FOX_token.svg',
   },
-  //FOX
+  //FOX Goerli
   '0xb514a1237860308db88758d26bc9b065bc310748': {
     image:
       'https://assets.website-files.com/5cec55545d0f47cfe2a39a8e/61895a7ef8500fada381641f_FOX_token.svg',
   },
-  //FOX
+  //FOX Mainnet Convertible Bond
   '0x2e2a42fbe7c7e2ffc031baf7442dbe1f8957770a': {
     image:
       'https://assets.website-files.com/5cec55545d0f47cfe2a39a8e/61895a7ef8500fada381641f_FOX_token.svg',
+  },
+  //ICHI Goerli
+  '0x443bD404f87c19aC39aC67960DDdaE0A7788fce4': {
+    image: 'https://avatars.githubusercontent.com/u/74116843?s=200&v=4',
+  },
+  //ICHI Goerli Convertible Bond
+  '0xsssss': {
+    image: 'https://avatars.githubusercontent.com/u/74116843?s=200&v=4',
+  },
+  //ICHI Mainnet Convertible Bond
+  '0xyyyy': {
+    image: 'https://avatars.githubusercontent.com/u/74116843?s=200&v=4',
   },
 }
 
