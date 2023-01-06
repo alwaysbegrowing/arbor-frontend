@@ -24,7 +24,6 @@ import { useBondExtraDetails } from '../../hooks/useBondExtraDetails'
 import { ConvertButtonOutline, LoadingTwoGrid, SimpleButtonOutline, TwoGridPage } from '../Auction'
 import BondManagement from './BondManagement'
 
-import getPageViews from '@/api/page-views'
 import { getPayload } from '@/components/CreditEnhancers/promissory/SignatureRequest'
 import PromissoryNoteModal from '@/components/PromissoryNoteModal'
 import { Bond } from '@/generated/graphql'
@@ -119,8 +118,6 @@ const BondDetailItem = ({ title, value }: { value: ReactElement; title: string }
     </span>
   )
 }
-
-getPageViews()
 
 export const BondDetails = ({ id }) => {
   const { data: bond } = useBond(id)

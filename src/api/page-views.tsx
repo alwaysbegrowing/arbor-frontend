@@ -1,116 +1,81 @@
-// export default async function getPageViews() {
-//   console.log('hi')
-//   try {
-//     const url =
-//       'https://www.googleapis.com/analytics/v3/data/ga?ids=ga:xx&dimensions=ga:pagePath&metrics=ga:pageviews&filters=ga:pagePath==/offerings&start-date=2021-10-15&end-date=2023-10-29&max-results=50'
+import { BetaAnalyticsDataClient } from '@google-analytics/data'
+import type { VercelRequest, VercelResponse } from '@vercel/node'
+import { GoogleAuth } from 'google-auth-library' // no need to install this library, it comes with @google-analytics/data
 
-//     const res = await fetch(url)
-//     if (!res.ok) {
-//       // backend returns {"message":"invalid url query"}
-//       // for bad requests
-//       throw await res.json()
-//     }
-//     return await res.json()
-//   } catch (error) {
-//     // const { auctionId } = params
-
-//     console.log(`Failed to query orderbook data for auction  id ${error.message}`)
-//     return null
-//   }
-// }
-
-export default async function getPageViews() {
-  // await fetch(
-  //   'https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly&include_granted_scopes=true&response_type=token&state=state_parameter_passthrough_value&redirect_uri=http://localhost:3000&client_id=xx,
-  //   // {
-  //   //   headers: {
-  //   //     'Access-Control-Allow-Origin': '*',
-  //   //   },
-  //   // },
-  // )
-  /*
-   * Create form to request access token from Google's OAuth 2.0 server.
-   */
-  // function oauthSignIn() {
-  //   // Google's OAuth 2.0 endpoint for requesting an access token
-  //   const oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth'
-
-  //   // Create <form> element to submit parameters to OAuth 2.0 endpoint.
-  //   const form = document.createElement('form')
-  //   form.setAttribute('method', 'GET') // Send as a GET request.
-  //   form.setAttribute('action', oauth2Endpoint)
-
-  //   // Parameters to pass to OAuth 2.0 endpoint.
-  //   const params = {
-  //     client_id: CLIENT ID,
-  //     redirect_uri: 'http://localhost:3000',
-  //     response_type: 'token',
-  //     scope: 'https://www.googleapis.com/auth/drive.metadata.readonly',
-  //     include_granted_scopes: 'true',
-  //     state: 'pass-through value',
-  //   }
-
-  //   // Add form parameters as hidden input values.
-  //   for (const p in params) {
-  //     const input = document.createElement('input')
-  //     input.setAttribute('type', 'hidden')
-  //     input.setAttribute('name', p)
-  //     input.setAttribute('value', params[p])
-  //     form.appendChild(input)
-  //   }
-
-  //   // Add form to page and submit it to open the OAuth 2.0 endpoint.
-  //   document.body.appendChild(form)
-  //   form.submit()
-
-  //   return
-  // }
-  // oauthSignIn()
-  //   .then((res) => {
-  //     const token = res.json()
-  //     return token
-  //   })
-  const res = fetch(
-    'https://analyticsdata.googleapis.com/v1beta/properties/xx:runReport?prettyPrint=true&key=API KEY',
-    {
-      method: 'POST',
-      body: JSON.stringify({
-        resource: {
-          metrics: [
-            {
-              name: 'screenPageViews',
-            },
-          ],
-          dateRanges: [
-            {
-              startDate: '2022-11-01',
-              endDate: 'today',
-            },
-          ],
-          dimensions: [
-            {
-              name: 'pagePath',
-            },
-          ],
-          dimensionFilter: {
-            filter: {
-              stringFilter: {
-                matchType: 'EXACT',
-                value: '/offerings/399',
-              },
-              fieldName: 'pagePath',
-            },
-          },
-        },
-      }),
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    },
-  )
-  const data = (await res).json()
-  console.log(await data)
-  return data
+export default (request: VercelRequest, res: VercelResponse) => {
+  const { name } = request.query
+  // const { response } = getPageViews()
+  res.status(200).send(`Hello ${name}!`)
 }
+
+async function getPageViews() {
+  const propertyId = '339576001'
+  // Creates a client.
+  const analyticsDataClient = new BetaAnalyticsDataClient({
+    auth: new GoogleAuth({
+      projectId: 'arbor-page-views',
+      scopes: 'https://www.googleapis.com/auth/analytics',
+      credentials: {
+        client_email: process.env.GOOGLE_CLIENT_EMAIL,
+        private_key: process.env.GOOGLE_PRIVATE_KEY,
+      },
+    }),
+  })
+
+  // Runs a realtime report on a Google Analytics 4 property.
+  async function runRealtimeReport() {
+    const [response] = await analyticsDataClient.runRealtimeReport({
+      property: `properties/${propertyId}`,
+      metrics: [
+        {
+          name: 'screenPageViews',
+        },
+      ],
+      dimensions: [
+        {
+          name: 'pagePath',
+        },
+      ],
+      dimensionFilter: {
+        filter: {
+          stringFilter: {
+            matchType: 'EXACT',
+            value: '/offerings/399',
+          },
+          fieldName: 'pagePath',
+        },
+      },
+    })
+    printRunReportResponse(response)
+    return response
+  }
+
+  runRealtimeReport()
+
+  // Prints results of a runReport call.
+  function printRunReportResponse(response) {
+    //[START analyticsdata_print_run_report_response_header]
+    console.log(`${response.rowCount} rows received`)
+    response.dimensionHeaders.forEach((dimensionHeader) => {
+      console.log(`Dimension header name: ${dimensionHeader.name}`)
+    })
+    response.metricHeaders.forEach((metricHeader) => {
+      console.log(`Metric header name: ${metricHeader.name} (${metricHeader.type})`)
+    })
+    //[END analyticsdata_print_run_report_response_header]
+
+    // [START analyticsdata_print_run_report_response_rows]
+    console.log('Report result:')
+    response.rows.forEach((row) => {
+      console.log(`${row.dimensionValues[0].value}, ${row.metricValues[0].value}`)
+    })
+    // [END analyticsdata_print_run_report_response_rows]
+  }
+  // [END analyticsdata_run_realtime_report]
+}
+
+// process.on('unhandledRejection', (err) => {
+//   console.error(err.message)
+//   process.exitCode = 1
+// })
+// main(...process.argv.slice(2))
