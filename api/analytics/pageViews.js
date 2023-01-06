@@ -1,11 +1,10 @@
 import { BetaAnalyticsDataClient } from '@google-analytics/data'
-import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { GoogleAuth } from 'google-auth-library' // no need to install this library, it comes with @google-analytics/data
 
-export default (request: VercelRequest, res: VercelResponse) => {
+export default (request, res) => {
   const { name } = request.query
   // const { response } = getPageViews()
-  res.status(200).send(`Hello ${name}!`)
+  res.status(200).send(`Hello ${BetaAnalyticsDataClient}!`)
 }
 
 async function getPageViews() {
