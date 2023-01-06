@@ -68,6 +68,12 @@ export const CollateralTokens = {
       address: '0xc770eefad204b5180df6a14ee197d99d808ee52d',
       decimals: 18,
     },
+    {
+      name: 'ICHI',
+      icon: ICHIIcon,
+      address: '0x111111517e4929D3dcbdfa7CCe55d30d4B6BC4d6',
+      decimals: 18,
+    },
   ],
   [chain.goerli.id]: [
     {
@@ -92,10 +98,12 @@ export const CollateralTokens = {
 }
 
 const ssAddress = '0x90A48D5CF7343B08dA12E067680B4C6dbfE551Be'.toLowerCase()
+const ichiAddress = '0x94A5980d5634533551dcB7108322f6C4f2a80E6B'.toLowerCase()
 
 // Make sure the address is all lowercase
 export const IssuerAllowList = [
   '0xfab4af4ea2eb609868cdb4f744155d67f0a5bf41',
   '0xf544286b80bc5e0ae4e37421a8c5c15a7cb813cc',
   ssAddress,
+  ichiAddress,
 ]
