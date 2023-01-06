@@ -1,85 +1,116 @@
-// import { google } from 'googleapis'
+// export default async function getPageViews() {
+//   console.log('hi')
+//   try {
+//     const url =
+//       'https://www.googleapis.com/analytics/v3/data/ga?ids=ga:xx&dimensions=ga:pagePath&metrics=ga:pageviews&filters=ga:pagePath==/offerings&start-date=2021-10-15&end-date=2023-10-29&max-results=50'
+
+//     const res = await fetch(url)
+//     if (!res.ok) {
+//       // backend returns {"message":"invalid url query"}
+//       // for bad requests
+//       throw await res.json()
+//     }
+//     return await res.json()
+//   } catch (error) {
+//     // const { auctionId } = params
+
+//     console.log(`Failed to query orderbook data for auction  id ${error.message}`)
+//     return null
+//   }
+// }
 
 export default async function getPageViews() {
-  console.log('hi')
-  try {
-    const url =
-      'https://www.googleapis.com/analytics/v3/data/ga?ids=ga:4393728121&dimensions=ga:pagePath&metrics=ga:pageviews&filters=ga:pagePath==/offerings&start-date=2021-10-15&end-date=2023-10-29&max-results=50'
+  // await fetch(
+  //   'https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly&include_granted_scopes=true&response_type=token&state=state_parameter_passthrough_value&redirect_uri=http://localhost:3000&client_id=xx,
+  //   // {
+  //   //   headers: {
+  //   //     'Access-Control-Allow-Origin': '*',
+  //   //   },
+  //   // },
+  // )
+  /*
+   * Create form to request access token from Google's OAuth 2.0 server.
+   */
+  // function oauthSignIn() {
+  //   // Google's OAuth 2.0 endpoint for requesting an access token
+  //   const oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth'
 
-    const res = await fetch(url)
-    if (!res.ok) {
-      // backend returns {"message":"invalid url query"}
-      // for bad requests
-      throw await res.json()
-    }
-    return await res.json()
-  } catch (error) {
-    // const { auctionId } = params
+  //   // Create <form> element to submit parameters to OAuth 2.0 endpoint.
+  //   const form = document.createElement('form')
+  //   form.setAttribute('method', 'GET') // Send as a GET request.
+  //   form.setAttribute('action', oauth2Endpoint)
 
-    console.log(`Failed to query orderbook data for auction  id ${error.message}`)
-    return null
-  }
+  //   // Parameters to pass to OAuth 2.0 endpoint.
+  //   const params = {
+  //     client_id: CLIENT ID,
+  //     redirect_uri: 'http://localhost:3000',
+  //     response_type: 'token',
+  //     scope: 'https://www.googleapis.com/auth/drive.metadata.readonly',
+  //     include_granted_scopes: 'true',
+  //     state: 'pass-through value',
+  //   }
+
+  //   // Add form parameters as hidden input values.
+  //   for (const p in params) {
+  //     const input = document.createElement('input')
+  //     input.setAttribute('type', 'hidden')
+  //     input.setAttribute('name', p)
+  //     input.setAttribute('value', params[p])
+  //     form.appendChild(input)
+  //   }
+
+  //   // Add form to page and submit it to open the OAuth 2.0 endpoint.
+  //   document.body.appendChild(form)
+  //   form.submit()
+
+  //   return
+  // }
+  // oauthSignIn()
+  //   .then((res) => {
+  //     const token = res.json()
+  //     return token
+  //   })
+  const res = fetch(
+    'https://analyticsdata.googleapis.com/v1beta/properties/xx:runReport?prettyPrint=true&key=API KEY',
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        resource: {
+          metrics: [
+            {
+              name: 'screenPageViews',
+            },
+          ],
+          dateRanges: [
+            {
+              startDate: '2022-11-01',
+              endDate: 'today',
+            },
+          ],
+          dimensions: [
+            {
+              name: 'pagePath',
+            },
+          ],
+          dimensionFilter: {
+            filter: {
+              stringFilter: {
+                matchType: 'EXACT',
+                value: '/offerings/399',
+              },
+              fieldName: 'pagePath',
+            },
+          },
+        },
+      }),
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    },
+  )
+  const data = (await res).json()
+  console.log(await data)
+  return data
 }
-
-// export default async function handler(request, response) {
-//   const res = await fetch(
-//     'https://www.googleapis.com/analytics/v3/data/ga?ids=ga:4393728121&dimensions=ga:pagePath&metrics=ga:pageviews&filters=ga:pagePath==/offerings&start-date=2021-10-15&end-date=2023-10-29&max-results=50',
-//     {
-//       method: 'POST',
-//       body: JSON.stringify({
-//         // client_id: process.env.CLIENT_ID,
-//         // client_secret: process.env.CLIENT_SECRET,
-//       }),
-//       headers: { 'Content-Type': 'application/json' },
-//     },
-//   )
-
-//   const data = await res.json()
-//   return response.status(200).json({ data })
-// }
-
-// const pageViewsAPI = async (req, res) => {
-//   const startDate = req.query.startDate || '2022-12-01'
-//   const post = req.query.post
-
-//   console.log('hi1')
-
-// try {
-//   const auth = new google.auth.GoogleAuth({
-//     credentials: {
-//       client_email: process.env.GOOGLE_CLIENT_EMAIL,
-//       client_id: process.env.GOOGLE_CLIENT_ID,
-//       private_key: process.env.GOOGLE_PRIVATE_KEY,
-//     },
-//     scopes: ['https://www.googleapis.com/auth/analytics.readonly'],
-//   })
-
-//   console.log('hi')
-
-//   // https://www.googleapis.com/analytics/v3/data/ga?ids=ga:4393728121&dimensions=ga:pagePath&metrics=ga:pageviews&filters=ga:pagePath==/offerings&start-date=2021-10-15&end-date=2023-10-29&max-results=50
-
-//   const analytics = google.analytics({
-//     auth,
-//     version: 'v3',
-//   })
-
-//   const response = await analytics.data.ga.get({
-//     ids: `ga:4393728121`,
-//     metrics: 'ga:pageviews',
-//     dimensions: 'ga:pagePath',
-//     ...(post ? { filters: `ga:pagePath==${post}` } : {}),
-//     'start-date': startDate,
-//     'end-date': 'today',
-//   })
-
-//   const pageViews = response?.data?.totalsForAllResults['ga:pageviews']
-
-//   console.log({ pageViews })
-
-//   return res.status(200).json({
-//     pageViews,
-//   })
-// } catch (err) {
-//   return res.status(500).json({ error: err.message })
-// }
-// }

@@ -1,8 +1,6 @@
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
-// import { ga } from 'react-ga'
-
 import CreditEnhancers from '@/components/CreditEnhancers'
 import PromissoryNote from '@/components/CreditEnhancers/promissory/PromissoryNote'
 import SelectOffering from '@/components/OfferingCreate'
@@ -18,17 +16,6 @@ import Offerings from '@/pages/Offerings'
 import Portfolio from '@/pages/Portfolio'
 
 const AppRoutes: React.FC = () => {
-  // const location = useLocation()
-
-  // const trackPageView = () => {
-  //   ga('set', 'page', window.location.pathname)
-  //   ga('send', 'pageview')
-  // }
-
-  // useEffect(() => {
-  //   trackPageView()
-  // }, [location])
-
   return (
     <Routes>
       <Route element={<Auction />} path="/offerings/:auctionId" />
