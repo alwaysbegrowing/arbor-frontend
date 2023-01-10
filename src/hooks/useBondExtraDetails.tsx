@@ -63,26 +63,55 @@ export const useBondExtraDetails = (bondId: string): ExtraDetailsItemProps[] => 
     Number(formatUnits(bond?.amountUnpaid || '0', bond?.decimals)),
   )
   const totalSupply = Math.round(Number(formatUnits(bond?.maxSupply || '0', bond?.decimals)))
+  const maturityDate = dayjs(bond?.maturityDate * 1000)
+    .utc()
+    .format('ll')
+    .toUpperCase()
+  const collateralTokens = round(Number(collateralPerBond.toLocaleString()), 2)
+  const clearingPrice = round(bond?.clearingPrice.toLocaleString(), 4)
+  const collateralValueRound = round(collateralValue, 2).toLocaleString()
+  const convertibleValueRound = round(convertibleValue, 2).toLocaleString()
 
   return [
     {
       title: 'Face value',
       value: (
-        <span className="flex items-center space-x-1">
+        <span className="flex items-center space-x-1 ">
           <span>1</span> {bond && <TokenLink token={bond.paymentToken} withLink />}
         </span>
       ),
       tooltip: 'Amount each bond is redeemable for at maturity assuming a default does not occur.',
     },
     {
+      title: 'Clearing Price',
+      tooltip: 'Price per bond at the latest auction.',
+      value: bond?.clearingPrice ? (
+        <span className="flex items-center space-x-1">
+          <span>{clearingPrice}</span>
+        </span>
+      ) : (
+        <span className="flex items-center space-x-1">
+          {bond?.auctions.length != 0 ? 'Auction Ongoing' : 'None Sold'}
+        </span>
+      ),
+      valueText: 'text-[#09f50b]',
+    },
+    {
+      title: 'Maturity date',
+      tooltip:
+        'Date each bond can be redeemed for $1 assuming no default. Convertible bonds cannot be converted after this date.',
+      value: maturityDate,
+      valueText: 'text-[#09f50b]',
+    },
+    {
       title: 'Collateral tokens',
       value: (
         <span className="flex items-center space-x-1">
-          <span>{collateralPerBond.toLocaleString()}</span>
+          <span>{collateralTokens}</span>
           {bond && <TokenLink token={bond.collateralToken} withLink />}
         </span>
       ),
-      hint: `($${round(collateralValue, 2).toLocaleString()})`,
+      hint: `($${collateralValueRound})`,
       tooltip:
         'Value of collateral securing each bond. If a bond is defaulted on, the bondholder is able to exchange each bond for these collateral tokens.',
     },
@@ -94,19 +123,11 @@ export const useBondExtraDetails = (bondId: string): ExtraDetailsItemProps[] => 
           {bond && <TokenLink token={bond.collateralToken} withLink />}
         </span>
       ),
-      hint: `($${round(convertibleValue, 2).toLocaleString()})`,
+      hint: `($${convertibleValueRound})`,
       tooltip: 'Value of tokens each bond is convertible into up until the maturity date.',
       show: isConvertBond,
     },
-    {
-      title: 'Maturity date',
-      tooltip:
-        'Date each bond can be redeemed for $1 assuming no default. Convertible bonds cannot be converted after this date.',
-      value: `${dayjs(bond?.maturityDate * 1000)
-        .utc()
-        .tz()
-        .format('ll')}`.toUpperCase(),
-    },
+
     {
       title: 'Collateralization ratio',
       value: `${collateralizationRatio}%`,
@@ -141,19 +162,6 @@ export const useBondExtraDetails = (bondId: string): ExtraDetailsItemProps[] => 
       value: (
         <span className="flex items-center space-x-1">
           <span>{totalSupply.toLocaleString()}</span>
-        </span>
-      ),
-    },
-    {
-      title: 'Clearing Price',
-      tooltip: 'Price per bond at the latest auction.',
-      value: bond?.clearingPrice ? (
-        <span className="flex items-center space-x-1">
-          <span>{bond?.clearingPrice.toLocaleString()}</span>
-        </span>
-      ) : (
-        <span className="flex items-center space-x-1">
-          {bond?.auctions.length != 0 ? 'Auction Ongoing' : 'None Sold'}
         </span>
       ),
     },
