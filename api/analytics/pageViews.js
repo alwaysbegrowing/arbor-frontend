@@ -1,16 +1,20 @@
-import { BetaAnalyticsDataClient } from '@google-analytics/data'
-import { GoogleAuth } from 'google-auth-library' // no need to install this library, it comes with @google-analytics/data
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { BetaAnalyticsDataClient } = require('@google-analytics/data')
+const { GoogleAuth } = require('google-auth-library')
 
-export default (request, res) => {
-  const { name } = request.query
-  const { response } = getPageViews()
-  res.status(200).send(`Hello ${response}!`)
+module.exports = async function handler(request, res) {
+  try {
+    const response = await getPageViews()
+    res.status(200).json(response)
+  } catch (e) {
+    res.status(500).send(e.message)
+  }
 }
 
-async function getPageViews() {
-  const propertyId = '339576001'
-  // Creates a client.
-  const analyticsDataClient = new BetaAnalyticsDataClient({
+const PROPERTY_ID = '339576001'
+
+const createClient = () => {
+  return new BetaAnalyticsDataClient({
     auth: new GoogleAuth({
       projectId: 'arbor-page-views',
       scopes: 'https://www.googleapis.com/auth/analytics.readonly',
@@ -20,102 +24,44 @@ async function getPageViews() {
       },
     }),
   })
-
-  try {
-    // console.log(propertyId)
-
-    const x = await analyticsDataClient.runRealtimeReport({
-      property: `properties/${propertyId}`,
-      dimensions: [
-        {
-          name: 'country',
-        },
-      ],
-      metrics: [
-        {
-          name: 'activeUsers',
-        },
-      ],
-    })
-    console.log(x, 'eow')
-  } catch (e) {
-    console.log(e)
-  }
 }
 
-// console.log({ analyticsDataClient })
+const createReport = async (analyticsDataClient, report) => {
+  return await analyticsDataClient.runRealtimeReport(report)
+}
 
-// Runs a realtime report on a Google Analytics 4 property.
-// async function runRealtimeReport() {
-//   console.log('hi', propertyId, analyticsDataClient)
-//   const [response] = await analyticsDataClient.runRealtimeReport({
-//     property: `properties/${propertyId}`,
-//     dimensions: [
-//       {
-//         name: 'country',
-//       },
-//     ],
-//     metrics: [
-//       {
-//         name: 'activeUsers',
-//       },
-//     ],
-//   })
-//   console.log(await response)
-//   printRunReportResponse(response)
-// }
+async function getPageViews() {
+  const analyticsDataClient = createClient()
 
-// runRealtimeReport()
+  return await createReport(analyticsDataClient, PAGE_VIEWS_BY_PAGE(PROPERTY_ID, '/offerings/399'))
+}
 
-//   // Prints results of a runReport call.
-//   function printRunReportResponse(response) {
-//     //[START analyticsdata_print_run_report_response_header]
-//     console.log('hi2')
-//     console.log(`${response.rowCount} rows received`)
-//     response.dimensionHeaders.forEach((dimensionHeader) => {
-//       console.log(`Dimension header name: ${dimensionHeader.name}`)
-//     })
-//     response.metricHeaders.forEach((metricHeader) => {
-//       console.log(`Metric header name: ${metricHeader.name} (${metricHeader.type})`)
-//     })
-//     //[END analyticsdata_print_run_report_response_header]
+const ACTIVE_USERS_BY_COUNTRY = {
+  property: `properties/${PROPERTY_ID}`,
+  dimensions: [
+    {
+      name: 'country',
+    },
+  ],
+  metrics: [
+    {
+      name: 'activeUsers',
+    },
+  ],
+}
 
-//     // [START analyticsdata_print_run_report_response_rows]
-//     console.log('Report result:')
-//     response.rows.forEach((row) => {
-//       console.log(`${row.dimensionValues[0].value}, ${row.metricValues[0].value}`)
-//     })
-//     // [END analyticsdata_print_run_report_response_rows]
-//   }
-//   // [END analyticsdata_run_realtime_report]
-// }
-
-// process.on('unhandledRejection', (err) => {
-//   console.error(err.message)
-//   process.exitCode = 1
-// })
-
-// property: `properties/${propertyId}`,
-// metrics: [
-//   {
-//     name: 'screenPageViews',
-//   },
-// ],
-// dimensions: [
-//   {
-//     name: 'pagePath',
-//   },
-// ],
-// dimensionFilter: {
-//   filter: {
-//     stringFilter: {
-//       matchType: 'EXACT',
-//       value: '/offerings/399',
-//     },
-//     fieldName: 'pagePath',
-//   },
-// },
-// })
-// printRunReportResponse(response)
-// // return response
-// }
+const PAGE_VIEWS_BY_PAGE = (propertyId, pagePath) => {
+  return {
+    property: `properties/${propertyId}`,
+    metrics: [
+      {
+        name: 'screenPageViews',
+      },
+    ],
+    dimensions: [
+      {
+        name: 'unifiedScreenName',
+      },
+    ],
+  }
+}
