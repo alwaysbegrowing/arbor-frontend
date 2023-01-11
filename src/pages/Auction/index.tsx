@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
 
@@ -140,6 +140,18 @@ export const LoadingTwoGrid = () => (
 const AuctionPage = ({ data: { auctionIdentifier, derivedAuctionInfo, graphInfo }, loading }) => {
   const navigate = useNavigate()
   const invalidAuction = !loading && (!auctionIdentifier || derivedAuctionInfo === undefined)
+  const [pageViews, setPageViews] = useState()
+
+  useEffect(() => {
+    const domain = window.location.origin
+    const getPageViews = async () => {
+      console.log('hello')
+      const value = await fetch(`${domain}/api/analytics/pageViews`)
+      const valueJson = await value.json()
+      console.log('hi', valueJson)
+    }
+    getPageViews()
+  }, [])
 
   if (invalidAuction) {
     return (
