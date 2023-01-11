@@ -1,10 +1,20 @@
-import { BetaAnalyticsDataClient } from '@google-analytics/data'
-import { GoogleAuth } from 'google-auth-library' // no need to install this library, it comes with @google-analytics/data
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { BetaAnalyticsDataClient } = require('@google-analytics/data')
+const { GoogleAuth } = require('google-auth-library')
 
-export default async function handler(request, res) {
-  const { name } = request.query
-  //auth process
-  const analyticsDataClient = new BetaAnalyticsDataClient({
+module.exports = async function handler(request, res) {
+  try {
+    const response = await getPageViews()
+    res.status(200).json(response)
+  } catch (e) {
+    res.status(500).send(e.message)
+  }
+}
+
+const PROPERTY_ID = '339576001'
+
+const createClient = () => {
+  return new BetaAnalyticsDataClient({
     auth: new GoogleAuth({
       projectId: 'arbor-page-views',
       scopes: 'https://www.googleapis.com/auth/analytics.readonly',
@@ -14,47 +24,45 @@ export default async function handler(request, res) {
       },
     }),
   })
+}
 
-  const propertyId = '339576001'
+const createReport = async (analyticsDataClient, report) => {
+  return await analyticsDataClient.runReport(report)
+}
 
-  // Runs a report on a Google Analytics 4 property.
-  try {
-    const [response] = await analyticsDataClient.runReport({
-      property: `properties/${propertyId}`,
-      metrics: [
-        {
-          name: 'screenPageViews',
-        },
-      ],
-      dateRanges: [
-        {
-          startDate: '2022-11-01',
-          endDate: 'today',
-        },
-      ],
-      dimensions: [
-        {
-          name: 'pagePath',
-        },
-      ],
-      dimensionFilter: {
-        filter: {
-          stringFilter: {
-            matchType: 'EXACT',
-            value: '/offerings/399',
-          },
-          fieldName: 'pagePath',
-        },
+async function getPageViews() {
+  const analyticsDataClient = createClient()
+
+  return await createReport(analyticsDataClient, PAGE_VIEWS_BY_PAGE(PROPERTY_ID, '/offerings/399'))
+}
+
+const PAGE_VIEWS_BY_PAGE = (propertyId, pagePath) => {
+  return {
+    property: `properties/${propertyId}`,
+    metrics: [
+      {
+        name: 'screenPageViews',
       },
-    })
-    const value = []
-    response.rows.forEach((row) => {
-      console.log(row)
-      // console.log(`${row.metricValues[0].value}`)
-      value.push(row.metricValues[0].value)
-    })
-    res.status(200).json(value)
-  } catch (e) {
-    console.log(e)
+    ],
+    dateRanges: [
+      {
+        startDate: '2022-11-01',
+        endDate: 'today',
+      },
+    ],
+    dimensions: [
+      {
+        name: 'pagePath',
+      },
+    ],
+    dimensionFilter: {
+      filter: {
+        stringFilter: {
+          matchType: 'EXACT',
+          value: '/offerings/399',
+        },
+        fieldName: 'pagePath',
+      },
+    },
   }
 }
