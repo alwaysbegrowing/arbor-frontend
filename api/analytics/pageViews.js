@@ -4,7 +4,8 @@ const { GoogleAuth } = require('google-auth-library')
 
 export default async (request, res) => {
   try {
-    const response = await getPageViews()
+    const { path } = request.query
+    const response = await getPageViews(path)
     res.status(200).json(response)
   } catch (e) {
     res.status(500).json(e.message)
@@ -30,13 +31,13 @@ const createReport = async (analyticsDataClient, report) => {
   return await analyticsDataClient.runReport(report)
 }
 
-async function getPageViews() {
+async function getPageViews(path) {
   const analyticsDataClient = createClient()
 
-  return await createReport(analyticsDataClient, PAGE_VIEWS_BY_PAGE(PROPERTY_ID, '/offerings/399'))
+  return await createReport(analyticsDataClient, PAGE_VIEWS_BY_PAGE(PROPERTY_ID, path))
 }
 
-const PAGE_VIEWS_BY_PAGE = (propertyId, pagePath) => {
+const PAGE_VIEWS_BY_PAGE = (propertyId, path) => {
   return {
     property: `properties/${propertyId}`,
     metrics: [
@@ -59,7 +60,7 @@ const PAGE_VIEWS_BY_PAGE = (propertyId, pagePath) => {
       filter: {
         stringFilter: {
           matchType: 'EXACT',
-          value: '/offerings/399',
+          value: `${path}`,
         },
         fieldName: 'pagePath',
       },
