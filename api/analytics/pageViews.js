@@ -2,12 +2,12 @@
 const { BetaAnalyticsDataClient } = require('@google-analytics/data')
 const { GoogleAuth } = require('google-auth-library')
 
-module.exports = async function handler(request, res) {
+export default async (request, res) => {
   try {
     const response = await getPageViews()
     res.status(200).json(response)
   } catch (e) {
-    res.status(500).send(e.message)
+    res.status(500).json(e.message)
   }
 }
 

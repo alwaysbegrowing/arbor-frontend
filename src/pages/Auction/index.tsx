@@ -142,13 +142,22 @@ const AuctionPage = ({ data: { auctionIdentifier, derivedAuctionInfo, graphInfo 
   const invalidAuction = !loading && (!auctionIdentifier || derivedAuctionInfo === undefined)
   const [pageViews, setPageViews] = useState()
 
+  console.log(pageViews)
+
+  // const domain = window.location.origin
+
   useEffect(() => {
     const domain = window.location.origin
     const getPageViews = async () => {
-      console.log('hello')
-      const value = await fetch(`${domain}/api/analytics/pageViews`)
-      const valueJson = await value.json()
-      console.log('hi', valueJson)
+      try {
+        console.log('hello')
+        const value = await fetch(`${domain}/api/analytics/pageViews`)
+        const valueJson = await value.json()
+        const pageView = valueJson[0].rows[0].metricValues[0].value
+        setPageViews(pageView)
+      } catch (e) {
+        console.log(e)
+      }
     }
     getPageViews()
   }, [])
