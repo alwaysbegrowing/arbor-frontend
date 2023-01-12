@@ -145,9 +145,6 @@ const AuctionPage = ({ data: { auctionIdentifier, derivedAuctionInfo, graphInfo 
   const invalidAuction = !loading && (!auctionIdentifier || derivedAuctionInfo === undefined)
   const [pageViews, setPageViews] = useState()
   const [path, setPath] = useState('')
-  console.log(path)
-
-  console.log(pageViews)
 
   useEffect(() => {
     const domain = window.location.origin
@@ -155,7 +152,7 @@ const AuctionPage = ({ data: { auctionIdentifier, derivedAuctionInfo, graphInfo 
     setPath(pagePath)
     const getPageViews = async () => {
       try {
-        const value = await fetch(`${domain}/api/analytics/pageViews?path=${path}`)
+        const value = await fetch(`${domain}/api/viewInfo/pageViews?path=${path}`)
         const valueJson = await value.json()
         const pageView = valueJson[0].rows[0].metricValues[0].value
         setPageViews(pageView)
