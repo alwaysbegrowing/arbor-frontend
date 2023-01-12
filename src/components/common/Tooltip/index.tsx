@@ -5,10 +5,12 @@ import ReactTooltip from 'react-tooltip'
 import { TooltipIcon } from '../../icons/TooltipIcon'
 
 const Tooltip = ({
+  color,
   left,
   tip,
   ...props
 }: {
+  color?: string
   tip?: string
   left?: ReactElement | string
   className?: string
@@ -24,7 +26,7 @@ const Tooltip = ({
       data-multiline={true}
       data-tip={tip}
     >
-      <TooltipIcon />
+      <TooltipIcon color={color} />
     </button>
   )
 
