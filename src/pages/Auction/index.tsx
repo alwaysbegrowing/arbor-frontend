@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
 
 import { ChainId } from '@josojo/honeyswap-sdk'
+import { BarChartIcon } from '@radix-ui/react-icons'
 import { twMerge } from 'tailwind-merge'
 
 import { ReactComponent as AuctionsIcon } from '../../assets/svg/auctions.svg'
@@ -16,6 +17,8 @@ import TokenLogo from '../../components/token/TokenLogo'
 import { useAuction, useGraphDerivedAuctionInfo } from '../../hooks/useAuction'
 import { useDerivedAuctionInfo } from '../../state/orderPlacement/hooks'
 import { RouteAuctionIdentifier, parseURL } from '../../state/orderPlacement/reducer'
+
+import Tooltip from '@/components/common/Tooltip'
 
 const GlobalStyle = createGlobalStyle`
   .siteHeader {
@@ -140,6 +143,40 @@ export const LoadingTwoGrid = () => (
 const AuctionPage = ({ data: { auctionIdentifier, derivedAuctionInfo, graphInfo }, loading }) => {
   const navigate = useNavigate()
   const invalidAuction = !loading && (!auctionIdentifier || derivedAuctionInfo === undefined)
+  const [pageViews, setPageViews] = useState()
+  const [path, setPath] = useState('')
+
+  useEffect(() => {
+    const domain = window.location.origin
+    const pagePath = window.location.pathname
+    setPath(pagePath)
+    const getPageViews = async () => {
+      try {
+        const value = await fetch(`${domain}/api/viewInfo/pageViews?path=${path}`)
+        const valueJson = await value.json()
+        const pageView = valueJson[0].rows[0].metricValues[0].value
+        setPageViews(pageView)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    getPageViews()
+  }, [path])
+
+  const PageViewDisplay = () => (
+    <Tooltip
+      color="#E0E0E0"
+      left={
+        <div className="ml-8 flex gap-x-2 text-[#E0E0E0]">
+          <span>
+            <BarChartIcon />
+          </span>
+          <span className="-mt-1">{pageViews}</span>
+        </div>
+      }
+      tip="Total page views."
+    />
+  )
 
   if (invalidAuction) {
     return (
@@ -178,8 +215,15 @@ const AuctionPage = ({ data: { auctionIdentifier, derivedAuctionInfo, graphInfo 
                   <p className="text-2sm text-[#E0E0E0]">{graphInfo?.bond.symbol}</p>
                 </div>
               </div>
-              <div className="hidden lg:flex">
-                <AuctionButtonOutline />
+              <div className="hidden justify-items-end lg:flex">
+                {pageViews && (
+                  <div className="absolute -mt-7">
+                    <PageViewDisplay />
+                  </div>
+                )}
+                <div className="relative">
+                  <AuctionButtonOutline />
+                </div>
               </div>
             </div>
 
